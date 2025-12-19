@@ -92,3 +92,343 @@
         <li>Combine similar/compatible datasets in an appropriate way for greater insight.</li>
       </ul>
     </section>
+
+    <section>
+      <h2>What today is really about</h2>
+      <p>
+        Cleaning data is not just “busy work”. It’s where you decide what your dataset <em>means</em>.
+        Every cleaning step is an active decision, and every decision should be <strong>justified</strong> 
+        so that others who follow your work can have trust in those choices and see how the data was altered from start to finsih.
+      </p>
+      <div class="callout">
+        <div class="kicker">Today’s mindset</div>
+        <p><strong>Do not clean silently.</strong> Write a short comment for every transformation that tells someonw who is following your code what decision you have made and why.</p>
+      </div>
+    </section>
+
+    <section class="box">
+      <h2>Technical focus</h2>
+      <p class="pill">tidyverse</p>
+      <p class="pill">dplyr</p>
+      <p class="pill">joins</p>
+      <p class="pill">data quality</p>
+
+      <div class="grid two">
+        <div>
+          <div class="kicker">Core functions</div>
+          <ul>
+            <li><span class="mono">select()</span></li>
+            <li><span class="mono">filter()</span></li>
+            <li><span class="mono">mutate()</span></li>
+            <li><span class="mono">rename()</span></li>
+            <li><span class="mono">arrange()</span></li>
+            <li><span class="mono">group_by()</span> &amp; <span class="mono">summarise()</span></li>
+          </ul>
+        </div>
+        <div>
+          <div class="kicker">Common issues</div>
+          <ul>
+            <li>Missing values</li>
+            <li>Inconsistent categories (labels)</li>
+            <li>Duplicated IDs / duplicated rows</li>
+            <li>Unit mismatches (e.g., mg vs µg)</li>
+            <li>Unexpected ranges (outliers / impossible values)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+        <section>
+      <h2>Classroom activity</h2>
+      <p>
+        You will be given <strong>two related datasets</strong> (i.e. two new CSV files) with built-in problems. THese are available here [insert link? or maybe just host all on the daily canvas notes]
+        Your goal is to produce <strong>one clean table</strong> ready for analysis.
+      </p>
+
+      <div class="box task">
+        <div class="kicker">Your mission</div>
+        <p><strong>Produce a single cleaned dataset</strong> by:</p>
+        <ol>
+          <li>Inspecting both datasets</li>
+          <li>Finding anomalies (duplicates, missingness, inconsistent labels, unit issues)</li>
+          <li>Fixing anomalies with justified decisions</li>
+          <li>Combining the datasets into one clean table</li>
+          <li>Saving the result as a new CSV</li>
+        </ol>
+      </div>
+
+      <div class="box warn">
+        <div class="kicker">Remember!</div>
+        <p>If you make a change, you must be able to answer: <strong>“Why did you do that?”</strong></p>
+      </div>
+    </section>
+
+        <section>
+      <h2>Setup (project + script)</h2>
+      <p>
+        Use the same project folder approach as yesterday so that your work stays organised. Create a new script:
+        <span class="mono">scripts/tuesday_cleaning.R</span>
+      </p>
+
+      <pre><code>library(tidyverse)
+# remember to do .libs first if you are using a university PC on the stats3 server
+
+# Load the two datasets (place both CSVs in data_raw/)
+df_a_raw &lt;- read.csv("data_raw/dataset_A.csv")
+df_b_raw &lt;- read.csv("data_raw/dataset_B.csv")</code></pre>
+
+      <div class="box tip">
+        <div class="kicker">Tip</div>
+        <p>Keep the originals unchanged so that you can always reaccess your original data, (<span class="mono">df_a_raw</span>, <span class="mono">df_b_raw</span>). Create cleaned versions (<span class="mono">df_a</span>, <span class="mono">df_b</span>) as you go.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Step 1: Inspect and describe what each table represents</h2>
+      <pre><code># Quick inspection
+glimpse(df_a_raw)
+glimpse(df_b_raw)
+
+head(df_a_raw, 10) # you can specify how many rows you want to look at like so - here I want to see the first 10
+head(df_b_raw, 10)
+
+# Missingness checks
+colSums(is.na(df_a_raw))
+colSums(is.na(df_b_raw))</code></pre>
+
+      <div class="box task">
+        <div class="kicker">Task (comments in script)</div>
+        <ul>
+          <li>What does one row represent in A?</li>
+          <li>What does one row represent in B?</li>
+          <li>What column(s) look like potential join keys? (e.g., <span class="mono">id</span>)</li>
+          <li>Which columns are numeric vs categories?</li>
+          <li>What issues do you immediately see?</li>
+        </ul>
+      </div>
+    </section>
+
+        <section>
+      <h2>Step 2: Tidy data principles - what does “clean” data look like?)</h2>
+      <div class="callout">
+        <div class="kicker">A tidy table usually means:</div>
+        <ul>
+          <li>Each row = one observation</li>
+          <li>Each column = one variable</li>
+          <li>Each cell = one value</li>
+        </ul>
+      </div>
+      <p>
+        Your goal today isn’t to be fancy or get lost in the small details - it’s to learn how to produce a table that is:
+        <strong>consistent</strong>, <strong>documented</strong>, and <strong>analysis-ready</strong>.
+      </p>
+    </section>
+
+        <section>
+      <h2>Step 3: Core wrangling functions (with real intent)</h2>
+
+      <div class="grid two">
+        <div class="box">
+          <div class="kicker"><span class="mono">select()</span>: keeping only what you need</div>
+          <pre><code>a &lt;- df_a_raw %&gt;%
+  select(id, date, value, category)</code></pre>
+          <p class="subtitle">Sometimes a table will contain more columns than we intend to use, we can use select() to reduce clutter and focus the analysis.</p>
+        </div>
+
+        <div class="box">
+          <div class="kicker"><span class="mono">rename()</span>: standardise names</div>
+          <pre><code>a &lt;- a %&gt;%
+  rename(measurement = value)</code></pre>
+          <p class="subtitle">Sometimes columns which represent the same things have differet names across different CSVs, 
+            this allows us to make names clear and consistent across A and B so that we can ultimately merge our two data sources.</p>
+        </div>
+
+        <div class="box">
+          <div class="kicker"><span class="mono">filter()</span>: remove impossible / irrelevant rows</div>
+          <pre><code>a &lt;- a %&gt;%
+  filter(!is.na(id))</code></pre>
+          <p class="subtitle">Never filter silently though, when dropping data you must explain why. This code for example asks us to drop any rows where ID is missing.</p>
+        </div>
+
+        <div class="box">
+          <div class="kicker"><span class="mono">mutate()</span> — create corrected / new variables</div>
+          <pre><code>a &lt;- a %&gt;%
+  mutate(date = as.Date(date))</code></pre>
+          <p class="subtitle">Unit conversions and label cleanups happen here.</p>
+        </div>
+
+        <div class="box">
+          <div class="kicker"><span class="mono">arrange()</span>: order rows for checking</div>
+          <pre><code>a %&gt;% arrange(id, date)</code></pre>
+          <p class="subtitle">Useful for spotting duplicates and weird sequences.</p>
+        </div>
+
+        <div class="box">
+          <div class="kicker"><span class="mono">group_by()</span> + <span class="mono">summarise()</span>: audit your data</div>
+          <pre><code>a %&gt;%
+  group_by(id) %&gt;%
+  summarise(n = n()) %&gt;%
+  arrange(desc(n))</code></pre>
+          <p class="subtitle">This is how you detect duplicated IDs or unexpected counts.</p>
+        </div>
+      </div>
+    </section>
+    
+    <section>
+      <h2>Step 4: Detect problems (data quality checks)</h2>
+
+      <h3>1) Duplicated rows / duplicated IDs</h3>
+      <pre><code># Duplicate rows (exact duplicates)
+df_a_raw %&gt;% duplicated() %&gt;% sum()
+
+# Rows duplicated by key fields (example: same id + date)
+df_a_raw %&gt;% count(id, date) %&gt;% filter(n &gt; 1)</code></pre>
+
+      <div class="box task">
+        <div class="kicker">Decision required</div>
+        <p>If you find duplicates, decide:</p>
+        <ul>
+          <li>Are they true duplicates (ie are they safe to drop)?</li>
+          <li>Or do they represent repeated measurements and therefore should be kept?</li>
+        </ul>
+      </div>
+
+      <h3>2) Inconsistent categories (labels)</h3>
+      <pre><code># Look at unique labels
+df_a_raw %&gt;% count(category) %&gt;% arrange(desc(n))</code></pre>
+
+      <pre><code># Example standardisation
+a &lt;- df_a_raw %&gt;%
+  mutate(category = str_to_lower(category),
+         category = str_trim(category),
+         category = recode(category,
+                           "uk " = "uk",
+                           "united kingdom" = "uk",
+                           "u.k." = "uk"))</code></pre>
+                <p class="subtitle">This is just an example of one type of string-based inconsistency you may face when looking at a dataset.</p>
+
+      <h3>3) Missing values</h3>
+      <pre><code># Missingness by column
+colSums(is.na(df_a_raw))
+
+# this tells you how many outright missing items there are in any given colunm so that you can go and investigate them
+</code></pre>
+
+      <div class="box warn">
+        <div class="kicker">Important</div>
+        <p>Dropping missing rows changes what your dataset represents. If you drop, explain why.</p>
+      </div>
+
+      <h3>4) Unit mismatches</h3>
+      <p>
+        A classic issue: one dataset in mg, but another is in µg, or one column in metres and another in cm.
+        You must detect and unify the units for them to be comparable.
+      </p>
+
+      <pre><code># Example checks
+summary(df_a_raw$height)
+summary(df_b_raw$height)
+
+# Example conversion: centimeters to meters
+b &lt;- df_b_raw %&gt;%
+  mutate(value_m = value_cm / 100)</code></pre>
+
+      <div class="box danger">
+        <div class="kicker">Danger zone</div>
+        <p>Unit conversion can create mistakes which are confident-looking but ultimately wrong. Always remember to double-check ranges after converting to confirm that the outputs make sense.</p>
+      </div>
+    </section>
+
+      <section>
+      <h2>Step 5: Combine datasets (joins)</h2>
+      <p>
+        Joining is how you build one analysis-ready table. The key is picking a correct join key (e.g., <span class="mono">id</span>).
+      </p>
+
+      <pre><code># Example: clean copies first
+a &lt;- df_a_raw
+b &lt;- df_b_raw
+
+# Join (example: left join keeps all rows from A)
+df_clean &lt;- a %&gt;%
+  left_join(b, by = "id")</code></pre>
+
+      <div class="box task">
+        <div class="kicker">After joining, you must audit the join</div>
+        <pre><code># How many rows before vs after?
+nrow(a)
+nrow(df_clean)
+
+# Did the join introduce missingness where you expected matches?
+colSums(is.na(df_clean))</code></pre>
+        <p>If row counts explode unexpectedly, you likely have a many-to-many join problem (duplicates in keys).</p>
+      </div>
+    </section>
+
+      <section>
+      <h2>Step 6: Produce the final clean table</h2>
+      <p>Your final dataset should now have:</p>
+      <ul>
+        <li>Consistent variable names</li>
+        <li>Consistent units</li>
+        <li>Documented category levels</li>
+        <li>No unexplained missingness</li>
+        <li>One row per observation (as defined by you)</li>
+      </ul>
+
+      <pre><code># Example final selection
+df_final &lt;- df_clean %&gt;%
+  select(id, date, category, measurement, anythingelse()) %&gt;%
+  arrange(id, date)
+
+glimpse(df_final)
+summary(df_final)</code></pre>
+
+      <div class="box tip">
+        <div class="kicker">Tip</div>
+        <p>Use <span class="mono">glimpse()</span> + <span class="mono">summary()</span> at the end to confirm the dataset still “makes sense”.</p>
+      </div>
+    </section>
+
+      <section>
+      <h2>Save your cleaned dataset</h2>
+      <pre><code>write.csv(df_final, "data_clean/week1_clean.csv", row.names = FALSE)</code></pre>
+
+      <div class="box task">
+        <div class="kicker">Task</div>
+        <p>Open <span class="mono">data_clean/week1_clean.csv</span> in RStudio and confirm it looks correct.</p>
+      </div>
+    </section>
+
+     <section>
+      <h2>Day 2 outputs</h2>
+      <div class="box">
+        <div class="kicker">By the end of today, you should have:</div>
+        <ul class="checklist">
+          <li>A cleaned dataset saved as a new CSV (in <span class="mono">data_clean/</span>)</li>
+          <li>A script (<span class="mono">scripts/day2_cleaning.R</span>) with clear comments explaining each transformation</li>
+          <li>Evidence of active decision-making (not silent, unexplained cleaning)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>End-of-session checklist (quick)</h2>
+      <div class="box task">
+        <div class="kicker">Before you leave</div>
+        <ul>
+          <li>Can you explain why you handled duplicates the way you did?</li>
+          <li>Can you show where you standardised labels?</li>
+          <li>Can you justify how you handled missing values?</li>
+          <li>Can you demonstrate unit consistency?</li>
+          <li>Is <span class="mono">week1_clean.csv</span> saved in <span class="mono">data_clean/</span>?</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Week 1 • Tuesday • Cleaning = strategy + justification</p>
+  </footer>
+</body>
+</html>
