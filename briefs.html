@@ -31,6 +31,7 @@
     }
 
     .tabs {
+      position: relative;
       display: inline-flex;
       gap: 8px;
       padding: 6px;
@@ -39,7 +40,22 @@
       background: #fff;
     }
 
+    /* Sliding indicator */
+    .indicator {
+      position: absolute;
+      top: 6px;
+      bottom: 6px;
+      left: 6px;
+      width: 0;
+      background: var(--blue);
+      border-radius: var(--radius);
+      transition: transform 0.25s ease, width 0.25s ease;
+      z-index: 0;
+    }
+
     .tab {
+      position: relative;
+      z-index: 1;
       padding: 8px 18px;
       border-radius: var(--radius);
       border: none;
@@ -47,16 +63,14 @@
       cursor: pointer;
       font-size: 0.95rem;
       color: var(--muted);
-      transition: background 0.15s ease, color 0.15s ease;
+      transition: color 0.15s ease;
     }
 
     .tab:hover {
-      background: #f3f4f6;
       color: var(--text);
     }
 
     .tab.active {
-      background: var(--blue);
       color: #fff;
       font-weight: 600;
     }
@@ -84,6 +98,7 @@
   <!-- Tabs -->
   <div class="tabs-wrap">
     <div class="tabs">
+      <div class="indicator"></div>
       <button class="tab active" data-target="A">A</button>
       <button class="tab" data-target="B">B</button>
       <button class="tab" data-target="C">C</button>
@@ -104,6 +119,19 @@
   <script>
     const tabs = document.querySelectorAll(".tab");
     const panels = document.querySelectorAll(".panel");
+    const indicator = document.querySelector(".indicator");
+    const tabsContainer = document.querySelector(".tabs");
+
+    function moveIndicator(tab) {
+      const tabRect = tab.getBoundingClientRect();
+      const containerRect = tabsContainer.getBoundingClientRect();
+
+      indicator.style.width = `${tabRect.width}px`;
+      indicator.style.transform = `translateX(${tabRect.left - containerRect.left}px)`;
+    }
+
+    // Initialise on page load
+    moveIndicator(document.querySelector(".tab.active"));
 
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
@@ -112,7 +140,14 @@
 
         tab.classList.add("active");
         document.getElementById(tab.dataset.target).classList.add("active");
+        moveIndicator(tab);
       });
+    });
+
+    // Keep indicator aligned on resize
+    window.addEventListener("resize", () => {
+      const activeTab = document.querySelector(".tab.active");
+      if (activeTab) moveIndicator(activeTab);
     });
   </script>
 
