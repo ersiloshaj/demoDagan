@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ASDA Project Brief: Store Sales and Operations Dashboard</title>
+
+  <style>
+    :root{
+      --asda-green:#78be20;
+      --asda-green-dark:#4e9b15;
+      --asda-grey:#f4f6fb;
+      --ink:#0b1020;
+      --muted:#5b647a;
+      --paper:#ffffff;
+      --border:#e6e9f2;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      background:var(--asda-grey);
+      color:var(--ink);
+      font:15px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      padding:24px;
+    }
+
+    .page{
+      width:210mm;
+      max-width:100%;
+      margin:0 auto;
+      background:var(--paper);
+      border:1px solid var(--border);
+      box-shadow:0 10px 30px rgba(10,20,60,.08);
+    }
+
+    header{
+      padding:20px 40px 16px;
+      border-bottom:4px solid var(--asda-green);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      flex-wrap:wrap;
+      position:relative;
+    }
+
+    .top-strip{
+      position:absolute;
+      left:0;
+      top:0;
+      right:0;
+      height:10px;
+      background:var(--asda-green-dark);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:360px;
+      margin-top:10px;
+    }
+
+    .brand img{
+      height:44px;
+      width:auto;
+      display:block;
+    }
+
+    .org{
+      line-height:1.2;
+    }
+
+    .org .name{
+      font-size:17px;
+      font-weight:850;
+      color:var(--asda-green-dark);
+      letter-spacing:.2px;
+    }
+
+    .org .dept{
+      font-size:13px;
+      color:var(--muted);
+      margin-top:2px;
+    }
+
+    .contact{
+      text-align:right;
+      font-size:12.5px;
+      color:var(--muted);
+      margin-top:10px;
+    }
+
+    .contact strong{
+      color:var(--ink);
+      font-weight:850;
+    }
+
+    main{
+      padding:32px 40px 26px;
+      overflow-wrap:anywhere;
+    }
+
+    .meta{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .meta .block{min-width:260px}
+    .meta .block div{margin:2px 0}
+
+    .subject{
+      margin:18px 0 14px;
+      padding:12px 14px;
+      border:1px solid var(--border);
+      border-left:4px solid var(--asda-green);
+      background:#fbfff7;
+      font-weight:850;
+      color:var(--ink);
+    }
+
+    h2{
+      font-size:13.5px;
+      margin:18px 0 8px;
+      color:var(--asda-green-dark);
+      letter-spacing:.2px;
+      text-transform:uppercase;
+    }
+
+    p{margin:10px 0}
+
+    ul{margin:8px 0 10px 18px}
+    li{margin:6px 0}
+
+    .callout{
+      margin:16px 0;
+      padding:14px;
+      border:1px solid var(--border);
+      border-left:4px solid var(--asda-green);
+      background:#f7fff0;
+    }
+
+    .kpi-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px 16px;
+      margin:10px 0 6px;
+      padding:12px 14px;
+      border:1px solid var(--border);
+      background:#fcfffa;
+    }
+
+    .kpi-grid div{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .kpi-grid strong{
+      color:var(--ink);
+      font-weight:850;
+    }
+
+    .signature{
+      margin-top:28px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .sigline{
+      margin-top:8px;
+      border-top:1px solid var(--border);
+      padding-top:10px;
+      min-width:360px;
+    }
+
+    .signature-img{
+      display:block;
+      max-width:100px;
+      height:auto;
+      margin:4px 0 6px;
+    }
+
+    .signame{font-weight:880}
+    .sigtitle{color:var(--muted); font-size:13px; margin-top:2px}
+
+    footer{
+      padding:14px 40px 22px;
+      border-top:1px solid var(--border);
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .disclaimer{max-width:680px}
+
+    @page{
+      size:A4;
+      margin:15mm;
+    }
+
+    @media print{
+      body{
+        background:#fff !important;
+        padding:0 !important;
+        margin:0 !important;
+      }
+      .page{
+        box-shadow:none !important;
+        border:0 !important;
+        width:auto !important;
+        max-width:none !important;
+      }
+      *{
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      header, footer, .signature, .callout{
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .signature-img{
+        filter: contrast(1.1);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page" role="document" aria-label="Letter">
+    <header>
+      <div class="top-strip" aria-hidden="true"></div>
+
+      <div class="brand">
+        <img
+          src="assets/asda-logo.png"
+          alt="ASDA"
+        />
+        <div class="org">
+          <div class="name">ASDA</div>
+          <div class="dept">Retail Operations and Commercial Analytics</div>
+        </div>
+      </div>
+
+      <div class="contact">
+        <div><strong>Asda House</strong></div>
+        <div>Great Wilson Street, Leeds, LS11 5AD</div>
+        <div>operations.analytics@asda.uk</div>
+        <div>+44 (0)113 000 0000</div>
+      </div>
+    </header>
+
+    <main>
+      <div class="meta">
+        <div class="block">
+          <div><strong>To:</strong> Analyst Placement Cohort</div>
+          <div><strong>From:</strong> Retail Operations and Commercial Analytics</div>
+          <div><strong>Reference:</strong> ASDA-OPS-2022-2024-SALES</div>
+        </div>
+        <div class="block" style="text-align:right">
+          <div><strong>Date:</strong> <span id="date"></span></div>
+          <div><strong>Project type:</strong> Dashboard and technical note</div>
+          <div><strong>Dataset:</strong> Weekly sales by store and department</div>
+        </div>
+      </div>
+
+      <div class="subject">
+        Subject: Store Sales and Operational Insights Dashboard, Weekly Data (2022 to 2024)
+      </div>
+
+      <p>
+        ASDA is commissioning an internal dashboard to support store leadership and regional management with fast,
+        consistent insight into weekly sales performance. The dashboard will be used to monitor overall trends, understand
+        store and department drivers, and explore how external conditions align with sales patterns.
+      </p>
+
+      <p>
+        This project uses a historical retail dataset originally sourced from a public dataset, and will be re-skinned to a UK
+        grocery and general merchandise context for training. Treat it as a realistic internal dataset covering 45 stores,
+        weekly performance, and a small set of operational and economic indicators.
+      </p>
+
+      <div class="callout">
+        <strong>Analytical standard:</strong> This tool is designed for decision support. You should describe patterns and
+        plausible operational explanations, but you should avoid claiming causality. Document assumptions and limitations
+        clearly, including data quality issues, missingness, and any transformations.
+      </div>
+
+      <h2>data available</h2>
+      <ul>
+        <li>Weekly sales by store and department</li>
+        <li>Holiday flag for key trading weeks</li>
+        <li>Temperature data</li>
+        <li>Fuel price data</li>
+        <li>Unemployment rate data</li>
+        <li>Consumer price index data</li>
+      </ul>
+
+      <h2>primary dashboard objectives</h2>
+      <ul>
+        <li>Provide leadership with a clear view of total sales trends across the period</li>
+        <li>Identify stores and departments driving revenue, growth, and volatility</li>
+        <li>Support regional managers with a store level deep dive tool</li>
+        <li>Explore whether external indicators align with changes in sales and category mix</li>
+      </ul>
+
+      <h2>dashboard modules and questions</h2>
+
+      <h2>module 1: operational overview</h2>
+      <ul>
+        <li><strong>Views:</strong> Weekly total sales, store comparison, department filter, holiday highlighting</li>
+        <li><strong>Questions:</strong> Do sales trend in a particular direction? Which stores dominate revenue? Are trends consistent across stores when external indicators change?</li>
+      </ul>
+
+      <h2>module 2: store and department performance</h2>
+      <ul>
+        <li><strong>Views:</strong> Department contribution within each store, top and bottom departments, store ranking by total sales, growth and volatility</li>
+        <li><strong>Questions:</strong> Do the same departments perform similarly across locations? Are some stores overly dependent on a small number of departments?</li>
+      </ul>
+
+      <h2>module 3: store deep dive tool</h2>
+      <ul>
+        <li><strong>Views:</strong> Store selector, departmental sales profile, seasonality, holiday response, overlays for temperature, fuel, unemployment and CPI</li>
+        <li><strong>Questions:</strong> What characterises this store? Which departments drive volatility? Which external conditions align with changes in sales? Are there seasonal trends that could support better stocking and merchandising choices?</li>
+      </ul>
+
+      <div class="kpi-grid" aria-label="Suggested headline metrics">
+        <div><strong>Suggested KPI:</strong> Total weekly sales and rolling average</div>
+        <div><strong>Suggested KPI:</strong> Store rank by total sales and growth rate</div>
+        <div><strong>Suggested KPI:</strong> Store volatility, week to week change distribution</div>
+        <div><strong>Suggested KPI:</strong> Department contribution share within a store</div>
+      </div>
+
+      <h2>expected deliverables</h2>
+      <ul>
+        <li><strong>Interactive dashboard</strong> suitable for non-technical stakeholders, with clear defaults and labels</li>
+        <li><strong>Technical note (1 to 2 pages)</strong> describing data sources, derived metrics, and limitations</li>
+        <li><strong>Brief findings summary</strong> with 3 to 5 operational insights and recommendations for follow up analysis</li>
+      </ul>
+
+      <h2>success criteria</h2>
+      <p>
+        Success will be judged on clarity, interpretability, reproducibility, and analytical judgement.
+        The best submissions will communicate what the data suggests, what it does not suggest, and how a regional manager
+        could use the dashboard to act, prioritise, and ask better questions.
+      </p>
+
+      <div class="signature">
+        <div>
+          <p style="margin:0 0 6px 0;">Yours faithfully,</p>
+          <div class="sigline">
+            <img
+              src="assets/signature.png"
+              alt="Signature"
+              class="signature-img"
+            />
+            <div class="signame">Retail Operations and Commercial Analytics</div>
+            <div class="sigtitle">ASDA</div>
+          </div>
+        </div>
+
+        <div style="text-align:right; color:var(--muted); font-size:12.5px; max-width: 360px;">
+          <div><strong>Attachment:</strong> Data dictionary and KPI definitions</div>
+          <div><strong>Handling:</strong> Internal training</div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="disclaimer">
+        <strong>Teaching Simulation Notice:</strong> This document is a fictional project brief created for educational purposes.
+        It is not an official communication from ASDA or any parent company.
+      </div>
+      <div>© <span id="year"></span> EL</div>
+    </footer>
+  </div>
+
+  <script>
+    const now = new Date();
+    const fmt = new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "long", year: "numeric" });
+    document.getElementById("date").textContent = fmt.format(now);
+    document.getElementById("year").textContent = now.getFullYear();
+  </script>
+</body>
+</html>
