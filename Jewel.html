@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PhD Proposal Writing Service</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Professional PhD proposal writing and editing service to help you craft a compelling, competitive doctoral research proposal."
+  />
+
+  <style>
+    :root {
+      --primary: #2f4fdb;
+      --primary-dark: #1f36a0;
+      --accent: #ffb85c;
+      --bg: #f5f7fb;
+      --text: #1f2430;
+      --muted: #6b7280;
+      --white: #ffffff;
+      --border: #e5e7eb;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
+      --shadow-subtle: 0 6px 18px rgba(15, 23, 42, 0.08);
+      --max-width: 1100px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(245, 247, 251, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+    }
+
+    .nav {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 0 0, #ffb85c, #2f4fdb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.05rem;
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-subtitle {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 999px;
+      transition: width 0.16s ease-out;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      border-radius: 999px;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background 0.15s ease-out, color 0.15s ease-out,
+        box-shadow 0.15s ease-out, transform 0.08s ease-out,
+        border-color 0.15s ease-out;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--white);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 40px rgba(15, 23, 42, 0.25);
+    }
+
+    .btn-outline {
+      border-color: rgba(148, 163, 184, 0.7);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text);
+    }
+
+    .btn-outline:hover {
+      background: var(--white);
+      border-color: var(--primary);
+    }
+
+    .btn-icon {
+      font-size: 1.1rem;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .section {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 2.25rem;
+      align-items: center;
+      padding-top: 2.2rem;
+      padding-bottom: 2.7rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(79, 70, 229, 0.06);
+      border: 1px solid rgba(79, 70, 229, 0.14);
+      color: var(--muted);
+      font-size: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
+    }
+
+    .hero-title {
+      font-size: clamp(2.1rem, 3vw + 1rem, 3rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-highlight {
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      color: var(--muted);
+      max-width: 34rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+    }
+
+    .hero-meta span .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--primary);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-top: 1.25rem;
+    }
+
+    .hero-trust {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1.35rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-trust-avatars {
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-trust-avatars span {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #e0e7ff, #c4b5fd);
+      border: 2px solid var(--bg);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      margin-left: -8px;
+    }
+
+    .hero-trust-avatars span:first-child {
+      margin-left: 0;
+    }
+
+    .hero-card {
+      background: radial-gradient(circle at 0 0, #eef2ff, #fef9c3);
+      border-radius: 26px;
+      padding: 1.6rem 1.55rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(15, 23, 42, 0.7);
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .hero-card-subtitle {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-card-meta {
+      display: grid;
+      grid-template-columns: 1.1fr 1.1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      font-size: 0.8rem;
+    }
+
+    .hero-card-meta-block {
+      padding: 0.6rem 0.7rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+    }
+
+    .hero-card-meta-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-bottom: 0.15rem;
+    }
+
+    .hero-card-meta-value {
+      font-weight: 600;
+    }
+
+    .hero-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+      margin-top: 0.4rem;
+    }
+
+    .hero-card-footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .hero-card-footer-label {
+      color: var(--muted);
+    }
+
+    .hero-card-footer-value {
+      font-weight: 600;
+    }
+
+    .hero-card-floating {
+      position: absolute;
+      right: 1rem;
+      bottom: 1.25rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.88);
+      color: var(--white);
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .hero-card-floating-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .section-header {
+      margin-bottom: 1.4rem;
+    }
+
+    .section-kicker {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .section-description {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 32rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.1rem;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 1.1rem 1.1rem 1.1rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+      font-size: 0.9rem;
+    }
+
+    .card-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: rgba(47, 79, 219, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-title {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      font-size: 0.98rem;
+    }
+
+    .card-body {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.4rem 0 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .card-list li {
+      padding-left: 1.1rem;
+      position: relative;
+      margin-bottom: 0.2rem;
+    }
+
+    .card-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0.3rem;
+      top: 0;
+      color: var(--primary);
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 1.8rem;
+      align-items: flex-start;
+    }
+
+    .process-steps {
+      display: grid;
+      gap: 0.85rem;
+      font-size: 0.85rem;
+    }
+
+    .process-step {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: var(--radius-md);
+      padding: 0.8rem 0.9rem;
+      border: 1px solid var(--border);
+      display: flex;
+      gap: 0.7rem;
+    }
+
+    .process-step-number {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: rgba(47, 79, 219, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--primary);
+      flex-shrink: 0;
+      margin-top: 0.25rem;
+    }
+
+    .process-step-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .contact-panel {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 1.25rem 1.1rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+      font-size: 0.9rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin-bottom: 0.7rem;
+      font-size: 0.85rem;
+    }
+
+    .contact-label {
+      font-weight: 600;
+      min-width: 70px;
+    }
+
+    .contact-value {
+      color: var(--muted);
+    }
+
+    .contact-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    .whatsapp-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.6rem 0.9rem;
+      border-radius: 999px;
+      background: #22c55e;
+      color: var(--white);
+      font-size: 0.86rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .whatsapp-button span.icon {
+      font-size: 1rem;
+    }
+
+    .form-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 1.2rem 1.1rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+      font-size: 0.9rem;
+    }
+
+    .form-header {
+      margin-bottom: 0.6rem;
+    }
+
+    .form-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.1rem;
+    }
+
+    .form-subtitle {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    form {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem;
+    }
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 500;
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 0.55rem 0.85rem;
+      font-size: 0.85rem;
+      font-family: inherit;
+      outline: none;
+      background: #f9fafb;
+      transition: border-color 0.12s ease-out, box-shadow 0.12s ease-out,
+        background 0.12s ease-out;
+    }
+
+    textarea {
+      border-radius: 16px;
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.4);
+      background: var(--white);
+    }
+
+    .helper-text {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .form-footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 0.4rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+
+    .consent input[type="checkbox"] {
+      width: auto;
+      margin-top: 0.1rem;
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      font-size: 0.85rem;
+    }
+
+    .faq-item {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 0.9rem;
+      border: 1px solid var(--border);
+    }
+
+    .faq-question {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .faq-answer {
+      color: var(--muted);
+    }
+
+    footer {
+      border-top: 1px solid rgba(226, 232, 240, 0.9);
+      background: #f9fafb;
+      font-size: 0.8rem;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1.1rem 1.25rem 1.3rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.7rem;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .footer-links a {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-card {
+        order: -1;
+      }
+
+      .cards-grid,
+      .faq-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .two-column {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 1.4rem;
+      }
+
+      .hero-card {
+        margin-top: -0.2rem;
+      }
+
+      .cards-grid,
+      .faq-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .form-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .section {
+        padding-inline: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <!-- HEADER / NAV -->
+  <header>
+    <nav class="nav">
+      <div class="nav-left">
+        <div class="logo-mark">P</div>
+        <div class="brand">
+          <div class="brand-title">Precision PhD Proposals</div>
+          <div class="brand-subtitle">PhD proposal &amp; application support</div>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#contact">Contact</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="nav-cta-group">
+        <a
+          href="https://wa.me/441234567890?text=Hi%2C%20I%27d%20like%20help%20with%20my%20PhD%20proposal."
+          target="_blank"
+          rel="noopener"
+          class="btn btn-outline"
+        >
+          <span class="btn-icon">💬</span>
+          WhatsApp
+        </a>
+        <a href="#contact" class="btn btn-primary">
+          Get started
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="section hero" id="top">
+      <div>
+        <div class="badge">
+          <span class="badge-dot"></span>
+          1:1 support for PhD applicants worldwide
+        </div>
+        <h1 class="hero-title">
+          PhD proposal writing
+          <span class="hero-highlight">done properly.</span>
+        </h1>
+        <p class="hero-subtitle">
+          We help you shape your research idea into a clear, compelling PhD proposal
+          that speaks the language of supervisors, panels, and funding committees.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">
+            Book a free consultation
+          </a>
+          <a
+            href="https://wa.me/441234567890?text=Hi%2C%20I%27d%20like%20to%20chat%20about%20my%20PhD%20proposal."
+            target="_blank"
+            rel="noopener"
+            class="btn btn-outline"
+          >
+            Chat on WhatsApp
+          </a>
+        </div>
+
+        <div class="hero-meta">
+          <span><span class="dot"></span> Tailored to your field &amp; university</span>
+          <span><span class="dot"></span> Feedback on structure, argument &amp; methods</span>
+          <span><span class="dot"></span> Turnaround options for urgent deadlines</span>
+        </div>
+
+        <div class="hero-trust">
+          <div class="hero-trust-avatars">
+            <span>UK</span>
+            <span>EU</span>
+            <span>INT</span>
+          </div>
+          <div>
+            Supporting PhD applications to UK, European &amp; international universities.
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-card" aria-label="Service highlight">
+        <div class="hero-card-tag">PhD Proposal Package</div>
+        <div class="hero-card-title">From rough idea to polished proposal</div>
+        <div class="hero-card-subtitle">
+          Ideal if you have a research idea or draft but need it structured and refined
+          for a specific programme or funding call.
+        </div>
+
+        <div class="hero-card-meta">
+          <div class="hero-card-meta-block">
+            <div class="hero-card-meta-label">Includes</div>
+            <div class="hero-card-meta-value">
+              1:1 consultation, outline, written proposal draft &amp; revision round
+            </div>
+          </div>
+          <div class="hero-card-meta-block">
+            <div class="hero-card-meta-label">Typical length</div>
+            <div class="hero-card-meta-value">
+              2&ndash;5 pages (or per guidelines)
+            </div>
+          </div>
+          <div class="hero-card-meta-block">
+            <div class="hero-card-meta-label">Turnaround</div>
+            <div class="hero-card-meta-value">
+              Standard: 7&ndash;10 days<br />Rush options available
+            </div>
+          </div>
+          <div class="hero-card-meta-block">
+            <div class="hero-card-meta-label">Support</div>
+            <div class="hero-card-meta-value">
+              Email &amp; WhatsApp check-ins while we work
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card-footer">
+          <div class="hero-card-footer-left">
+            <div class="hero-card-footer-label">Ready to explore your project?</div>
+            <div class="hero-card-footer-value">
+              Send a quick summary via WhatsApp or the form below.
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card-floating">
+          <span class="hero-card-floating-dot"></span>
+          New inquiries typically replied to within 24 hours.
+        </div>
+      </aside>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services">
+      <div class="section-header">
+        <div class="section-kicker">Services</div>
+        <h2 class="section-title">How we can help with your PhD application</h2>
+        <p class="section-description">
+          Whether you&rsquo;re starting from a blank page or refining a full draft, you can pick the
+          level of support that fits your project, programme, and timeline.
+        </p>
+      </div>
+
+      <div class="cards-grid">
+        <article class="card">
+          <div class="card-icon">🧠</div>
+          <h3 class="card-title">Idea &amp; scope development</h3>
+          <p class="card-body">
+            Turn an early idea into a focused, realistic PhD project that fits a supervisor,
+            department, or funding call.
+          </p>
+          <ul class="card-list">
+            <li>Clarify research questions &amp; aims</li>
+            <li>Discuss feasibility and scope</li>
+            <li>Position within the literature</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">📝</div>
+          <h3 class="card-title">Proposal writing &amp; structuring</h3>
+          <p class="card-body">
+            We help you build a coherent narrative from title to methods and expected impact,
+            aligned with the formal guidelines.
+          </p>
+          <ul class="card-list">
+            <li>Clear, logical structure</li>
+            <li>Concise background &amp; rationale</li>
+            <li>Methods aligned with your training &amp; resources</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div class="card-icon">🩺</div>
+          <h3 class="card-title">Editing, review &amp; feedback</h3>
+          <p class="card-body">
+            For existing drafts, we provide detailed comments on clarity, structure, methods,
+            and fit to your target programme.
+          </p>
+          <ul class="card-list">
+            <li>Tracked changes &amp; margin comments</li>
+            <li>Line edits for clarity &amp; tone</li>
+            <li>Optional mock interview preparation</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- PROCESS & CONTACT -->
+    <section class="section" id="process">
+      <div class="section-header">
+        <div class="section-kicker">Process</div>
+        <h2 class="section-title">What working together looks like</h2>
+        <p class="section-description">
+          A simple, structured process designed to keep you in control of your proposal while
+          getting professional input at the key stages.
+        </p>
+      </div>
+
+      <div class="two-column">
+        <!-- Process steps -->
+        <div>
+          <div class="process-steps">
+            <div class="process-step">
+              <div class="process-step-number">1</div>
+              <div>
+                <div class="process-step-title">Initial contact</div>
+                <div>
+                  Submit the form or send a WhatsApp message with your field, target
+                  university or programme, and any deadlines.
+                </div>
+              </div>
+            </div>
+
+            <div class="process-step">
+              <div class="process-step-number">2</div>
+              <div>
+                <div class="process-step-title">Short consultation</div>
+                <div>
+                  We arrange a short call or written exchange to understand your background,
+                  research idea, and what support you need.
+                </div>
+              </div>
+            </div>
+
+            <div class="process-step">
+              <div class="process-step-number">3</div>
+              <div>
+                <div class="process-step-title">Plan &amp; quote</div>
+                <div>
+                  You receive a clear plan (what we will do and by when) and a transparent
+                  price based on length and level of support.
+                </div>
+              </div>
+            </div>
+
+            <div class="process-step">
+              <div class="process-step-number">4</div>
+              <div>
+                <div class="process-step-title">Drafting &amp; feedback</div>
+                <div>
+                  We work on the outline and proposal, sharing drafts for your feedback
+                  and refining until you&rsquo;re confident with the final version.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact info panel -->
+          <div class="contact-panel" id="contact-info">
+            <h3 style="margin: 0 0 0.4rem; font-size: 1rem;">Contact details</h3>
+            <div class="contact-item">
+              <div class="contact-label">Email</div>
+              <div class="contact-value">
+                <a href="mailto:hello@phdproposals.example">hello@phdproposals.example</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-label">WhatsApp</div>
+              <div class="contact-value">
+                +44&nbsp;1234&nbsp;567&nbsp;890<br />
+                <span class="contact-note">
+                  Click the button below to open a chat with a pre-filled message.
+                </span>
+                <div>
+                  <a
+                    class="whatsapp-button"
+                    href="https://wa.me/441234567890?text=Hi%2C%20I%27d%20like%20help%20with%20my%20PhD%20proposal."
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <span class="icon">💬</span>
+                    Message on WhatsApp
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-label">Time zone</div>
+              <div class="contact-value">
+                UK / Europe (but we work with applicants in multiple time zones)
+              </div>
+            </div>
+
+            <div class="contact-note">
+              We&rsquo;ll never share your details with anyone else. Your project and materials
+              remain confidential.
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact form -->
+        <div id="contact">
+          <div class="form-card">
+            <div class="form-header">
+              <div class="form-title">Tell us about your PhD plans</div>
+              <div class="form-subtitle">
+                Fill in this form and we&rsquo;ll get back to you by email or WhatsApp to discuss
+                next steps. No obligation.
+              </div>
+            </div>
+
+            <!-- IMPORTANT: Replace the action URL with your backend / form handler -->
+            <form
+              action="https://example.com/contact"
+              method="POST"
+              autocomplete="on"
+            >
+              <div class="form-row">
+                <div>
+                  <label for="name">Full name *</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    placeholder="Your full name"
+                  />
+                </div>
+                <div>
+                  <label for="email">Email address *</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    placeholder="you@example.com"
+                  />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div>
+                  <label for="phone">WhatsApp / phone</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="+44 ..."
+                  />
+                  <div class="helper-text">
+                    Include country code if you prefer us to contact you on WhatsApp.
+                  </div>
+                </div>
+                <div>
+                  <label for="country">Location / country</label>
+                  <input
+                    type="text"
+                    id="country"
+                    name="country"
+                    placeholder="e.g. UK, Germany, India"
+                  />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div>
+                  <label for="programme">Target programme or university</label>
+                  <input
+                    type="text"
+                    id="programme"
+                    name="programme"
+                    placeholder="e.g. PhD in ... at ..."
+                  />
+                </div>
+                <div>
+                  <label for="deadline">Approx. deadline</label>
+                  <input
+                    type="date"
+                    id="deadline"
+                    name="deadline"
+                  />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div>
+                  <label for="service">Type of support</label>
+                  <select id="service" name="service">
+                    <option value="">Please select</option>
+                    <option value="idea">Idea &amp; scope development</option>
+                    <option value="writing">
+                      Full proposal writing &amp; structure
+                    </option>
+                    <option value="editing">
+                      Editing &amp; detailed feedback
+                    </option>
+                    <option value="other">Combination / other</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="budget">Approx. budget (optional)</label>
+                  <input
+                    type="text"
+                    id="budget"
+                    name="budget"
+                    placeholder="e.g. £200–£400"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label for="details">Tell us about your project or ideas *</label>
+                <textarea
+                  id="details"
+                  name="details"
+                  required
+                  placeholder="Briefly describe your background, research interests, and what you need help with..."
+                ></textarea>
+              </div>
+
+              <div class="consent">
+                <input
+                  type="checkbox"
+                  id="consent"
+                  name="consent"
+                  required
+                />
+                <label for="consent">
+                  I agree to be contacted via the details I&rsquo;ve provided about PhD proposal
+                  support. I understand I can withdraw this at any time.
+                </label>
+              </div>
+
+              <div class="form-footer">
+                <button type="submit" class="btn btn-primary">
+                  Submit inquiry
+                </button>
+                <div>
+                  We aim to respond within 1 working day. If your deadline is very
+                  soon, consider also sending a WhatsApp message.
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="section-header">
+        <div class="section-kicker">FAQ</div>
+        <h2 class="section-title">Questions you might have</h2>
+        <p class="section-description">
+          A few of the most common questions from PhD applicants. You can also ask
+          anything specific in your initial message.
+        </p>
+      </div>
+
+      <div class="faq-grid">
+        <div class="faq-item">
+          <div class="faq-question">Do you write everything for me from scratch?</div>
+          <div class="faq-answer">
+            We can help at different levels &mdash; from structuring and editing your
+            own text to drafting sections based on your ideas and materials. You
+            remain the owner of the proposal and responsible for its content.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Is this allowed by universities?</div>
+          <div class="faq-answer">
+            Our role is to support clarity, structure, and communication of your
+            own work and ideas. We do not fabricate data, results, or credentials,
+            and you are responsible for following your institution&rsquo;s policies.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">How much does it cost?</div>
+          <div class="faq-answer">
+            Pricing depends on the length of the proposal, your starting point
+            (idea vs. full draft), and the timeline. Share your details and we&rsquo;ll
+            provide a clear quote before any work starts.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Which subjects do you work with?</div>
+          <div class="faq-answer">
+            We support a range of fields including life sciences, social sciences,
+            public health, quantitative disciplines, and interdisciplinary projects.
+            If your topic is highly specialised, we&rsquo;ll let you know if it&rsquo;s not a fit.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Can you help with interviews as well?</div>
+          <div class="faq-answer">
+            Yes. Once your proposal is in good shape, we can offer mock interview
+            sessions focused on your project, motivation, and basic methods to help
+            you feel more confident.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">What happens after I submit the form?</div>
+          <div class="faq-answer">
+            You&rsquo;ll receive a short follow-up email (or WhatsApp message, if you prefer)
+            to clarify your needs. Then you&rsquo;ll get a plan, timeline, and quote. You can
+            decide whether to go ahead.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        &copy; <span id="year"></span> Precision PhD Proposals. All rights reserved.
+      </div>
+      <div class="footer-links">
+        <a href="#top">Back to top</a>
+        <a href="#contact">Contact</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // Simple script to keep the footer year up to date
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
