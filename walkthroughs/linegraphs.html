@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lesson: Ridership over time by mode, faceted by city</title>
+  <style>
+    :root { --bg:#0b0f14; --card:#111826; --text:#e7eef7; --muted:#a9b6c5; --accent:#7dd3fc; --border:#223044; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--text); line-height:1.5; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 28px 18px 60px; }
+    h1 { font-size: 28px; margin: 0 0 6px; }
+    p { margin: 10px 0; color: var(--muted); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin: 14px 0; }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    @media (min-width: 860px){ .grid { grid-template-columns: 1.1fr 0.9fr; } }
+    .badge { display:inline-block; font-size: 12px; padding: 3px 8px; border-radius: 999px; background: rgba(125,211,252,0.12); color: var(--accent); border: 1px solid rgba(125,211,252,0.22); }
+    ul { margin: 8px 0 0 18px; color: var(--muted); }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    pre { margin: 0; padding: 14px; border-radius: 12px; background: #0a1220; border: 1px solid #1c2a40; overflow:auto; }
+    .hint { color: var(--text); }
+    .steps ol { margin: 8px 0 0 18px; color: var(--muted); }
+    .k { color: var(--text); font-weight: 650; }
+    .solnHead { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .btn {
+      cursor:pointer; user-select:none;
+      background: rgba(125,211,252,0.12);
+      border: 1px solid rgba(125,211,252,0.28);
+      color: var(--accent);
+      padding: 6px 10px;
+      border-radius: 10px;
+      display:inline-flex; align-items:center; gap:8px;
+      font-weight: 650;
+    }
+    .btn:focus { outline: 2px solid rgba(125,211,252,0.45); outline-offset: 2px; }
+    .blurred pre { filter: blur(7px); transition: filter 180ms ease; }
+    .blurred .note { opacity: 0.95; }
+    .revealed pre { filter: none; }
+    .note { margin-top: 10px; font-size: 13px; color: var(--muted); }
+    .icon { width: 18px; height: 18px; display:inline-block; }
+    .callout { border-left: 4px solid rgba(125,211,252,0.7); padding-left: 12px; margin: 10px 0; color: var(--muted); }
+    .mini { font-size: 13px; color: var(--muted); }
+    a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="badge">ggplot2 lesson</span>
+    <h1>Ridership over time by mode, faceted by city</h1>
+    <p>
+      Goal: make a line plot that shows <span class="k">total monthly riders</span> over time.
+      Each transport mode gets its own panel, and each panel is split by city using faceting.
+    </p>
+
+    <div class="grid">
+      <div class="card steps">
+        <h2 style="margin:0 0 6px;font-size:18px;">What you need</h2>
+        <ul>
+          <li><code>data_clean/transport_usage_clean.csv</code></li>
+          <li>Packages: <code>tidyverse</code>, <code>lubridate</code>, <code>scales</code></li>
+        </ul>
+
+        <div class="callout">
+          Why facet? Faceting lets you compare patterns without mixing everything into one crowded chart.
+        </div>
+
+        <h2 style="margin:14px 0 6px;font-size:18px;">Steps</h2>
+        <ol>
+          <li>Read the data and make sure <code>date</code> is a Date.</li>
+          <li>Group by <code>date</code>, <code>city</code>, and <code>transport_mode</code>.</li>
+          <li>Sum <code>total_monthly_riders</code> within each group.</li>
+          <li>Plot a line chart with <code>geom_line()</code>.</li>
+          <li>Facet by city, and facet or wrap by mode.</li>
+        </ol>
+
+        <p class="mini">
+          Tip: you can facet by one variable and use color for another, or facet both.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2 style="margin:0 0 6px;font-size:18px;">Try it</h2>
+        <p>
+          Build a table that has columns: <code>date</code>, <code>city</code>, <code>transport_mode</code>,
+          and <code>total_monthly_riders</code> (summed). Then plot it.
+        </p>
+        <pre><code># Your workspace
+library(tidyverse)
+library(lubridate)
+library(scales)
+
+usage <- read_csv("data_clean/transport_usage_clean.csv", show_col_types = FALSE) %>%
+  mutate(date = as.Date(date))
+
+# 1) Summarise
+# 2) Plot</code></pre>
+      </div>
+    </div>
+
+    <div class="card blurred" id="solution">
+      <div class="solnHead">
+        <h2 style="margin:0;font-size:18px;">Solution</h2>
+        <button class="btn" type="button" onclick="toggleSolution('solution')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none">
+            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          Reveal
+        </button>
+      </div>
+
+      <pre><code>library(tidyverse)
+library(lubridate)
+library(scales)
+
+usage <- read_csv("data_clean/transport_usage_clean.csv", show_col_types = FALSE) %>%
+  mutate(
+    date = as.Date(date),
+    city = as.factor(city),
+    transport_mode = as.factor(transport_mode)
+  )
+
+ridership_ts <- usage %>%
+  group_by(date, city, transport_mode) %>%
+  summarise(total_monthly_riders = sum(total_monthly_riders), .groups = "drop")
+
+ggplot(ridership_ts, aes(x = date, y = total_monthly_riders, group = transport_mode)) +
+  geom_line(linewidth = 0.7) +
+  facet_grid(city ~ transport_mode, scales = "free_y") +
+  scale_y_continuous(labels = comma) +
+  labs(
+    title = "Ridership over time by mode, faceted by city",
+    x = NULL,
+    y = "Total monthly riders"
+  ) +
+  theme_minimal(base_size = 12)</code></pre>
+
+      <div class="note">
+        For a less crowded design, why not consider faceting only by mode of transport, and using different coloured lines to denote the cities, or viceversa.. Example: <code>facet_wrap(~ transport_mode)</code> and map <code>colour = city</code>.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin:0 0 6px;font-size:18px;">Checks and questions</h2>
+      <ul>
+        <li>Do you see seasonal patterns (peaks in certain months)?</li>
+        <li>Do modes behave differently across cities?</li>
+        <li>Would you keep <code>free_y</code> or enforce the same y scale across different facets?</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function toggleSolution(id){
+      const el = document.getElementById(id);
+      const btn = el.querySelector("button");
+      const revealed = el.classList.toggle("revealed");
+      el.classList.toggle("blurred", !revealed);
+      btn.lastChild.textContent = revealed ? " Hide" : " Reveal";
+    }
+  </script>
+</body>
+</html>
