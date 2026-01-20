@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lesson: Share of total ridership by mode as a piechart</title>
+  <style>
+    :root { --bg:#0b0f14; --card:#111826; --text:#e7eef7; --muted:#a9b6c5; --accent:#7dd3fc; --border:#223044; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--text); line-height:1.5; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 28px 18px 60px; }
+    h1 { font-size: 28px; margin: 0 0 6px; }
+    p { margin: 10px 0; color: var(--muted); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin: 14px 0; }
+    .badge { display:inline-block; font-size: 12px; padding: 3px 8px; border-radius: 999px; background: rgba(125,211,252,0.12); color: var(--accent); border: 1px solid rgba(125,211,252,0.22); }
+    ul { margin: 8px 0 0 18px; color: var(--muted); }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    pre { margin: 0; padding: 14px; border-radius: 12px; background: #0a1220; border: 1px solid #1c2a40; overflow:auto; }
+    .solnHead { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .btn {
+      cursor:pointer; user-select:none;
+      background: rgba(125,211,252,0.12);
+      border: 1px solid rgba(125,211,252,0.28);
+      color: var(--accent);
+      padding: 6px 10px;
+      border-radius: 10px;
+      display:inline-flex; align-items:center; gap:8px;
+      font-weight: 650;
+    }
+    .blurred pre { filter: blur(7px); transition: filter 180ms ease; }
+    .revealed pre { filter: none; }
+    .note { margin-top: 10px; font-size: 13px; color: var(--muted); }
+    .icon { width: 18px; height: 18px; display:inline-block; }
+    .callout { border-left: 4px solid rgba(125,211,252,0.7); padding-left: 12px; margin: 10px 0; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="badge">ggplot2 lesson</span>
+    <h1>Share of total ridership by mode by pie chart</h1>
+    <p>
+      Goal: compute each mode's share of total ridership, then display it as a pie chart.
+      Pie charts are best when there are only a few categories and you want a quick sense of proportions.
+    </p>
+
+    <div class="card">
+      <h2 style="margin:0 0 6px;font-size:18px;">Key idea</h2>
+      <ul>
+        <li>First sum total riders by <code>transport_mode</code>.</li>
+        <li>Then divide by the grand total to get a share.</li>
+        <li>In ggplot, a pie chart is a bar chart in polar coordinates.</li>
+      </ul>
+      <div class="callout">
+        An alternative might be a bar chart labelled with percentages.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin:0 0 6px;font-size:18px;">Try it</h2>
+      <pre><code>library(tidyverse)
+library(scales)
+
+usage <- read_csv("data_clean/transport_usage_clean.csv", show_col_types = FALSE)
+
+# 1) group_by transport_mode
+# 2) summarise total riders
+# 3) compute share
+# 4) pie chart using coord_polar()
+# 5) can you label each section of the pie with the corresponding % ?
+# 6) can you split pies by city?      </code></pre>
+    </div>
+
+    <div class="card blurred" id="solution">
+      <div class="solnHead">
+        <h2 style="margin:0;font-size:18px;">Solution</h2>
+        <button class="btn" type="button" onclick="toggleSolution('solution')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none">
+            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          Reveal
+        </button>
+      </div>
+
+      <pre><code>library(tidyverse)
+library(scales)
+
+usage <- read_csv("data_clean/transport_usage_clean.csv", show_col_types = FALSE)
+
+mode_share <- usage %>%
+  group_by(transport_mode) %>%
+  summarise(total_riders = sum(total_monthly_riders), .groups = "drop") %>%
+  mutate(share = total_riders / sum(total_riders))
+
+ggplot(mode_share, aes(x = "", y = share, fill = transport_mode)) +
+  geom_col(width = 1) +
+  coord_polar(theta = "y") +
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  labs(
+    title = "Share of total ridership by mode",
+    x = NULL,
+    y = NULL
+  ) +
+  theme_void(base_size = 12)</code></pre>
+
+      <div class="note">
+        Try adding labels with <code>geom_text()</code> showing percentages.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin:0 0 6px;font-size:18px;">Checks and questions</h2>
+      <ul>
+        <li>Do any slices dominate?</li>
+        <li>Would it be better to show shares by city rather than overall in order to check city-specific trends?</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function toggleSolution(id){
+      const el = document.getElementById(id);
+      const btn = el.querySelector("button");
+      const revealed = el.classList.toggle("revealed");
+      el.classList.toggle("blurred", !revealed);
+      btn.lastChild.textContent = revealed ? " Hide" : " Reveal";
+    }
+  </script>
+</body>
+</html>
