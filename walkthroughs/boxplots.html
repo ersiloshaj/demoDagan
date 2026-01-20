@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lesson: Box plot of average delay by transport mode</title>
+  <style>
+    :root { --bg:#0b0f14; --card:#111826; --text:#e7eef7; --muted:#a9b6c5; --accent:#7dd3fc; --border:#223044; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--text); line-height:1.5; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 28px 18px 60px; }
+    h1 { font-size: 28px; margin: 0 0 6px; }
+    p { margin: 10px 0; color: var(--muted); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin: 14px 0; }
+    .badge { display:inline-block; font-size: 12px; padding: 3px 8px; border-radius: 999px; background: rgba(125,211,252,0.12); color: var(--accent); border: 1px solid rgba(125,211,252,0.22); }
+    ul { margin: 8px 0 0 18px; color: var(--muted); }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    pre { margin: 0; padding: 14px; border-radius: 12px; background: #0a1220; border: 1px solid #1c2a40; overflow:auto; }
+    .solnHead { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .btn {
+      cursor:pointer; user-select:none;
+      background: rgba(125,211,252,0.12);
+      border: 1px solid rgba(125,211,252,0.28);
+      color: var(--accent);
+      padding: 6px 10px;
+      border-radius: 10px;
+      display:inline-flex; align-items:center; gap:8px;
+      font-weight: 650;
+    }
+    .blurred pre { filter: blur(7px); transition: filter 180ms ease; }
+    .revealed pre { filter: none; }
+    .note { margin-top: 10px; font-size: 13px; color: var(--muted); }
+    .icon { width: 18px; height: 18px; display:inline-block; }
+    .callout { border-left: 4px solid rgba(125,211,252,0.7); padding-left: 12px; margin: 10px 0; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="badge">ggplot2 lesson</span>
+    <h1>Box plot of average delay by transport mode</h1>
+    <p>
+      Goal: compare <code>avg_delay_minutes</code> across transport modes.
+      A box plot shows the median, spread, and outliers.
+    </p>
+
+    <div class="card">
+      <h2 style="margin:0 0 6px;font-size:18px;">What a box plot tells you</h2>
+      <ul>
+        <li><b>Middle line</b>: median</li>
+        <li><b>Box</b>: middle 50 percent of values</li>
+        <li><b>Whiskers</b>: typical ranges</li>
+        <li><b>Points</b>: outliers</li>
+      </ul>
+      <div class="callout">
+        Questions worth considering: which modes are most variable, which are most consistent, and which users risk being late to work most often?
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin:0 0 6px;font-size:18px;">Try it</h2>
+      <pre><code>library(tidyverse)
+
+usage <- read_csv("data_clean/transport_usage_clean.csv", show_col_types = FALSE)
+
+# Make sure transport_mode is treated as a category
+# Then build a box plot of avg_delay_minutes by transport_mode</code></pre>
+    </div>
+
+    <div class="card blurred" id="solution">
+      <div class="solnHead">
+        <h2 style="margin:0;font-size:18px;">Solution</h2>
+        <button class="btn" type="button" onclick="toggleSolution('solution')">
+          <svg class="icon" viewBox="0 0 24 24" fill="none">
+            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          Reveal
+        </button>
+      </div>
+
+      <pre><code>library(tidyverse)
+
+usage <- read_csv("data_clean/transport_usage_clean.csv", show_col_types = FALSE) %>%
+  mutate(transport_mode = as.factor(transport_mode))
+
+ggplot(usage, aes(x = transport_mode, y = avg_delay_minutes)) +
+  geom_boxplot(outlier.alpha = 0.4) +
+  labs(
+    title = "Average delay by transport mode",
+    x = NULL,
+    y = "Average delay (minutes)"
+  ) +
+  theme_minimal(base_size = 12)</code></pre>
+
+      <div class="note">
+        Optional: reorder modes by median delay using <code>forcats::fct_reorder()</code>.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin:0 0 6px;font-size:18px;">Checks and questions</h2>
+      <ul>
+        <li>Which mode has the highest median delay?</li>
+        <li>Which mode has the widest spread?</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function toggleSolution(id){
+      const el = document.getElementById(id);
+      const btn = el.querySelector("button");
+      const revealed = el.classList.toggle("revealed");
+      el.classList.toggle("blurred", !revealed);
+      btn.lastChild.textContent = revealed ? " Hide" : " Reveal";
+    }
+  </script>
+</body>
+</html>
