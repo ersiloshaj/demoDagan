@@ -1,1 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Week 2: Turning Analysis into an R Shiny Dashboard</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:#121a33;
+      --panel2:#0f1630;
+      --text:#e8ecff;
+      --muted:#b9c2ff;
+      --accent:#7aa2ff;
+      --good:#7dffb2;
+      --warn:#ffd37a;
+      --bad:#ff7a7a;
+      --border:rgba(255,255,255,0.12);
+      --code:#0a0f1f;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background: radial-gradient(1200px 700px at 20% 0%, rgba(122,162,255,0.18), transparent 60%),
+                  radial-gradient(800px 600px at 80% 10%, rgba(125,255,178,0.10), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+    header{
+      padding:40px 18px 18px;
+      max-width:1050px;
+      margin:0 auto;
+    }
+    h1{
+      margin:0 0 10px;
+      font-size: clamp(26px, 3vw, 38px);
+      letter-spacing:0.2px;
+    }
+    .subtitle{
+      color:var(--muted);
+      max-width: 70ch;
+      font-size: 16px;
+    }
+    .wrap{
+      max-width:1050px;
+      margin:0 auto;
+      padding:0 18px 60px;
+    }
+    .row{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+    @media(min-width: 950px){
+      .row{
+        grid-template-columns: 320px 1fr;
+        gap:18px;
+      }
+      .sticky{
+        position:sticky;
+        top:16px;
+        align-self:start;
+      }
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:16px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+    }
+    .toc a{
+      display:block;
+      color:var(--muted);
+      text-decoration:none;
+      padding:7px 8px;
+      border-radius:10px;
+      border:1px solid transparent;
+      margin:2px 0;
+    }
+    .toc a:hover{
+      color:var(--text);
+      border-color: rgba(122,162,255,0.35);
+      background: rgba(122,162,255,0.08);
+    }
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding:3px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      color:var(--muted);
+      margin-right:6px;
+      margin-bottom:6px;
+      background: rgba(255,255,255,0.03);
+    }
+    h2{
+      margin: 0 0 10px;
+      font-size: 22px;
+    }
+    h3{
+      margin: 18px 0 8px;
+      font-size: 18px;
+    }
+    p{ margin: 10px 0; }
+    ul{ margin: 8px 0 12px 22px; }
+    li{ margin: 6px 0; }
+    .callout{
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      background: rgba(122,162,255,0.08);
+      border-radius: 12px;
+      margin: 12px 0;
+    }
+    .callout.good{ border-left-color: var(--good); background: rgba(125,255,178,0.07); }
+    .callout.warn{ border-left-color: var(--warn); background: rgba(255,211,122,0.07); }
+    .code{
+      background: var(--code);
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius: 14px;
+      padding: 12px;
+      overflow:auto;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 10px 0 14px;
+    }
+    .hr{
+      height:1px;
+      background: rgba(255,255,255,0.10);
+      margin: 18px 0;
+    }
+    .kpi-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+      margin-top: 10px;
+    }
+    @media(min-width: 800px){
+      .kpi-grid{
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .kpi{
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:14px;
+      padding:12px;
+      background: rgba(255,255,255,0.03);
+    }
+    .kpi .label{ color: var(--muted); font-size: 12px; }
+    .kpi .value{ font-size: 22px; margin-top: 4px; }
+    .footer{
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Week 2-ish: Turning Week 1 Analysis into an R Shiny Dashboard</h1>
+    <div class="subtitle">
+      By the end of this week you will have a working <b>app.R</b> that loads your cleaned, analysis ready transport data and lets a stakeholder explore trends interactively.
+      This week is designed to introduce every concept before you need it, so nothing arrives out of nowhere later on.
+    </div>
+  </header>
 
+  <div class="wrap">
+    <div class="row">
+      <aside class="card sticky toc">
+        <div style="margin-bottom:10px;">
+          <span class="tag">We'll start beginner friendly by working with classic shiny first</span>
+          <span class="tag">You'll see more options for further polish and taking your work to the next level later, but first lets make soemthing that works.</span>
+        </div>
+        <a href="#what">What is Shiny?</a>
+        <a href="#how">How Shiny works</a>
+        <a href="#reactive">Reactivity</a>
+        <a href="#plan">Rough plan for the week and overarching direction/goals</a>
+        <a href="#build">Building an app in stages</a>
+        <a href="#features">What your app will do</a>
+        <a href="#polish">Kicking it up a notch</a>
+        <a href="#beyond">How does this feed in / give room to build on for your final projects?</a>
+      </aside>
+
+      <main class="card">
+        <section id="what">
+          <h2>What is Shiny?</h2>
+          <p>
+            <b>Shiny</b> is an R framework for building interactive web apps directly from R.
+            Instead of producing a static plot and saving it, you build a small web page where users can (in the context of our transport data):
+          </p>
+          <ul>
+            <li>Change inputs (city, mode, date range)</li>
+            <li>See outputs update instantly (plots, tables, KPIs)</li>
+            <li>Download filtered datasets or charts</li>
+          </ul>
+
+          <div class="callout good">
+            <b>Why this matters for your placements:</b><br/>
+            Week 1 has created analysis and insights. Week 2 aims to package those insights into a deliverable which a stakeholder could actually explore.
+
+            You will be able to use this as the basis for your final projects and understand what might be possible if you keep exploring and learning.
+          </div>
+        </section>
+
+        <div class="hr"></div>
+
+        <section id="how">
+          <h2>How Shiny works</h2>
+          <p>Every Shiny app has two main parts:</p>
+          <ul>
+            <li><b>UI (User Interface)</b>: what the user sees and clicks</li>
+            <li><b>Server</b>: the R code that runs in the background when a user interacts</li>
+          </ul>
+
+          <p>In classic Shiny, you usually write one file called <b>app.R</b> (could be <em>anything</em>.R though) that contains both the UI and server parts.</p>
+
+          <div class="code"><pre>
+
+UI:    inputs + layout + placeholders for outputs
+Server: read data + filter data + build plots/tables + send to UI</pre></div>
+
+          <p>
+            Shiny apps run an R session in the background. When a user changes an input, Shiny re-runs only the pieces that depend on that input.
+            That selective re-run is the key idea of reactivity in these apps.
+          </p>
+        </section>
+
+        <div class="hr"></div>
+
+        <section id="reactive">
+          <h2>Do not fear, reactivity is here.</h2>
+          <p>These are the core building blocks you will use:</p>
+
+          <h3>Inputs</h3>
+          <ul>
+            <li><code>selectInput()</code> for city and mode</li>
+            <li><code>dateRangeInput()</code> for date filtering</li>
+            <li><code>checkboxInput()</code> for “raw points vs smooth curve”</li>
+          </ul>
+
+          <h3>Reactive data</h3>
+          <p>
+            A <b>reactive expression</b> is a function that returns a value and updates when its dependencies change.
+            You will use it to produce a filtered dataset once, then re-use it in multiple outputs.
+          </p>
+          <div class="code"><pre>filtered_data &lt;- reactive({
+  df |&gt;
+    filter(city %in% input$city) |&gt;
+    filter(mode %in% input$mode) |&gt;
+    filter(date &gt;= input$dates[1], date &lt;= input$dates[2])
+})</pre></div>
+
+          <h3>Outputs</h3>
+          <ul>
+            <li><code>renderPlot()</code> sends a plot to a <code>plotOutput()</code></li>
+            <li><code>renderTable()</code> or <code>renderDT()</code> sends a table to the UI</li>
+            <li>KPIs are often <code>renderText()</code> or <code>renderUI()</code></li>
+          </ul>
+
+          <div class="callout warn">
+            <b>Common beginner mistake:</b><br/>
+            Writing the same filtering code inside every plot. Use one <code>reactive()</code> filtered dataset, then build all outputs from it.
+          </div>
+        </section>
+
+        <div class="hr"></div>
+
+        <section id="plan">
+          <h2>Week plan and direction</h2>
+          <p>
+            The direction is simple: start from a minimal Shiny skeleton, then add one feature at a time.
+            Each stage will aim to produce something runnable and useful, so you always know what changed and why.
+            Building like this also helps you work out what might be causing errors rather than introducing a heap of complexity all at once.
+          </p>
+
+          <h3>Stage 0: Reload your cleaned analysis ready dataset</h3>
+          <ul>
+            <li>Read the combined analysis ready CSV from Week 1</li>
+            <li>Make sure dates are converted properly</li>
+            <li>Quick sanity checks: rows, missing values, unique cities and modes</li>
+          </ul>
+
+          <h3>Stage 1: First Shiny app that runs</h3>
+          <ul>
+            <li>Basic UI with a title and one plot placeholder</li>
+            <li>Server reads the data and draws a basic plot</li>
+          </ul>
+
+          <h3>Stage 2: Add filtering inputs</h3>
+          <ul>
+            <li>City selector, mode selector, date range</li>
+            <li>One reactive dataset drives everything</li>
+          </ul>
+
+          <h3>Stage 3: Add your two main plots</h3>
+          <ul>
+            <li>Ridership over time by mode, responsive to city and date range</li>
+            <li>Ticket price vs daily riders with a toggle for raw points vs smooth</li>
+          </ul>
+
+          <h3>Stage 4: Add stakeholder extras</h3>
+          <ul>
+            <li>Summary table</li>
+            <li>KPI cards</li>
+            <li>Download filtered CSV and download plots</li>
+          </ul>
+
+          <h3>Stage 5: Further polishing to really sell your work</h3>
+          <ul>
+            <li>Use <b>bslib</b> for theming</li>
+            <li><b>shinydashboard</b> for layout</li>
+            <li><b>shinythemes</b> for an easy style upgrade</li>
+          </ul>
+        </section>
+
+        <div class="hr"></div>
+
+        <section id="build">
+          <h2>Build the app in stages</h2>
+
+          <h3>Stage 1: The smallest working app</h3>
+          <h3>NEED TO ADD MORE NOTES HERE TO EXPLAIN THAT RUNNING TIES TOGETHER THE SERVER AND UI ELEMENTS AND GENERATES AN OUTPUT PANEL</h3>
+          <h3>SAVE INTRODUCING ONLINE HOSTING UNTIL MUCH LATER, STUDENTS WILL NEED FREE ACCOUNTS, THEY HAVE LIMITED RUNTIMES ON FREE ACCOUNT.</h3>
+          
+          <div class="code"><pre>install.packages("shiny")
+
+library(shiny)
+
+ui &lt;- fluidPage(
+  titlePanel("Transport Dashboard"),
+  mainPanel(
+    plotOutput("p1")
+  )
+)
+
+server &lt;- function(input, output, session) {
+  output$p1 &lt;- renderPlot({
+    hist(rnorm(100))
+  })
+}
+
+shinyApp(ui, server)</pre></div>
+
+          <div class="callout good">
+            <b>Checkpoint:</b> can you run the app and see a histogram. If so then you are ready to replace the demo plot with your real data.
+          </div>
+
+          <h3>Stage 2: Load your analysis ready dataset</h3>
+          <p>
+            It is always good practice to load data near the top of the server portion of the script so it is immediately clear to observers where the data is coming from.
+            You will also make sure to convert your date column to Date so that it is interpreted properly by R (this is especially important for filtering later).
+          </p>
+
+          <div class="code"><pre># Example patterns (you will adapt names to your dataset)
+
+df &lt;- read.csv("transport.csv")
+
+# If your date column is called "date"
+df$date &lt;- as.Date(df$date)</pre></div>
+
+          <h3>Stage 3: Create your reactive filtered dataset</h3>
+          <p>
+            You will create a single <code>filtered_data()</code> reactive expression so all outputs stay consistent.
+          </p>
+
+          <div class="code"><pre>filtered_data &lt;- reactive({
+  req(input$city, input$mode, input$dates)
+  df |&gt;
+    subset(city %in% input$city) |&gt;
+    subset(mode %in% input$mode) |&gt;
+    subset(date &gt;= input$dates[1] &amp; date &lt;= input$dates[2])
+})</pre></div>
+
+          <div class="callout warn">
+            <b>About req():</b> Using this prevents errors during startup when inputs haven't been entered yet.
+          </div>
+        </section>
+
+        <div class="hr"></div>
+
+        <section id="features">
+          <h2>What your app will do</h2>
+          <p>Minimum dashboard features for this week:</p>
+          <ul>
+            <li><b>Inputs:</b> city, mode, date range, raw vs smooth toggle</li>
+            <li><b>Plot 1:</b> ridership over time (reactive)</li>
+            <li><b>Plot 2:</b> ticket price vs daily riders (reactive, raw data points or a smoothed line)</li>
+            <li><b>Summary table:</b> grouped metrics for the selected filters</li>
+            <li><b>KPIs:</b> total riders, mean delay, average ticket price (or another sensible trio of your choice)</li>
+            <li><b>Downloads:</b> filtered CSV, plot PNGs</li>
+          </ul>
+
+          <div class="kpi-grid">
+            <div class="kpi">
+              <div class="label">Example KPI</div>
+              <div class="value">Total riders</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Example KPI</div>
+              <div class="value">Mean delay</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Example KPI</div>
+              <div class="value">Avg ticket price</div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <b>Loose business questions you might answer with this app:</b>
+            <ul>
+              <li>Which city and mode combinations show the strongest growth in riders over time?</li>
+              <li>Does the price to demand relationship look different by mode?</li>
+              <li>Are there time windows where performance changes, such as seasonal shifts?</li>
+            </ul>
+          </div>
+        </section>
+
+        <div class="hr"></div>
+
+        <section id="polish">
+          <h2>Taking it up a level</h2>
+          <p>
+            Once the core app works, you can improve presentation without changing the logic.
+          </p>
+
+          <h3>bslib (recommended)</h3>
+          <p>
+            <b>bslib</b> lets you theme Bootstrap based Shiny apps.
+            You can change fonts, spacing, colors and make it feel more like a product.
+          </p>
+          <div class="code"><pre>install.packages("bslib")
+library(bslib)
+
+ui &lt;- fluidPage(
+  theme = bs_theme(bootswatch = "flatly"),
+  ...</pre></div>
+
+          <h3>shinydashboard (layout options)</h3>
+          <p>
+            <b>shinydashboard</b> gives a classic sidebar dashboard layout with boxes and tabs.
+            You can switch to it later without rewriting your core filtering logic.
+          </p>
+
+          <h3>shinythemes (fast styling)</h3>
+          <p>
+            <b>shinythemes</b> provides pre-made themes. It is quick, but less flexible than bslib.
+          </p>
+        </section>
+
+        <div class="hr"></div>
+
+        <section id="beyond">
+          <h2>Ideas which might come in handy for your projects</h2>
+          <p>
+            You may not need these this week. But let these serve as ideas as to what else exists so that you are somewhat aware of additional possibilities when working on your assignments.
+          </p>
+          <ul>
+            <li><b>reactiveValues</b>: store and update state, useful for multi-step workflows</li>
+            <li><b>observeEvent</b>: run code when a button is clicked, useful for when a user needs to apply filters</li>
+            <li><b>Shiny modules</b>: reuse UI and server logic, useful when apps become large</li>
+            <li><b>Validation</b>: show friendly messages when filters result in zero rows rather than crashing or wrongly allowing the user to assume a long load is occuring</li>
+            <li><b>Caching</b>: speed up expensive summaries</li>
+          </ul>
+
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
