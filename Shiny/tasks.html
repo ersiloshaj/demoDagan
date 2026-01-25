@@ -1,1 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Week 2 Worksheet: Build the Transport Shiny App</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:#121a33;
+      --panel2:#0f1630;
+      --text:#e8ecff;
+      --muted:#b9c2ff;
+      --accent:#7aa2ff;
+      --border:rgba(255,255,255,0.12);
+      --code:#0a0f1f;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background: radial-gradient(1200px 700px at 20% 0%, rgba(122,162,255,0.18), transparent 60%),
+                  radial-gradient(800px 600px at 80% 10%, rgba(255,211,122,0.10), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+    header{
+      padding:34px 18px 14px;
+      max-width:1050px;
+      margin:0 auto;
+    }
+    h1{
+      margin:0 0 8px;
+      font-size: clamp(24px, 3vw, 34px);
+      letter-spacing:0.2px;
+    }
+    .subtitle{
+      color:var(--muted);
+      max-width: 80ch;
+      font-size: 15px;
+    }
+    .wrap{
+      max-width:1050px;
+      margin:0 auto;
+      padding:0 18px 60px;
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:16px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+      margin-top: 14px;
+    }
+    .task{
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(255,255,255,0.03);
+      margin: 12px 0;
+    }
+    .task h2{
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+    .task .goal{
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .checklist{
+      margin: 8px 0 0 0;
+      padding-left: 18px;
+    }
+    .checklist li{
+      margin: 6px 0;
+    }
+    .code{
+      background: var(--code);
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius: 14px;
+      padding: 12px;
+      overflow:auto;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 10px 0 14px;
+      white-space: pre;
+    }
+    .hint{
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      background: rgba(122,162,255,0.08);
+      border-radius: 12px;
+      margin: 10px 0;
+    }
 
+    /* Solution panels */
+    .solution-wrap{
+      margin-top: 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      overflow:hidden;
+      background: rgba(255,255,255,0.02);
+    }
+    .solution-header{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+    .solution-header b{
+      font-size: 14px;
+    }
+    .btn{
+      appearance:none;
+      border:1px solid rgba(255,255,255,0.18);
+      background: rgba(122,162,255,0.10);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 8px 10px;
+      cursor:pointer;
+      font-size: 13px;
+    }
+    .btn:hover{
+      background: rgba(122,162,255,0.18);
+      border-color: rgba(122,162,255,0.35);
+    }
+
+    .solution-body{
+      padding: 12px;
+    }
+
+    .locked .blurred{
+      filter: blur(8px);
+      user-select: none;
+      pointer-events: none;
+    }
+    .locked .lock-note{
+      display:block;
+    }
+    .lock-note{
+      display:none;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .footer{
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 18px;
+    }
+    .badge{
+      display:inline-block;
+      font-size:12px;
+      padding:3px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.15);
+      color:var(--muted);
+      background: rgba(255,255,255,0.03);
+      margin-left: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Week 2 Worksheet: Build the Transport Shiny App</h1>
+    <div class="subtitle">
+      You will produce a working <b>app.R</b> that loads your analysis ready dataset and lets a stakeholder explore ridership trends and price demand patterns.
+      Solutions are blurred and password protected so please try and work through what you are able to independently. At regular intervals we will all reconvene to make sure everyone is on schedule and catch up accordingly.
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="card">
+      <h2>Setup</h2>
+      <p>Before you begin:</p>
+      <ul>
+        <li>Create a folder for Week 2.</li>
+        <li>Copy your analysis ready dataset into the folder (one combined CSV).</li>
+        <li>Create a new file called <b>app.R</b>.</li>
+      </ul>
+
+      <div class="hint">
+        <b>Expected columns (adapt to your own names if changed last week):</b><br/>
+        date, city, mode, daily_riders, avg_delay_mins, ticket_price
+      </div>
+    </div>
+
+    <!-- Task 1 -->
+    <div class="card task">
+      <h2>Task 1: Minimal app that runs <span class="badge">Stage 1</span></h2>
+      <div class="goal">Goal: get a working Shiny app showing any plot.</div>
+      <ol class="checklist">
+        <li>Install and load <code>shiny</code>.</li>
+        <li>Create a <code>fluidPage</code> UI with <code>plotOutput("p1")</code>.</li>
+        <li>In the server, define <code>output$p1</code> using <code>renderPlot</code>.</li>
+        <li>Run the app.</li>
+      </ol>
+
+      <div class="solution-wrap locked" data-solution="s1">
+        <div class="solution-header">
+          <b>Solution</b>
+          <button class="btn" onclick="unlockSolution('s1')">Unlock</button>
+        </div>
+        <div class="solution-body">
+          <div class="lock-note">Enter the password to reveal this solution.</div>
+          <div class="code blurred"># app.R
+
+# 1) Install packages once:
+# install.packages("shiny")
+
+library(shiny)
+
+ui <- fluidPage(
+  titlePanel("Transport Dashboard"),
+  mainPanel(
+    plotOutput("p1")
+  )
+)
+
+server <- function(input, output, session) {
+  output$p1 <- renderPlot({
+    hist(rnorm(100))
+  })
+}
+
+shinyApp(ui, server)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Task 2 -->
+    <div class="card task">
+      <h2>Task 2: Load your analysis ready dataset <span class="badge">Stage 2</span></h2>
+      <div class="goal">Goal: replace the demo plot with a simple plot based on your real data.</div>
+      <ol class="checklist">
+        <li>Read your combined CSV into <code>df</code>.</li>
+        <li>Convert your date column to Date.</li>
+        <li>Make a simple plot (example: daily riders over time for all data).</li>
+      </ol>
+
+      <div class="hint">
+        If your date is not parsing, check if it is formatted like "2025-01-31".
+        If it is "31/01/2025" you may need to use <code>as.Date(x, format = "%d/%m/%Y")</code>.
+      </div>
+
+      <div class="solution-wrap locked" data-solution="s2">
+        <div class="solution-header">
+          <b>Solution</b>
+          <button class="btn" onclick="unlockSolution('s2')">Unlock</button>
+        </div>
+        <div class="solution-body">
+          <div class="lock-note">Enter the password to reveal this solution.</div>
+          <div class="code blurred">library(shiny)
+library(ggplot2)
+
+ui <- fluidPage(
+  titlePanel("Transport Dashboard"),
+  mainPanel(
+    plotOutput("p1")
+  )
+)
+
+server <- function(input, output, session) {
+
+  df <- read.csv("analysis_ready_transport.csv")
+
+  df$date <- as.Date(df$date)
+
+  output$p1 <- renderPlot({
+    ggplot(df, aes(x = date, y = daily_riders)) +
+      geom_line() +
+      labs(x = "Date", y = "Daily riders")
+  })
+}
+
+shinyApp(ui, server)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Task 3 -->
+    <div class="card task">
+      <h2>Task 3: Add inputs and build a reactive filtered dataset <span class="badge">Stage 3</span></h2>
+      <div class="goal">Goal: add city selector, mode selector, date range, and make all outputs use a single filtered dataset.</div>
+      <ol class="checklist">
+        <li>Add a sidebar layout with inputs: city, mode, date range.</li>
+        <li>Populate city and mode choices from the dataset.</li>
+        <li>Create <code>filtered_data <- reactive({ ... })</code>.</li>
+        <li>Update your plot to use <code>filtered_data()</code>.</li>
+      </ol>
+
+      <div class="hint">
+        Use <code>req()</code> inside your reactive to avoid startup errors.
+      </div>
+
+      <div class="solution-wrap locked" data-solution="s3">
+        <div class="solution-header">
+          <b>Solution</b>
+          <button class="btn" onclick="unlockSolution('s3')">Unlock</button>
+        </div>
+        <div class="solution-body">
+          <div class="lock-note">Enter the password to reveal this solution.</div>
+          <div class="code blurred">library(shiny)
+library(ggplot2)
+library(dplyr)
+
+ui <- fluidPage(
+  titlePanel("Transport Dashboard"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("city", "City", choices = NULL, selected = NULL, multiple = TRUE),
+      selectInput("mode", "Mode", choices = NULL, selected = NULL, multiple = TRUE),
+      dateRangeInput("dates", "Date range", start = NULL, end = NULL)
+    ),
+    mainPanel(
+      plotOutput("p1")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+
+  df <- read.csv("analysis_ready_transport.csv")
+  df$date <- as.Date(df$date)
+
+  observe({
+    updateSelectInput(session, "city", choices = sort(unique(df$city)), selected = unique(df$city)[1])
+    updateSelectInput(session, "mode", choices = sort(unique(df$mode)), selected = unique(df$mode)[1])
+    updateDateRangeInput(session, "dates",
+                         start = min(df$date, na.rm = TRUE),
+                         end   = max(df$date, na.rm = TRUE))
+  })
+
+  filtered_data <- reactive({
+    req(input$city, input$mode, input$dates)
+    df %>%
+      filter(city %in% input$city) %>%
+      filter(mode %in% input$mode) %>%
+      filter(date >= input$dates[1], date <= input$dates[2])
+  })
+
+  output$p1 <- renderPlot({
+    fd <- filtered_data()
+    ggplot(fd, aes(x = date, y = daily_riders, color = mode)) +
+      geom_line() +
+      labs(x = "Date", y = "Daily riders")
+  })
+}
+
+shinyApp(ui, server)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Task 4 -->
+    <div class="card task">
+      <h2>Task 4: Add the two main plots with a smooth toggle <span class="badge">Stage 4</span></h2>
+      <div class="goal">Goal: ridership over time and ticket price vs daily riders, controlled by inputs and a raw vs smooth toggle.</div>
+      <ol class="checklist">
+        <li>Add a checkbox input: raw vs smooth.</li>
+        <li>Create Plot 1: ridership over time by mode, faceted by city when multiple cities selected.</li>
+        <li>Create Plot 2: ticket price vs daily riders with raw points and optional smooth.</li>
+      </ol>
+
+      <div class="hint">
+        Use <code>facet_wrap(~ city)</code> when more than one city is selected.
+        When only one city is selected, you can skip faceting for clarity.
+      </div>
+
+      <div class="solution-wrap locked" data-solution="s4">
+        <div class="solution-header">
+          <b>Solution</b>
+          <button class="btn" onclick="unlockSolution('s4')">Unlock</button>
+        </div>
+        <div class="solution-body">
+          <div class="lock-note">Enter the password to reveal this solution.</div>
+          <div class="code blurred"># Add this input in sidebarPanel:
+# checkboxInput("smooth", "Show smooth curve", value = FALSE)
+
+# In mainPanel add:
+# plotOutput("p_riders")
+# plotOutput("p_price")
+
+output$p_riders <- renderPlot({
+  fd <- filtered_data()
+
+  p <- ggplot(fd, aes(x = date, y = daily_riders, color = mode)) +
+    geom_line() +
+    labs(x = "Date", y = "Daily riders")
+
+  # Facet only if multiple cities are selected
+  if (length(input$city) > 1) {
+    p <- p + facet_wrap(~ city, scales = "free_y")
+  }
+
+  p
+})
+
+output$p_price <- renderPlot({
+  fd <- filtered_data()
+
+  p <- ggplot(fd, aes(x = ticket_price, y = daily_riders)) +
+    geom_point(alpha = 0.6) +
+    labs(x = "Ticket price", y = "Daily riders")
+
+  if (isTRUE(input$smooth)) {
+    p <- p + geom_smooth(se = FALSE)
+  }
+
+  p
+})</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Task 5 -->
+    <div class="card task">
+      <h2>Task 5: Add summary table, KPIs, and downloads <span class="badge">Stage 5</span></h2>
+      <div class="goal">Goal: stakeholder-friendly outputs that make the app feel like a deliverable.</div>
+      <ol class="checklist">
+        <li>Create a summary table grouped by city and mode.</li>
+        <li>Create three KPI values (total riders, mean delay, mean ticket price).</li>
+        <li>Add a download button for the filtered CSV.</li>
+        <li>Add a download button for a plot image.</li>
+      </ol>
+
+      <div class="hint">
+        Start simple: summary table uses <code>group_by(city, mode)</code> then <code>summarise()</code>.
+        KPIs can be plain text in the UI first, then later styled with cards.
+      </div>
+
+      <div class="solution-wrap locked" data-solution="s5">
+        <div class="solution-header">
+          <b>Solution</b>
+          <button class="btn" onclick="unlockSolution('s5')">Unlock</button>
+        </div>
+        <div class="solution-body">
+          <div class="lock-note">Enter the password to reveal this solution.</div>
+          <div class="code blurred"># UI ideas (add to mainPanel)
+# h3("KPIs"),
+# fluidRow(
+#   column(4, strong("Total riders:"), textOutput("kpi_total")),
+#   column(4, strong("Mean delay:"),  textOutput("kpi_delay")),
+#   column(4, strong("Mean price:"),  textOutput("kpi_price"))
+# ),
+# h3("Summary table"),
+# tableOutput("summary_tbl"),
+# downloadButton("download_csv", "Download filtered CSV"),
+# downloadButton("download_plot", "Download riders plot (PNG)")
+
+output$summary_tbl <- renderTable({
+  fd <- filtered_data()
+  fd %>%
+    group_by(city, mode) %>%
+    summarise(
+      total_riders = sum(daily_riders, na.rm = TRUE),
+      mean_delay_mins = mean(avg_delay_mins, na.rm = TRUE),
+      mean_ticket_price = mean(ticket_price, na.rm = TRUE),
+      .groups = "drop"
+    ) %>%
+    arrange(desc(total_riders))
+})
+
+output$kpi_total <- renderText({
+  fd <- filtered_data()
+  format(sum(fd$daily_riders, na.rm = TRUE), big.mark = ",")
+})
+
+output$kpi_delay <- renderText({
+  fd <- filtered_data()
+  round(mean(fd$avg_delay_mins, na.rm = TRUE), 2)
+})
+
+output$kpi_price <- renderText({
+  fd <- filtered_data()
+  round(mean(fd$ticket_price, na.rm = TRUE), 2)
+})
+
+output$download_csv <- downloadHandler(
+  filename = function() {
+    paste0("filtered_transport_", Sys.Date(), ".csv")
+  },
+  content = function(file) {
+    write.csv(filtered_data(), file, row.names = FALSE)
+  }
+)
+
+output$download_plot <- downloadHandler(
+  filename = function() {
+    paste0("ridership_plot_", Sys.Date(), ".png")
+  },
+  content = function(file) {
+    png(file, width = 1200, height = 700)
+    fd <- filtered_data()
+    p <- ggplot(fd, aes(x = date, y = daily_riders, color = mode)) +
+      geom_line() +
+      labs(x = "Date", y = "Daily riders")
+    if (length(input$city) > 1) p <- p + facet_wrap(~ city, scales = "free_y")
+    print(p)
+    dev.off()
+  }
+)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Task 6 -->
+    <div class="card task">
+      <h2>Task 6: Improving visuals with bslib and better layouts <span class="badge">Push Task</span></h2>
+      <div class="goal">Goal: keep the logic the same, but make the app look more like a product.</div>
+      <ol class="checklist">
+        <li>Add a <code>bslib</code> theme.</li>
+        <li>Group plots into tabs.</li>
+        <li>Turn KPIs into visible cards using simple UI.</li>
+      </ol>
+
+      <div class="solution-wrap locked" data-solution="s6">
+        <div class="solution-header">
+          <b>Solution</b>
+          <button class="btn" onclick="unlockSolution('s6')">Unlock</button>
+        </div>
+        <div class="solution-body">
+          <div class="lock-note">Enter the password to reveal this solution.</div>
+          <div class="code blurred">library(bslib)
+
+ui <- fluidPage(
+  theme = bs_theme(bootswatch = "flatly"),
+  titlePanel("Transport Dashboard"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("city", "City", choices = NULL, multiple = TRUE),
+      selectInput("mode", "Mode", choices = NULL, multiple = TRUE),
+      dateRangeInput("dates", "Date range"),
+      checkboxInput("smooth", "Show smooth curve", value = FALSE)
+    ),
+    mainPanel(
+      tabsetPanel(
+        tabPanel("Ridership", plotOutput("p_riders")),
+        tabPanel("Price vs Demand", plotOutput("p_price")),
+        tabPanel("Summary", tableOutput("summary_tbl"))
+      )
+    )
+  )
+)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card footer">
+      Deliverable: submit <b>app.R</b> in a folder with your analysis ready CSV for review.
+      Your app should run with <code>shiny::runApp()</code>.
+    </div>
+  </div>
+
+  <script>
+    function unlockSolution(id){
+      const wrap = document.querySelector('[data-solution="' + id + '"]');
+      if(!wrap) return;
+
+      const pw = prompt("Enter password to reveal solution:");
+      if(pw === null) return;
+
+      if(pw === "1234"){
+        wrap.classList.remove("locked");
+      } else {
+        alert("Incorrect password.");
+      }
+    }
+  </script>
+</body>
+</html>
