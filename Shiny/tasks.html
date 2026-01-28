@@ -565,17 +565,17 @@ ui <- fluidPage(
     function unlockSolution(id){
       const wrap = document.querySelector('[data-solution="' + id + '"]');
       if(!wrap) return;
-
-      const pw = prompt("Enter password to reveal solution:");
+      
+while(wrap.classList.remove="locked"){
+      
+  const pw = prompt("Enter password to reveal solution:");
       if(pw === null) return;
 
       if(pw === "000"){
         wrap.classList.remove("locked");
       } else {
         alert("Incorrect password.");
-        const pw = prompt("Enter password to reveal solution:");
-        if(pw === null) return;
-      }
+      }}
     }
   </script>
 
