@@ -168,6 +168,22 @@
     }
   </style>
 </head>
+
+  <style>
+  .shake {
+    animation: shake 0.4s;
+    border: 2px solid red;
+  }
+
+  @keyframes shake {
+    0%   { transform: translateX(0); }
+    25%  { transform: translateX(-5px); }
+    50%  { transform: translateX(5px); }
+    75%  { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+  }
+</style>
+  
 <body>
   <header>
     <h1>Week 2 Worksheet: Build the Transport Shiny App</h1>
@@ -560,6 +576,29 @@ ui <- fluidPage(
     </div>
   </div>
 
+<script>
+  function unlockSolution(id){
+    const wrap = document.querySelector('[data-solution="' + id + '"]');
+    if(!wrap) return;
+
+    const pw = prompt("Enter password to reveal solution:");
+    if(pw === null) return;
+
+    if(pw === "000"){
+      wrap.classList.remove("locked");
+      wrap.classList.remove("shake");
+    } else {
+      wrap.classList.add("shake");
+
+      // remove the class so it can shake again next time
+      setTimeout(() => {
+        wrap.classList.remove("shake");
+      }, 400);
+    }
+  }
+</script>
+
+<!---
   <script>
     function unlockSolution(id){
       const wrap = document.querySelector('[data-solution="' + id + '"]');
@@ -575,5 +614,7 @@ ui <- fluidPage(
       }
     }
   </script>
+--->
+
 </body>
 </html>
