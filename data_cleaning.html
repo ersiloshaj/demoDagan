@@ -1,0 +1,248 @@
+.card.intro {
+  border-left: 5px solid #4f7dbf;
+  background: rgba(79, 125, 191, 0.06);
+}
+
+.card.intro ul {
+  margin-left: 1.2em;
+}
+
+.card.intro .prompt {
+  margin-top: 1em;
+  font-style: italic;
+}
+
+<div class="card intro">
+  <h2>Understanding the Data: Going into the known.</h2>
+
+  <p>
+    The datasets you will work with over the next few days were generated to resemble
+    real urban transport data collected from multiple systems over time.
+  </p>
+
+  <p>
+    I.e. if they were real, it is safe to say that they have <strong>not</strong> been prepared for analysis. This is how data often arrives to us.
+  </p>
+
+  <p>
+    In the raw data files, you should expect to encounter issues such as:
+  </p>
+
+  <ul>
+    <li>inconsistent naming of cities and transport modes</li>
+    <li>missing values in key operational fields</li>
+    <li>values recorded in the wrong units or scale</li>
+    <li>duplicate records and partial logging</li>
+    <li>gaps in time series where data was not recorded</li>
+  </ul>
+
+  <p>
+    This time around these problems are deliberate. They reflect how data often arrives from
+    ticketing systems, operational logs, and incident reporting tools that were
+    never designed for analytics. In future you may receive data of any origin but it 
+    is likely that the one thing all these datasets have in common is that <em>they are messy.</em>
+  </p>
+
+  <p>
+    Your first responsibility as an analyst is to decide:
+  </p>
+
+  <ul>
+    <li>which issues must be fixed before analysis</li>
+    <li>which values can be safely removed or imputed</li>
+    <li>which assumptions you are willing to make</li>
+    <li>how your cleaning choices affect the conclusions you can draw</li>
+  </ul>
+
+  <p>
+    You will clean and organise the data so that it can support:
+  </p>
+
+  <ul>
+    <li>comparisons between cities and transport modes</li>
+    <li>analysis over time</li>
+    <li>links between usage, delays, pricing, and incidents</li>
+    <li>clear communication through plots and dashboards</li>
+  </ul>
+</div>
+
+<style>
+  .card.intro { border-left: 5px solid #4f7dbf; background: rgba(79,125,191,0.06); }
+  .card { background: #fff; border-radius: 16px; padding: 18px 18px 14px; box-shadow: 0 10px 28px rgba(0,0,0,0.08); margin: 18px 0; }
+  .muted { opacity: 0.85; }
+  .solution-wrap { position: relative; margin-top: 14px; }
+  .solution-wrap .locked { filter: blur(7px); user-select: none; pointer-events: none; }
+  .solution-wrap .solution-inner { background: rgba(0,0,0,0.03); border-radius: 14px; padding: 14px; border: 1px solid rgba(0,0,0,0.08); }
+  .solution-wrap .reveal-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .reveal-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 1px solid rgba(0,0,0,0.12);
+    background: #f7f7f7; padding: 10px 12px; border-radius: 12px;
+    cursor: pointer; font-weight: 600;
+    transition: transform 160ms ease, background 160ms ease;
+  }
+  .reveal-btn:hover { transform: translateY(-1px); background: #f1f1f1; }
+  .reveal-btn .icon { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 10px; background: rgba(79,125,191,0.14); }
+  .label-pill { font-size: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.08); }
+  pre { margin: 0; overflow: auto; border-radius: 12px; padding: 12px; background: #0b1020; color: #e6e9f5; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+  .pw-shake { animation: pwShake 360ms ease; outline: 2px solid rgba(220,53,69,0.35); }
+  @keyframes pwShake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+</style>
+
+<div class="card intro">
+  <h2>What problems are there?</h2>
+
+  <div class="solution-wrap" data-solution="problems">
+    <div class="reveal-row">
+      <button class="reveal-btn" type="button" onclick="unlockSolution('problems')">
+        <span class="icon">🔒</span>
+        Reveal: What problems should you look out for?
+      </button>
+      <span class="label-pill">Password required</span>
+    </div>
+
+    <div class="solution-inner locked">
+      <h3>Common issues in the raw files</h3>
+      <ul>
+        <li><strong>Inconsistent labels:</strong> cities and transport modes appear in different formats (different cases, sometimes abbreviated).</li>
+        <li><strong>Missing values:</strong> key fields may be blank (delays, frequency, incident details).</li>
+        <li><strong>Wrong scale / units:</strong> some prices may be recorded as pennies instead of pounds or some route lengths may be in different units.</li>
+        <li><strong>Outliers and impossible values:</strong> capacity utilisation can exceed 1; incident duration and impact can be unrealistically large.</li>
+        <li><strong>Duplicates:</strong> incident logs may contain repeated incident IDs or duplicated rows.</li>
+        <li><strong>Gaps in time series:</strong> some route-months are missing, causing broken trends.</li>
+        <li><strong>Join risks:</strong> merges can fail if route IDs, city labels, or mode labels do not align across files.</li>
+      </ul>
+
+      <p class="muted">
+        Find these issues, decide how to handle them, and document your choices in your RScript.
+      </p>
+    </div>
+  </div>
+
+
+  <div class="solution-wrap" data-solution="snippets">
+    <div class="reveal-row">
+      <button class="reveal-btn" type="button" onclick="unlockSolution('snippets')">
+        <span class="icon">🧩</span>
+        Reveal: Code snippets that might inspire
+      </button>
+      <span class="label-pill">Password required</span>
+    </div>
+
+    <div class="solution-inner locked">
+      <h3>Code snippets and templates that might be of use</h3>
+
+      <p><strong>1) Standardise labels (cities, modes)</strong></p>
+      <pre><code>library(dplyr)
+library(stringr)
+
+clean_labels &lt;- function(x) {
+  x %&gt;%
+    str_trim() %&gt;%
+    str_to_lower() %&gt;%
+    str_replace_all("\\s+", " ")
+}
+
+city_map &lt;- c(
+  "ldn" = "London",
+  "london" = "London",
+  "man" = "Manchester",
+  "manchester" = "Manchester",
+  "bristol" = "Bristol",
+  "edi" = "Edinburgh",
+  "edinburgh" = "Edinburgh"
+)
+
+df &lt;- df %&gt;%
+  mutate(
+    city_raw = city,
+    city = recode(clean_labels(city), !!!city_map, .default = str_to_title(clean_labels(city))),
+    transport_mode = str_to_title(clean_labels(transport_mode))
+  )</code></pre>
+
+      <p><strong>2) Handle missingness (drop, impute, or flag)</strong></p>
+      <pre><code>df &lt;- df %&gt;%
+  mutate(
+    missing_delay = is.na(avg_delay_minutes),
+    avg_delay_minutes = ifelse(is.na(avg_delay_minutes), median(avg_delay_minutes, na.rm = TRUE), avg_delay_minutes)
+  )</code></pre>
+
+      <p><strong>3) Fix unit / scale issues (example: prices accidentally x100)</strong></p>
+      <pre><code>df &lt;- df %&gt;%
+  mutate(
+    avg_ticket_price = ifelse(avg_ticket_price &gt; 20, avg_ticket_price / 100, avg_ticket_price)
+  )</code></pre>
+
+      <p><strong>4) Cap or investigate impossible values (example: utilisation)</strong></p>
+      <pre><code>df &lt;- df %&gt;%
+  mutate(
+    capacity_utilisation = pmin(capacity_utilisation, 1)
+  )</code></pre>
+
+      <p><strong>5) Remove duplicates (incident logs)</strong></p>
+      <pre><code>incident_log &lt;- incident_log %&gt;%
+  arrange(timestamp) %&gt;%
+  distinct(incident_id, .keep_all = TRUE)</code></pre>
+
+      <p><strong>6) Detect time gaps and create a complete date grid</strong></p>
+      <pre><code>library(tidyr)
+library(lubridate)
+
+complete_tbl &lt;- df %&gt;%
+  mutate(date = as.Date(date)) %&gt;%
+  group_by(route_id) %&gt;%
+  complete(date = seq(min(date), max(date), by = "month")) %&gt;%
+  ungroup()</code></pre>
+
+      <p><strong>7) Safe joins with checks</strong></p>
+      <pre><code>usage &lt;- usage %&gt;% mutate(route_id = str_trim(route_id))
+routes &lt;- routes %&gt;% mutate(route_id = str_trim(route_id))
+
+joined &lt;- usage %&gt;%
+  left_join(routes, by = "route_id")
+
+stopifnot(sum(is.na(joined$transport_mode.y)) == 0)  # example check</code></pre>
+
+      <p class="muted">
+        Again, these are patterns and ideas, not necessarily scripts that you can use right after pasting. You should adapt them to the dataset after you have explored it.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function unlockSolution(id){
+    const wrap = document.querySelector('[data-solution="' + id + '"]');
+    if(!wrap) return;
+
+    const target = wrap.querySelector('.solution-inner');
+    const btn = wrap.querySelector('.reveal-btn');
+
+    const pw = prompt("Enter password to reveal:");
+    if(pw === null) return;
+
+    const correct = (id === "problems" && pw === "111") || (id === "snippets" && pw === "222");
+
+    if(correct){
+      target.classList.remove("locked");
+      if(btn){
+        btn.querySelector('.icon').textContent = "🔓";
+        btn.lastChild.textContent = " Revealed";
+      }
+    } else {
+      if(btn){
+        btn.classList.remove("pw-shake");
+        void btn.offsetWidth; // restart animation
+        btn.classList.add("pw-shake");
+      }
+      alert("Incorrect password.");
+    }
+  }
+</script>
