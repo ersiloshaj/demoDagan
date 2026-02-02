@@ -1,16 +1,54 @@
-.card.intro {
-  border-left: 5px solid #4f7dbf;
-  background: rgba(79, 125, 191, 0.06);
-}
-
-.card.intro ul {
-  margin-left: 1.2em;
-}
-
-.card.intro .prompt {
-  margin-top: 1em;
-  font-style: italic;
-}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mini Project Intro: Using R to create plots to assess methods of transport in different UK cities</title>
+  <style>
+    :root { --bg:#0b0f14; --card:#111826; --text:#e7eef7; --muted:#a9b6c5; --accent:#7dd3fc; --border:#223044; --good:#86efac; --warn:#fbbf24; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--text); line-height:1.55; }
+    .wrap { max-width: 1020px; margin: 0 auto; padding: 28px 18px 70px; }
+    h1 { font-size: 30px; margin: 0 0 6px; }
+    h2 { font-size: 18px; margin: 0 0 8px; }
+    h3 { font-size: 15px; margin: 0 0 6px; color: var(--text); }
+    p { margin: 10px 0; color: var(--muted); }
+    .badge { display:inline-block; font-size: 12px; padding: 3px 8px; border-radius: 999px; background: rgba(125,211,252,0.12); color: var(--accent); border: 1px solid rgba(125,211,252,0.22); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin: 14px 0; }
+    .grid { display:grid; grid-template-columns: 1fr; gap: 14px; }
+    @media (min-width: 940px){ .grid { grid-template-columns: 1fr 1fr; } }
+    ul, ol { margin: 8px 0 0 18px; color: var(--muted); }
+    li { margin: 6px 0; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    pre { margin: 10px 0 0; padding: 14px; border-radius: 12px; background: #0a1220; border: 1px solid #1c2a40; overflow:auto; }
+    .callout { border-left: 4px solid rgba(125,211,252,0.7); padding-left: 12px; margin: 10px 0; color: var(--muted); }
+    .pillrow { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .pill { font-size: 12px; padding: 4px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); background: rgba(255,255,255,0.03); }
+    .kpi { display:grid; grid-template-columns: 1fr; gap:10px; margin-top:10px; }
+    @media (min-width: 940px){ .kpi { grid-template-columns: 1fr 1fr 1fr; } }
+    .kpi .box { border: 1px solid var(--border); border-radius: 12px; padding: 12px; background: rgba(255,255,255,0.02); }
+    .kpi .label { font-size: 12px; color: var(--muted); }
+    .kpi .value { font-size: 18px; font-weight: 750; margin-top:4px; }
+    .solnHead { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .btn {
+      cursor:pointer; user-select:none;
+      background: rgba(125,211,252,0.12);
+      border: 1px solid rgba(125,211,252,0.28);
+      color: var(--accent);
+      padding: 6px 10px;
+      border-radius: 10px;
+      display:inline-flex; align-items:center; gap:8px;
+      font-weight: 650;
+    }
+    .btn:focus { outline: 2px solid rgba(125,211,252,0.45); outline-offset: 2px; }
+    .blurred pre { filter: blur(7px); transition: filter 180ms ease; }
+    .revealed pre { filter: none; }
+    .note { margin-top: 10px; font-size: 13px; color: var(--muted); }
+    .icon { width: 18px; height: 18px; display:inline-block; }
+    .good { color: var(--good); font-weight: 700; }
+    .warn { color: var(--warn); font-weight: 700; }
+    a { color: var(--accent); text-decoration: none; }
+    .mini { font-size: 13px; color: var(--muted); }
+  </style>
 
 <div class="card intro">
   <h2>Understanding the Data: Going into the known.</h2>
@@ -246,3 +284,5 @@ stopifnot(sum(is.na(joined$transport_mode.y)) == 0)  # example check</code></pre
     }
   }
 </script>
+
+</html>
