@@ -287,6 +287,7 @@ shinyApp(ui, server)</div>
       </div>
     </div>
 
+    <!---
     <!-- Task 3 -->
     <div class="card task">
       <h2>Task 3: Add inputs and build a reactive filtered dataset <span class="badge">Stage 3</span></h2>
@@ -421,7 +422,173 @@ output$p_price <- renderPlot({
         </div>
       </div>
     </div>
+--->
 
+
+      <!-- Task 3 -->
+<div class="card task">
+  <h2>Task 3: Inputs & one filtered dataset <span class="badge">Stage 3</span></h2>
+  <div class="goal">
+    Goal: add the inputs, populate them from the data, and drive everything from one reactive filtered dataset.
+  </div>
+
+  <ol class="checklist">
+    <li><b>3.1</b> Add a sidebar layout with city, mode, and date range inputs.</li>
+    <li><b>3.2</b> Load and prepare the dataset.</li>
+    <li><b>3.3</b> Populate all input choices from the dataset.</li>
+    <li><b>3.4</b> Create a single <code>filtered_data()</code> reactive.</li>
+    <li><b>3.5</b> Update outputs to use <code>filtered_data()</code>.</li>
+  </ol>
+
+  <div class="hint">
+    If the app errors on startup, think about which inputs exist at launch and how to guard against that.
+  </div>
+
+  <div class="solution-wrap locked" data-solution="s3">
+    <div class="solution-header">
+      <b>Solution</b>
+      <button class="btn" onclick="unlockSolution('s3')">Unlock</button>
+    </div>
+    <div class="solution-body">
+      <div class="lock-note">Enter the password to reveal this solution.</div>
+
+      <div class="code blurred">
+library(shiny)
+library(ggplot2)
+library(dplyr)
+
+ui <- fluidPage(
+  titlePanel("Transport Dashboard"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("city", "City", choices = NULL, multiple = TRUE),
+      selectInput("mode", "Mode", choices = NULL, multiple = TRUE),
+      dateRangeInput("dates", "Date range", start = NULL, end = NULL)
+    ),
+    mainPanel(
+      plotOutput("p1")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+
+  df <- read.csv("analysis_ready_transport.csv")
+  df$date <- as.Date(df$date)
+
+  observe({
+    updateSelectInput(
+      session,
+      "city",
+      choices = sort(unique(df$city)),
+      selected = unique(df$city)
+    )
+
+    updateSelectInput(
+      session,
+      "mode",
+      choices = sort(unique(df$mode)),
+      selected = unique(df$mode)
+    )
+
+    updateDateRangeInput(
+      session,
+      "dates",
+      start = min(df$date, na.rm = TRUE),
+      end   = max(df$date, na.rm = TRUE)
+    )
+  })
+
+  filtered_data <- reactive({
+    req(input$city, input$mode, input$dates)
+
+    df %>%
+      filter(city %in% input$city) %>%
+      filter(mode %in% input$mode) %>%
+      filter(date >= input$dates[1],
+             date <= input$dates[2])
+  })
+
+  output$p1 <- renderPlot({
+    fd <- filtered_data()
+
+    ggplot(fd, aes(x = date, y = daily_riders, color = mode)) +
+      geom_line() +
+      labs(x = "Date", y = "Daily riders")
+  })
+}
+
+shinyApp(ui, server)
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Task 4 -->
+<div class="card task">
+  <h2>Task 4: Two plots & smooth toggle <span class="badge">Stage 4</span></h2>
+  <div class="goal">
+    Goal: Build an additional scatter plot of ticket price vs riders which has the same filtering available. There should also be a toggle that optionally adds smoothing to the scatter plot.
+  </div>
+
+  <ol class="checklist">
+    <li><b>4.1</b> Add a smooth toggle and plot outputs.</li>
+    <li><b>4.2</b> Ridership over time plot using <code>filtered_data()</code>.</li>
+    <li><b>4.3</b> Facet by city only when multiple cities are selected.</li>
+    <li><b>4.4</b> Ticket price vs daily riders with optional smoothing.</li>
+  </ol>
+
+  <div class="hint">
+    Start with a minimal working plot, then add the conditional behaviour.
+  </div>
+
+  <div class="solution-wrap locked" data-solution="s4">
+    <div class="solution-header">
+      <b>Solution</b>
+      <button class="btn" onclick="unlockSolution('s4')">Unlock</button>
+    </div>
+    <div class="solution-body">
+      <div class="lock-note">Enter the password to reveal this solution.</div>
+
+      <div class="code blurred">
+# UI additions:
+# checkboxInput("smooth", "Show smooth curve", value = FALSE)
+# plotOutput("p_riders")
+# plotOutput("p_price")
+
+output$p_riders <- renderPlot({
+  fd <- filtered_data()
+
+  p <- ggplot(fd, aes(x = date, y = daily_riders, color = mode)) +
+    geom_line() +
+    labs(x = "Date", y = "Daily riders")
+
+  if (length(input$city) > 1) {
+    p <- p + facet_wrap(~ city, scales = "free_y")
+  }
+
+  p
+})
+
+output$p_price <- renderPlot({
+  fd <- filtered_data()
+
+  p <- ggplot(fd, aes(x = ticket_price, y = daily_riders)) +
+    geom_point(alpha = 0.6) +
+    labs(x = "Ticket price", y = "Daily riders")
+
+  if (isTRUE(input$smooth)) {
+    p <- p + geom_smooth(se = FALSE)
+  }
+
+  p
+})
+      </div>
+    </div>
+  </div>
+</div>
+      
     <!-- Task 5 -->
     <div class="card task">
       <h2>Task 5: Add summary table, KPIs, and downloads <span class="badge">Stage 5</span></h2>
