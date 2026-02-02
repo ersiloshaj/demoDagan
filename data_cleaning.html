@@ -174,6 +174,101 @@
     }
 
     a{ color: var(--accent); text-decoration: none; }
+
+
+      .download-row{
+    display:flex;
+    gap:14px;
+    justify-content:center;
+    align-items:stretch;
+    flex-wrap:wrap;
+    margin-top: 14px;
+  }
+
+  .dl-box{
+    width: min(320px, 100%);
+    text-decoration:none;
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+    padding: 14px;
+    transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    position: relative;
+    overflow:hidden;
+  }
+
+  .dl-box:hover{
+    transform: translateY(-2px);
+    border-color: rgba(122,162,255,0.38);
+    background: linear-gradient(180deg, rgba(122,162,255,0.10), rgba(255,255,255,0.02));
+  }
+
+  .dl-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .dl-title{
+    font-weight: 750;
+    font-size: 15px;
+    margin: 0;
+    letter-spacing: 0.2px;
+  }
+
+  .dl-pill{
+    display:inline-block;
+    font-size:12px;
+    padding:3px 10px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,0.15);
+    color:var(--muted);
+    background: rgba(255,255,255,0.03);
+    white-space: nowrap;
+  }
+
+  .dl-desc{
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    max-width: 60ch;
+  }
+
+  .dl-icon{
+    width: 38px;
+    height: 38px;
+    border-radius: 14px;
+    display:grid;
+    place-items:center;
+    background: rgba(122,162,255,0.12);
+    border: 1px solid rgba(255,255,255,0.10);
+    flex: 0 0 auto;
+  }
+
+  .dl-box:focus{
+    outline: 2px solid rgba(122,162,255,0.45);
+    outline-offset: 3px;
+  }
+
+  /* subtle glow strip */
+  .dl-box::after{
+    content:"";
+    position:absolute;
+    inset:-40% -30%;
+    background: radial-gradient(circle at 30% 30%, rgba(122,162,255,0.16), transparent 55%);
+    transform: rotate(8deg);
+    pointer-events:none;
+  }
+
+  @media (max-width: 980px){
+    .dl-box{ width: min(420px, 100%); }
+  }
+
+    
   </style>
 </head>
 
@@ -243,6 +338,45 @@
       </ul>
     </div>
 
+
+
+
+    <div class="card">
+  <h2>Download the raw CSV files below</h2>
+  <p>Use these as your starting point.</p>
+
+  <div class="download-row">
+    <a class="dl-box" href="CSVs/transport_usage_raw.csv" download>
+      <div class="dl-top">
+        <div class="dl-icon">⬇️</div>
+        <span class="dl-pill">CSV</span>
+      </div>
+      <p class="dl-title">Transport usage (raw)</p>
+      <p class="dl-desc">Monthly usage metrics by city, route, and mode.</p>
+    </a>
+
+    <a class="dl-box" href="CSVs/route_metadata_raw.csv" download>
+      <div class="dl-top">
+        <div class="dl-icon">⬇️</div>
+        <span class="dl-pill">CSV</span>
+      </div>
+      <p class="dl-title">Route metadata (raw)</p>
+      <p class="dl-desc">Route-level details such as city, mode, zone type, and route length.</p>
+    </a>
+
+    <a class="dl-box" href="CSVs/incident_log_raw.csv" download>
+      <div class="dl-top">
+        <div class="dl-icon">⬇️</div>
+        <span class="dl-pill">CSV</span>
+      </div>
+      <p class="dl-title">Incident log (raw)</p>
+      <p class="dl-desc">Operational incidents with timestamps and severity.</p>
+    </a>
+  </div>
+</div>
+
+
+    
   
     <div class="card intro">
       <h2>What problems are there?</h2>
