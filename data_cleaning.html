@@ -3,182 +3,294 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mini Project Intro: Using R to create plots to assess methods of transport in different UK cities</title>
+  <title>Intro to Data Cleaning</title>
+
   <style>
-    :root { --bg:#0b0f14; --card:#111826; --text:#e7eef7; --muted:#a9b6c5; --accent:#7dd3fc; --border:#223044; --good:#86efac; --warn:#fbbf24; }
-    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--text); line-height:1.55; }
-    .wrap { max-width: 1020px; margin: 0 auto; padding: 28px 18px 70px; }
-    h1 { font-size: 30px; margin: 0 0 6px; }
-    h2 { font-size: 18px; margin: 0 0 8px; }
-    h3 { font-size: 15px; margin: 0 0 6px; color: var(--text); }
-    p { margin: 10px 0; color: var(--muted); }
-    .badge { display:inline-block; font-size: 12px; padding: 3px 8px; border-radius: 999px; background: rgba(125,211,252,0.12); color: var(--accent); border: 1px solid rgba(125,211,252,0.22); }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin: 14px 0; }
-    .grid { display:grid; grid-template-columns: 1fr; gap: 14px; }
-    @media (min-width: 940px){ .grid { grid-template-columns: 1fr 1fr; } }
-    ul, ol { margin: 8px 0 0 18px; color: var(--muted); }
-    li { margin: 6px 0; }
-    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
-    pre { margin: 10px 0 0; padding: 14px; border-radius: 12px; background: #0a1220; border: 1px solid #1c2a40; overflow:auto; }
-    .callout { border-left: 4px solid rgba(125,211,252,0.7); padding-left: 12px; margin: 10px 0; color: var(--muted); }
-    .pillrow { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
-    .pill { font-size: 12px; padding: 4px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); background: rgba(255,255,255,0.03); }
-    .kpi { display:grid; grid-template-columns: 1fr; gap:10px; margin-top:10px; }
-    @media (min-width: 940px){ .kpi { grid-template-columns: 1fr 1fr 1fr; } }
-    .kpi .box { border: 1px solid var(--border); border-radius: 12px; padding: 12px; background: rgba(255,255,255,0.02); }
-    .kpi .label { font-size: 12px; color: var(--muted); }
-    .kpi .value { font-size: 18px; font-weight: 750; margin-top:4px; }
-    .solnHead { display:flex; align-items:center; justify-content:space-between; gap:12px; }
-    .btn {
-      cursor:pointer; user-select:none;
-      background: rgba(125,211,252,0.12);
-      border: 1px solid rgba(125,211,252,0.28);
-      color: var(--accent);
-      padding: 6px 10px;
-      border-radius: 10px;
-      display:inline-flex; align-items:center; gap:8px;
-      font-weight: 650;
+    :root{
+      --bg:#0b1020;
+      --panel:#121a33;
+      --panel2:#0f1630;
+      --text:#e8ecff;
+      --muted:#b9c2ff;
+      --accent:#7aa2ff;
+      --border:rgba(255,255,255,0.12);
+      --code:#0a0f1f;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
-    .btn:focus { outline: 2px solid rgba(125,211,252,0.45); outline-offset: 2px; }
-    .blurred pre { filter: blur(7px); transition: filter 180ms ease; }
-    .revealed pre { filter: none; }
-    .note { margin-top: 10px; font-size: 13px; color: var(--muted); }
-    .icon { width: 18px; height: 18px; display:inline-block; }
-    .good { color: var(--good); font-weight: 700; }
-    .warn { color: var(--warn); font-weight: 700; }
-    a { color: var(--accent); text-decoration: none; }
-    .mini { font-size: 13px; color: var(--muted); }
+
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background: radial-gradient(1200px 700px at 20% 0%, rgba(122,162,255,0.18), transparent 60%),
+                  radial-gradient(800px 600px at 80% 10%, rgba(255,211,122,0.10), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+
+    header{
+      padding:34px 18px 14px;
+      max-width:1050px;
+      margin:0 auto;
+    }
+
+    h1{
+      margin:0 0 8px;
+      font-size: clamp(24px, 3vw, 34px);
+      letter-spacing:0.2px;
+    }
+
+    .subtitle{
+      color:var(--muted);
+      max-width: 80ch;
+      font-size: 15px;
+    }
+
+    .wrap{
+      max-width:1050px;
+      margin:0 auto;
+      padding:0 18px 60px;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:16px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+      margin-top: 14px;
+    }
+
+    h2{
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    h3{
+      margin: 0 0 6px;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    p{
+      margin: 10px 0;
+      color: var(--muted);
+    }
+
+    ul, ol{
+      margin: 8px 0 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    li{ margin: 6px 0; }
+
+    .hint{
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      background: rgba(122,162,255,0.08);
+      border-radius: 12px;
+      margin: 10px 0;
+      color: var(--muted);
+    }
+
+    .solution-wrap{
+      margin-top: 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      overflow:hidden;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .solution-header{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .solution-header b{ font-size: 14px; }
+
+    .btn{
+      appearance:none;
+      border:1px solid rgba(255,255,255,0.18);
+      background: rgba(122,162,255,0.10);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 8px 10px;
+      cursor:pointer;
+      font-size: 13px;
+    }
+
+    .btn:hover{
+      background: rgba(122,162,255,0.18);
+      border-color: rgba(122,162,255,0.35);
+    }
+
+    .solution-body{ padding: 12px; }
+
+    .locked .blurred{
+      filter: blur(8px);
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .locked .lock-note{ display:block; }
+
+    .lock-note{
+      display:none;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .code{
+      background: var(--code);
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius: 14px;
+      padding: 12px;
+      overflow:auto;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 10px 0 0;
+      white-space: pre;
+      color: var(--text);
+    }
+
+    .badge{
+      display:inline-block;
+      font-size:12px;
+      padding:3px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.15);
+      color:var(--muted);
+      background: rgba(255,255,255,0.03);
+      margin-left: 8px;
+    }
+
+    a{ color: var(--accent); text-decoration: none; }
   </style>
+</head>
 
-<div class="card intro">
-  <h2>Understanding the Data: Going into the known.</h2>
-
-  <p>
-    The datasets you will work with over the next few days were generated to resemble
-    real urban transport data collected from multiple systems over time.
-  </p>
-
-  <p>
-    I.e. if they were real, it is safe to say that they have <strong>not</strong> been prepared for analysis. This is how data often arrives to us.
-  </p>
-
-  <p>
-    In the raw data files, you should expect to encounter issues such as:
-  </p>
-
-  <ul>
-    <li>inconsistent naming of cities and transport modes</li>
-    <li>missing values in key operational fields</li>
-    <li>values recorded in the wrong units or scale</li>
-    <li>duplicate records and partial logging</li>
-    <li>gaps in time series where data was not recorded</li>
-  </ul>
-
-  <p>
-    This time around these problems are deliberate. They reflect how data often arrives from
-    ticketing systems, operational logs, and incident reporting tools that were
-    never designed for analytics. In future you may receive data of any origin but it 
-    is likely that the one thing all these datasets have in common is that <em>they are messy.</em>
-  </p>
-
-  <p>
-    Your first responsibility as an analyst is to decide:
-  </p>
-
-  <ul>
-    <li>which issues must be fixed before analysis</li>
-    <li>which values can be safely removed or imputed</li>
-    <li>which assumptions you are willing to make</li>
-    <li>how your cleaning choices affect the conclusions you can draw</li>
-  </ul>
-
-  <p>
-    You will clean and organise the data so that it can support:
-  </p>
-
-  <ul>
-    <li>comparisons between cities and transport modes</li>
-    <li>analysis over time</li>
-    <li>links between usage, delays, pricing, and incidents</li>
-    <li>clear communication through plots and dashboards</li>
-  </ul>
-</div>
-
-<style>
-  .card.intro { border-left: 5px solid #4f7dbf; background: rgba(79,125,191,0.06); }
-  .card { background: #fff; border-radius: 16px; padding: 18px 18px 14px; box-shadow: 0 10px 28px rgba(0,0,0,0.08); margin: 18px 0; }
-  .muted { opacity: 0.85; }
-  .solution-wrap { position: relative; margin-top: 14px; }
-  .solution-wrap .locked { filter: blur(7px); user-select: none; pointer-events: none; }
-  .solution-wrap .solution-inner { background: rgba(0,0,0,0.03); border-radius: 14px; padding: 14px; border: 1px solid rgba(0,0,0,0.08); }
-  .solution-wrap .reveal-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-  .reveal-btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    border: 1px solid rgba(0,0,0,0.12);
-    background: #f7f7f7; padding: 10px 12px; border-radius: 12px;
-    cursor: pointer; font-weight: 600;
-    transition: transform 160ms ease, background 160ms ease;
-  }
-  .reveal-btn:hover { transform: translateY(-1px); background: #f1f1f1; }
-  .reveal-btn .icon { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 10px; background: rgba(79,125,191,0.14); }
-  .label-pill { font-size: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.08); }
-  pre { margin: 0; overflow: auto; border-radius: 12px; padding: 12px; background: #0b1020; color: #e6e9f5; }
-  code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-  .pw-shake { animation: pwShake 360ms ease; outline: 2px solid rgba(220,53,69,0.35); }
-  @keyframes pwShake {
-    0%, 100% { transform: translateX(0); }
-    20% { transform: translateX(-6px); }
-    40% { transform: translateX(6px); }
-    60% { transform: translateX(-4px); }
-    80% { transform: translateX(4px); }
-  }
-</style>
-
-<div class="card intro">
-  <h2>What problems are there?</h2>
-
-  <div class="solution-wrap" data-solution="problems">
-    <div class="reveal-row">
-      <button class="reveal-btn" type="button" onclick="unlockSolution('problems')">
-        <span class="icon">🔒</span>
-        Reveal: What problems should you look out for?
-      </button>
-      <span class="label-pill">Password required</span>
+<body>
+  <header>
+    <h1>Intro to Data Cleaning</h1>
+    <div class="subtitle">
+      Over the next few sessions and week(s) you will be working from raw CSVs that resemble real-world transport data.
+      Your first goal is to clean and organise them so your subsequent analyses are trustworthy.
+      Some panels are blurred and password protected so you can attempt the work independently first.
+      Codes will be revealed before we move on to the next part of content but students are encouraged to push ahead.
     </div>
+  </header>
 
-    <div class="solution-inner locked">
-      <h3>Common issues in the raw files</h3>
+  <div class="wrap">
+
+    <div class="card intro">
+      <h2>Understanding the Data: Going into the <em>known</em>.</h2>
+
+      <p>
+        The datasets you will work with over the next few days were generated to resemble
+        real urban transport data collected from multiple systems over time.
+      </p>
+
+      <p>
+        I.e. if they were real, it is safe to say that they have <strong>not</strong> been prepared for analysis. This is how data often arrives to us.
+      </p>
+
+      <p>
+        In the raw data files, you should expect to encounter issues such as:
+      </p>
+
       <ul>
-        <li><strong>Inconsistent labels:</strong> cities and transport modes appear in different formats (different cases, sometimes abbreviated).</li>
-        <li><strong>Missing values:</strong> key fields may be blank (delays, frequency, incident details).</li>
-        <li><strong>Wrong scale / units:</strong> some prices may be recorded as pennies instead of pounds or some route lengths may be in different units.</li>
-        <li><strong>Outliers and impossible values:</strong> capacity utilisation can exceed 1; incident duration and impact can be unrealistically large.</li>
-        <li><strong>Duplicates:</strong> incident logs may contain repeated incident IDs or duplicated rows.</li>
-        <li><strong>Gaps in time series:</strong> some route-months are missing, causing broken trends.</li>
-        <li><strong>Join risks:</strong> merges can fail if route IDs, city labels, or mode labels do not align across files.</li>
+        <li>inconsistent naming of cities and transport modes</li>
+        <li>missing values in key operational fields</li>
+        <li>values recorded in the wrong units or scale</li>
+        <li>duplicate records and partial logging</li>
+        <li>gaps in time series where data was not recorded</li>
       </ul>
 
-      <p class="muted">
-        Find these issues, decide how to handle them, and document your choices in your RScript.
+      <p>
+        This time around these problems are deliberate. They reflect how data often arrives from
+        ticketing systems, operational logs, and incident reporting tools that were
+        never designed for analytics. But, in future you may receive data of any origin but it
+        is likely that the one thing all these datasets have in common is that <em>they are messy.</em>
       </p>
+
+      <p>
+        Your first responsibility as an analyst is to decide:
+      </p>
+
+      <ul>
+        <li>which issues must be fixed before analysis</li>
+        <li>which values can be safely removed or imputed</li>
+        <li>which assumptions you are willing to make</li>
+        <li>how your cleaning choices affect the conclusions you can draw</li>
+      </ul>
+
+      <p>
+        You will clean and organise the data so that it can support:
+      </p>
+
+      <ul>
+        <li>comparisons between cities and transport modes</li>
+        <li>analysis over time</li>
+        <li>links between usage, delays, pricing, and incidents</li>
+        <li>clear communication through plots and dashboards</li>
+      </ul>
     </div>
-  </div>
 
+  
+    <div class="card intro">
+      <h2>What problems are there?</h2>
 
-  <div class="solution-wrap" data-solution="snippets">
-    <div class="reveal-row">
-      <button class="reveal-btn" type="button" onclick="unlockSolution('snippets')">
-        <span class="icon">🧩</span>
-        Reveal: Code snippets that might inspire
-      </button>
-      <span class="label-pill">Password required</span>
-    </div>
+      <div class="solution-wrap locked" data-solution="problems">
+        <div class="solution-header">
+          <b>Reveal: What problems should you look out for?</b>
+          <button class="btn" onclick="unlockSolution('problems')">Unlock</button>
+        </div>
+        <div class="solution-body">
+          <div class="lock-note">Enter the password to reveal this solution.</div>
 
-    <div class="solution-inner locked">
-      <h3>Code snippets and templates that might be of use</h3>
+          <div class="blurred">
+            <div class="code">
+<h3>Common issues in the raw files</h3>
+<ul>
+  <li><strong>Inconsistent labels:</strong> cities and transport modes appear in different formats (different cases, sometimes abbreviated).</li>
+  <li><strong>Missing values:</strong> key fields may be blank (delays, frequency, incident details).</li>
+  <li><strong>Wrong scale / units:</strong> some prices may be recorded as pennies instead of pounds or some route lengths may be in different units.</li>
+  <li><strong>Outliers and impossible values:</strong> capacity utilisation can exceed 1; incident duration and impact can be unrealistically large.</li>
+  <li><strong>Duplicates:</strong> incident logs may contain repeated incident IDs or duplicated rows.</li>
+  <li><strong>Gaps in time series:</strong> some route-months are missing, causing broken trends.</li>
+  <li><strong>Join risks:</strong> merges can fail if route IDs, city labels, or mode labels do not align across files.</li>
+</ul>
 
-      <p><strong>1) Standardise labels (cities, modes)</strong></p>
-      <pre><code>library(dplyr)
+<p class="muted">
+  Find these issues, decide how to handle them, and document your choices in your RScript.
+</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="solution-wrap locked" data-solution="snippets">
+        <div class="solution-header">
+          <b>Reveal: Code snippets that might inspire</b>
+          <button class="btn" onclick="unlockSolution('snippets')">Unlock</button>
+        </div>
+        <div class="solution-body">
+          <div class="lock-note">Enter the password to reveal this solution.</div>
+
+          <div class="blurred">
+            <div class="code">
+<h3>Code snippets and templates that might be of use</h3>
+
+<p><strong>1) Standardise labels (cities, modes)</strong></p>
+<pre><code>library(dplyr)
 library(stringr)
 
 clean_labels &lt;- function(x) {
@@ -205,32 +317,32 @@ df &lt;- df %&gt;%
     transport_mode = str_to_title(clean_labels(transport_mode))
   )</code></pre>
 
-      <p><strong>2) Handle missingness (drop, impute, or flag)</strong></p>
-      <pre><code>df &lt;- df %&gt;%
+<p><strong>2) Handle missingness (drop, impute, or flag)</strong></p>
+<pre><code>df &lt;- df %&gt;%
   mutate(
     missing_delay = is.na(avg_delay_minutes),
     avg_delay_minutes = ifelse(is.na(avg_delay_minutes), median(avg_delay_minutes, na.rm = TRUE), avg_delay_minutes)
   )</code></pre>
 
-      <p><strong>3) Fix unit / scale issues (example: prices accidentally x100)</strong></p>
-      <pre><code>df &lt;- df %&gt;%
+<p><strong>3) Fix unit / scale issues (example: prices accidentally x100)</strong></p>
+<pre><code>df &lt;- df %&gt;%
   mutate(
     avg_ticket_price = ifelse(avg_ticket_price &gt; 20, avg_ticket_price / 100, avg_ticket_price)
   )</code></pre>
 
-      <p><strong>4) Cap or investigate impossible values (example: utilisation)</strong></p>
-      <pre><code>df &lt;- df %&gt;%
+<p><strong>4) Cap or investigate impossible values (example: utilisation)</strong></p>
+<pre><code>df &lt;- df %&gt;%
   mutate(
     capacity_utilisation = pmin(capacity_utilisation, 1)
   )</code></pre>
 
-      <p><strong>5) Remove duplicates (incident logs)</strong></p>
-      <pre><code>incident_log &lt;- incident_log %&gt;%
+<p><strong>5) Remove duplicates (incident logs)</strong></p>
+<pre><code>incident_log &lt;- incident_log %&gt;%
   arrange(timestamp) %&gt;%
   distinct(incident_id, .keep_all = TRUE)</code></pre>
 
-      <p><strong>6) Detect time gaps and create a complete date grid</strong></p>
-      <pre><code>library(tidyr)
+<p><strong>6) Detect time gaps and create a complete date grid</strong></p>
+<pre><code>library(tidyr)
 library(lubridate)
 
 complete_tbl &lt;- df %&gt;%
@@ -239,8 +351,8 @@ complete_tbl &lt;- df %&gt;%
   complete(date = seq(min(date), max(date), by = "month")) %&gt;%
   ungroup()</code></pre>
 
-      <p><strong>7) Safe joins with checks</strong></p>
-      <pre><code>usage &lt;- usage %&gt;% mutate(route_id = str_trim(route_id))
+<p><strong>7) Safe joins with checks</strong></p>
+<pre><code>usage &lt;- usage %&gt;% mutate(route_id = str_trim(route_id))
 routes &lt;- routes %&gt;% mutate(route_id = str_trim(route_id))
 
 joined &lt;- usage %&gt;%
@@ -248,41 +360,39 @@ joined &lt;- usage %&gt;%
 
 stopifnot(sum(is.na(joined$transport_mode.y)) == 0)  # example check</code></pre>
 
-      <p class="muted">
-        Again, these are patterns and ideas, not necessarily scripts that you can use right after pasting. You should adapt them to the dataset after you have explored it.
-      </p>
+<p class="muted">
+  Again, these are patterns and ideas, not necessarily scripts that you can use right after pasting. You should adapt them to the dataset after you have explored it.
+</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
+
   </div>
-</div>
 
-<script>
-  function unlockSolution(id){
-    const wrap = document.querySelector('[data-solution="' + id + '"]');
-    if(!wrap) return;
+  <script>
+    function unlockSolution(id){
+      const wrap = document.querySelector('[data-solution="' + id + '"]');
+      if(!wrap) return;
 
-    const target = wrap.querySelector('.solution-inner');
-    const btn = wrap.querySelector('.reveal-btn');
+      let unlocked = false;
 
-    const pw = prompt("Enter password to reveal:");
-    if(pw === null) return;
+      while(!unlocked){
+        const pw = prompt("Enter password to reveal solution:");
+        if(pw === null) return;
 
-    const correct = (id === "problems" && pw === "111") || (id === "snippets" && pw === "222");
+        const correct = (id === "problems" && pw === "111") || (id === "snippets" && pw === "222");
 
-    if(correct){
-      target.classList.remove("locked");
-      if(btn){
-        btn.querySelector('.icon').textContent = "🔓";
-        btn.lastChild.textContent = " Revealed";
+        if(correct){
+          wrap.classList.remove("locked");
+          unlocked = true;
+        } else {
+          alert("Incorrect password. Try again.");
+        }
       }
-    } else {
-      if(btn){
-        btn.classList.remove("pw-shake");
-        void btn.offsetWidth; // restart animation
-        btn.classList.add("pw-shake");
-      }
-      alert("Incorrect password.");
     }
-  }
-</script>
-
+  </script>
+</body>
 </html>
