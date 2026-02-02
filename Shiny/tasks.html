@@ -287,142 +287,146 @@ shinyApp(ui, server)</div>
       </div>
     </div>
 
-    <!---
-    <!-- Task 3 -->
-    <div class="card task">
-      <h2>Task 3: Add inputs and build a reactive filtered dataset <span class="badge">Stage 3</span></h2>
-      <div class="goal">Goal: add city selector, mode selector, date range, and make all outputs use a single filtered dataset.</div>
-      <ol class="checklist">
-        <li>Add a sidebar layout with inputs: city, mode, date range.</li>
-        <li>Populate city and mode choices from the dataset.</li>
-        <li>Create <code>filtered_data <- reactive({ ... })</code>.</li>
-        <li>Update your plot to use <code>filtered_data()</code>.</li>
-      </ol>
 
-      <div class="hint">
-        Use <code>req()</code> inside your reactive to avoid startup errors.
-      </div>
-
-      <div class="solution-wrap locked" data-solution="s3">
-        <div class="solution-header">
-          <b>Solution</b>
-          <button class="btn" onclick="unlockSolution('s3')">Unlock</button>
+      <!-- Task 3 -->
+      <!---
+      <div class="card task">
+        <h2>Task 3: Add inputs and build a reactive filtered dataset <span class="badge">Stage 3</span></h2>
+        <div class="goal">Goal: add city selector, mode selector, date range, and make all outputs use a single filtered dataset.</div>
+        <ol class="checklist">
+          <li>Add a sidebar layout with inputs: city, mode, date range.</li>
+          <li>Populate city and mode choices from the dataset.</li>
+          <li>Create <code>filtered_data <- reactive({ ... })</code>.</li>
+          <li>Update your plot to use <code>filtered_data()</code>.</li>
+        </ol>
+  
+        <div class="hint">
+          Use <code>req()</code> inside your reactive to avoid startup errors.
         </div>
-        <div class="solution-body">
-          <div class="lock-note">Enter the password to reveal this solution.</div>
-          <div class="code blurred">library(shiny)
-library(ggplot2)
-library(dplyr)
-
-ui <- fluidPage(
-  titlePanel("Transport Dashboard"),
-  sidebarLayout(
-    sidebarPanel(
-      selectInput("city", "City", choices = NULL, selected = NULL, multiple = TRUE),
-      selectInput("mode", "Mode", choices = NULL, selected = NULL, multiple = TRUE),
-      dateRangeInput("dates", "Date range", start = NULL, end = NULL)
-    ),
-    mainPanel(
-      plotOutput("p1")
+  
+        <div class="solution-wrap locked" data-solution="s3">
+          <div class="solution-header">
+            <b>Solution</b>
+            <button class="btn" onclick="unlockSolution('s3')">Unlock</button>
+          </div>
+          <div class="solution-body">
+            <div class="lock-note">Enter the password to reveal this solution.</div>
+            <div class="code blurred">library(shiny)
+  library(ggplot2)
+  library(dplyr)
+  
+  ui <- fluidPage(
+    titlePanel("Transport Dashboard"),
+    sidebarLayout(
+      sidebarPanel(
+        selectInput("city", "City", choices = NULL, selected = NULL, multiple = TRUE),
+        selectInput("mode", "Mode", choices = NULL, selected = NULL, multiple = TRUE),
+        dateRangeInput("dates", "Date range", start = NULL, end = NULL)
+      ),
+      mainPanel(
+        plotOutput("p1")
+      )
     )
   )
-)
-
-server <- function(input, output, session) {
-
-  df <- read.csv("analysis_ready_transport.csv")
-  df$date <- as.Date(df$date)
-
-  observe({
-    updateSelectInput(session, "city", choices = sort(unique(df$city)), selected = unique(df$city)[1])
-    updateSelectInput(session, "mode", choices = sort(unique(df$mode)), selected = unique(df$mode)[1])
-    updateDateRangeInput(session, "dates",
-                         start = min(df$date, na.rm = TRUE),
-                         end   = max(df$date, na.rm = TRUE))
-  })
-
-  filtered_data <- reactive({
-    req(input$city, input$mode, input$dates)
-    df %>%
-      filter(city %in% input$city) %>%
-      filter(mode %in% input$mode) %>%
-      filter(date >= input$dates[1], date <= input$dates[2])
-  })
-
-  output$p1 <- renderPlot({
+  
+  server <- function(input, output, session) {
+  
+    df <- read.csv("analysis_ready_transport.csv")
+    df$date <- as.Date(df$date)
+  
+    observe({
+      updateSelectInput(session, "city", choices = sort(unique(df$city)), selected = unique(df$city)[1])
+      updateSelectInput(session, "mode", choices = sort(unique(df$mode)), selected = unique(df$mode)[1])
+      updateDateRangeInput(session, "dates",
+                           start = min(df$date, na.rm = TRUE),
+                           end   = max(df$date, na.rm = TRUE))
+    })
+  
+    filtered_data <- reactive({
+      req(input$city, input$mode, input$dates)
+      df %>%
+        filter(city %in% input$city) %>%
+        filter(mode %in% input$mode) %>%
+        filter(date >= input$dates[1], date <= input$dates[2])
+    })
+  
+    output$p1 <- renderPlot({
+      fd <- filtered_data()
+      ggplot(fd, aes(x = date, y = daily_riders, color = mode)) +
+        geom_line() +
+        labs(x = "Date", y = "Daily riders")
+    })
+  }
+  
+  shinyApp(ui, server)</div>
+          </div>
+        </div>
+      </div>
+--->
+      <!-- Task 4 -->
+          <!---
+      <div class="card task">
+        <h2>Task 4: Add the two main plots with a smooth toggle <span class="badge">Stage 4</span></h2>
+        <div class="goal">Goal: ridership over time and ticket price vs daily riders, controlled by inputs and a raw vs smooth toggle.</div>
+        <ol class="checklist">
+          <li>Add a checkbox input: raw vs smooth.</li>
+          <li>Create Plot 1: ridership over time by mode, faceted by city when multiple cities selected.</li>
+          <li>Create Plot 2: ticket price vs daily riders with raw points and optional smooth.</li>
+        </ol>
+  
+        <div class="hint">
+          Use <code>facet_wrap(~ city)</code> when more than one city is selected.
+          When only one city is selected, you can skip faceting for clarity.
+        </div>
+  
+        <div class="solution-wrap locked" data-solution="s4">
+          <div class="solution-header">
+            <b>Solution</b>
+            <button class="btn" onclick="unlockSolution('s4')">Unlock</button>
+          </div>
+          <div class="solution-body">
+            <div class="lock-note">Enter the password to reveal this solution.</div>
+            <div class="code blurred"># Add this input in sidebarPanel:
+  # checkboxInput("smooth", "Show smooth curve", value = FALSE)
+  
+  # In mainPanel add:
+  # plotOutput("p_riders")
+  # plotOutput("p_price")
+  
+  output$p_riders <- renderPlot({
     fd <- filtered_data()
-    ggplot(fd, aes(x = date, y = daily_riders, color = mode)) +
+  
+    p <- ggplot(fd, aes(x = date, y = daily_riders, color = mode)) +
       geom_line() +
       labs(x = "Date", y = "Daily riders")
+  
+    # Facet only if multiple cities are selected
+    if (length(input$city) > 1) {
+      p <- p + facet_wrap(~ city, scales = "free_y")
+    }
+  
+    p
   })
-}
-
-shinyApp(ui, server)</div>
+  
+  output$p_price <- renderPlot({
+    fd <- filtered_data()
+  
+    p <- ggplot(fd, aes(x = ticket_price, y = daily_riders)) +
+      geom_point(alpha = 0.6) +
+      labs(x = "Ticket price", y = "Daily riders")
+  
+    if (isTRUE(input$smooth)) {
+      p <- p + geom_smooth(se = FALSE)
+    }
+  
+    p
+  })</div>
+          </div>
         </div>
       </div>
-    </div>
-
-    <!-- Task 4 -->
-    <div class="card task">
-      <h2>Task 4: Add the two main plots with a smooth toggle <span class="badge">Stage 4</span></h2>
-      <div class="goal">Goal: ridership over time and ticket price vs daily riders, controlled by inputs and a raw vs smooth toggle.</div>
-      <ol class="checklist">
-        <li>Add a checkbox input: raw vs smooth.</li>
-        <li>Create Plot 1: ridership over time by mode, faceted by city when multiple cities selected.</li>
-        <li>Create Plot 2: ticket price vs daily riders with raw points and optional smooth.</li>
-      </ol>
-
-      <div class="hint">
-        Use <code>facet_wrap(~ city)</code> when more than one city is selected.
-        When only one city is selected, you can skip faceting for clarity.
-      </div>
-
-      <div class="solution-wrap locked" data-solution="s4">
-        <div class="solution-header">
-          <b>Solution</b>
-          <button class="btn" onclick="unlockSolution('s4')">Unlock</button>
-        </div>
-        <div class="solution-body">
-          <div class="lock-note">Enter the password to reveal this solution.</div>
-          <div class="code blurred"># Add this input in sidebarPanel:
-# checkboxInput("smooth", "Show smooth curve", value = FALSE)
-
-# In mainPanel add:
-# plotOutput("p_riders")
-# plotOutput("p_price")
-
-output$p_riders <- renderPlot({
-  fd <- filtered_data()
-
-  p <- ggplot(fd, aes(x = date, y = daily_riders, color = mode)) +
-    geom_line() +
-    labs(x = "Date", y = "Daily riders")
-
-  # Facet only if multiple cities are selected
-  if (length(input$city) > 1) {
-    p <- p + facet_wrap(~ city, scales = "free_y")
-  }
-
-  p
-})
-
-output$p_price <- renderPlot({
-  fd <- filtered_data()
-
-  p <- ggplot(fd, aes(x = ticket_price, y = daily_riders)) +
-    geom_point(alpha = 0.6) +
-    labs(x = "Ticket price", y = "Daily riders")
-
-  if (isTRUE(input$smooth)) {
-    p <- p + geom_smooth(se = FALSE)
-  }
-
-  p
-})</div>
-        </div>
-      </div>
-    </div>
---->
+  
+        }
+      --->
 
 
       <!-- Task 3 -->
