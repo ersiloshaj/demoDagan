@@ -397,7 +397,7 @@
           { title:"", desc:"", href:"briefs/04_task.html" },
           { title:"", desc:"", href:"briefs/05_task.html" },
           { title:"", desc:"", href:"briefs/06_task.html" },
-          { title:"", desc:"", href:"briefs/07_task.html" },
+          { title:"", desc:"", href:"briefs/07_task.html", icon:"lcfc"},
           { title:"", desc:"", href:"briefs/08_task.html" }
         ]
       }
@@ -405,6 +405,18 @@
 
     const UNLOCK_KEY = "unlockedSections.v1";
 
+
+    function iconForItem(kind){
+      
+      if(kind === "lcfc") return <img 
+          src="assets/lcfc-logo.png"
+          alt="Leicester City Football Club crest"
+          class="crest"
+        />;
+      if(kind === "chart") return `<svg>...</svg>`;
+      return iconCheck(); // default
+    }
+    
     function esc(s){
       return String(s ?? "").replace(/[&<>"']/g, m => ({
         "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
@@ -478,7 +490,7 @@
                 return `
                   <div class="row">
                     <div class="node ${isLocked ? "locked" : ""}" title="${isLocked ? "Locked" : "Unlocked"}">
-                      ${isLocked ? iconLock() : iconCheck()}
+                      ${isLocked ? iconLock() : iconForItem(it.icon)}
                     </div>
 
                     <a class="content ${isLocked ? "disabled" : ""}"
