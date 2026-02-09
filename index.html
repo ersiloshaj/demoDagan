@@ -283,6 +283,13 @@
       background: rgba(15,22,48,0.55);
     }
 
+    .crest{
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
+    }
+
     footer{
       margin-top: 18px;
       color: var(--muted);
@@ -407,15 +414,29 @@
 
 
     function iconForItem(kind){
-      
-      if(kind === "lcfc") return <img 
-          src="assets/lcfc-logo.png"
-          alt="Leicester City Football Club crest"
-          class="crest"
-        />;
-      if(kind === "chart") return `<svg>...</svg>`;
-      return iconCheck(); // default
-    }
+  if(kind === "lcfc") {
+    return `
+      <img 
+        src="assets/lcfc-logo.png"
+        alt="Leicester City Football Club crest"
+        class="crest"
+      />
+    `;
+  }
+
+  if(kind === "chart") {
+    return `
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 20V10M10 20V4M16 20v-6M22 20H2"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"/>
+      </svg>
+    `;
+  }
+
+  return iconCheck(); // fallback
+}
     
     function esc(s){
       return String(s ?? "").replace(/[&<>"']/g, m => ({
