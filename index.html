@@ -1,0 +1,1057 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Roadmap</title>
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:#121a33;
+      --panel2:#0f1630;
+      --text:#e8ecff;
+      --muted:#b9c2ff;
+      --accent:#7aa2ff;
+      --good:#7dffb2;
+      --warn:#ffd37a;
+      --bad:#ff7a7a;
+      --border:rgba(255,255,255,0.12);
+      --shadow: 0 18px 45px rgba(0,0,0,0.35);
+      --ring: 0 0 0 3px rgba(122,162,255,0.35);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    *{ box-sizing:border-box; }
+    html, body { height:100%; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(1100px 720px at 20% 0%, rgba(122,162,255,0.18), transparent 60%),
+        radial-gradient(900px 700px at 85% 10%, rgba(125,255,178,0.10), transparent 55%),
+        radial-gradient(900px 700px at 40% 95%, rgba(255,211,122,0.08), transparent 55%),
+        var(--bg);
+      line-height:1.55;
+      overflow-x:hidden;
+    }
+
+    .wrap{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 18px 64px;
+    }
+
+    header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom: 18px;
+    }
+
+    .title{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .logo{
+      width:44px;
+      height:44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(122,162,255,0.30), rgba(125,255,178,0.20));
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: var(--shadow);
+      display:grid;
+      place-items:center;
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(22px, 2.6vw, 34px);
+      letter-spacing: 0.2px;
+      line-height:1.15;
+    }
+
+    .subtitle{
+      margin-top:6px;
+      color: var(--muted);
+      max-width: 80ch;
+      font-size: 14.5px;
+    }
+
+    .topbar{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.22);
+      user-select:none;
+      font-size: 13px;
+      white-space:nowrap;
+    }
+
+    .pill strong{ color: var(--text); font-weight: 780; }
+
+    .btn{
+      cursor:pointer;
+      border: 1px solid rgba(122,162,255,0.30);
+      background: rgba(122,162,255,0.12);
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 12px;
+      font-weight: 720;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(122,162,255,0.16);
+      border-color: rgba(122,162,255,0.45);
+    }
+    .btn:active{ transform: translateY(0px) scale(0.99); }
+    .btn:focus{ outline:none; box-shadow: var(--shadow), var(--ring); }
+
+    .btn.secondary{
+      border-color: rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      font-weight: 680;
+    }
+    .btn.secondary:hover{
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.20);
+      color: var(--text);
+    }
+
+    .icon{
+      width:18px;
+      height:18px;
+      display:inline-block;
+      flex:0 0 auto;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .controls{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin: 16px 0 18px;
+    }
+    @media(min-width: 920px){
+      .controls{
+        grid-template-columns: 1.35fr 0.65fr;
+        align-items:start;
+      }
+    }
+
+    .searchRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .input{
+      flex: 1 1 320px;
+      min-width: 240px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(10,15,31,0.55);
+    }
+    .input input{
+      width:100%;
+      border:0;
+      outline:none;
+      background: transparent;
+      color: var(--text);
+      font-size: 14px;
+    }
+    .input input::placeholder{ color: rgba(185,194,255,0.55); }
+
+    .chips{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .chip{
+      cursor:pointer;
+      user-select:none;
+      font-size: 12.5px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      transition: background .12s ease, border-color .12s ease, transform .12s ease;
+      white-space:nowrap;
+    }
+    .chip:hover{
+      background: rgba(122,162,255,0.10);
+      border-color: rgba(122,162,255,0.28);
+      transform: translateY(-1px);
+      color: var(--text);
+    }
+    .chip.active{
+      background: rgba(125,255,178,0.10);
+      border-color: rgba(125,255,178,0.35);
+      color: var(--text);
+      font-weight: 720;
+    }
+
+    /* Roadmap */
+    .roadmap{
+      margin-top: 14px;
+      position: relative;
+      padding: 18px 10px 10px;
+    }
+
+    /* dotted “path” */
+    .path{
+      position:absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 10px;
+      bottom: 10px;
+      width: min(660px, 92%);
+      pointer-events:none;
+      opacity: 0.55;
+    }
+
+    .path svg{ width:100%; height:100%; display:block; }
+
+    /* lanes */
+    .lane{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section{
+      margin-top: 10px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.02);
+      overflow:hidden;
+    }
+
+    .sectionHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding: 14px 14px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.02);
+      flex-wrap:wrap;
+    }
+
+    .sectionHead h2{
+      margin:0;
+      font-size: 15px;
+      letter-spacing: 0.2px;
+    }
+    .sectionHead .meta{
+      color: var(--muted);
+      font-size: 12.5px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .progress{
+      height: 10px;
+      width: 180px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.10);
+      overflow:hidden;
+    }
+    .progress > div{
+      height:100%;
+      width: 0%;
+      background: linear-gradient(90deg, rgba(125,255,178,0.55), rgba(122,162,255,0.60));
+      border-radius: 999px;
+      transition: width .25s ease;
+    }
+
+    .nodes{
+      padding: 14px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    /* Make the “zig-zag” feel */
+    @media(min-width: 860px){
+      .nodes{
+        grid-template-columns: repeat(12, 1fr);
+        gap: 16px 10px;
+      }
+    }
+
+    .node{
+      position: relative;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(15,22,48,0.55);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.25);
+      overflow:hidden;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      cursor:pointer;
+      text-decoration:none;
+      color: inherit;
+      display:flex;
+      gap: 12px;
+      align-items:center;
+      padding: 12px;
+      min-height: 70px;
+    }
+
+    .node:hover{
+      transform: translateY(-2px);
+      border-color: rgba(122,162,255,0.38);
+      background: rgba(18,26,51,0.70);
+    }
+    .node:focus{ outline:none; box-shadow: 0 14px 40px rgba(0,0,0,0.25), var(--ring); }
+
+    .node .bubble{
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      display:grid;
+      place-items:center;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      flex: 0 0 auto;
+      position: relative;
+    }
+
+    .node .bubble::after{
+      content:"";
+      position:absolute;
+      inset:-10px;
+      border-radius: 20px;
+      background: radial-gradient(circle at 30% 30%, rgba(122,162,255,0.20), transparent 60%);
+      opacity: 0;
+      transition: opacity .12s ease;
+      pointer-events:none;
+    }
+    .node:hover .bubble::after{ opacity: 1; }
+
+    .node .txt{
+      min-width: 0;
+    }
+    .node .name{
+      font-weight: 820;
+      letter-spacing: 0.1px;
+      margin: 0;
+      font-size: 14.5px;
+      line-height: 1.15;
+    }
+    .node .desc{
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12.5px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      max-width: 58ch;
+    }
+
+    .badgeRow{
+      margin-top: 8px;
+      display:flex;
+      gap: 8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .badge{
+      font-size: 11.5px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+    }
+
+    .status{
+      margin-left:auto;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex: 0 0 auto;
+    }
+
+    .dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.20);
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+
+    .node[data-status="done"] .dot{
+      background: rgba(125,255,178,0.85);
+      border-color: rgba(125,255,178,0.40);
+    }
+    .node[data-status="next"] .dot{
+      background: rgba(255,211,122,0.85);
+      border-color: rgba(255,211,122,0.40);
+    }
+    .node[data-status="locked"] .dot{
+      background: rgba(255,122,122,0.70);
+      border-color: rgba(255,122,122,0.35);
+    }
+
+    .node[data-status="locked"]{
+      cursor:not-allowed;
+      opacity: 0.72;
+    }
+    .node[data-status="locked"]:hover{
+      transform:none;
+      border-color: rgba(255,255,255,0.12);
+      background: rgba(15,22,48,0.55);
+    }
+
+    .lock{
+      width: 18px;
+      height: 18px;
+      opacity: 0.9;
+    }
+
+    /* Zig-zag placement using columns at desktop */
+    @media(min-width: 860px){
+      .node{ min-height: 78px; }
+      .node[data-col]{ grid-column: var(--col, 1) / span 5; }
+      .node[data-row]{ grid-row: var(--row, auto); }
+    }
+
+    footer{
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+    }
+    .mono{ font-family: var(--mono); }
+    a.inline{ color: var(--accent); text-decoration:none; }
+    a.inline:hover{ text-decoration: underline; }
+
+    /* Modal */
+    .modalWrap{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 16px;
+      z-index: 50;
+    }
+    .modal{
+      width: min(720px, 100%);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(12,16,32,0.90);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+      overflow:hidden;
+    }
+    .modalHead{
+      padding: 14px 14px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .modalHead strong{ font-size: 14.5px; }
+    .modalBody{
+      padding: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .modalActions{
+      padding: 14px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+
+    .kbd{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.03);
+      padding: 2px 7px;
+      border-radius: 8px;
+      margin-left: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <div class="title">
+          <div class="logo" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2l8 5v10l-8 5-8-5V7l8-5Z" stroke="currentColor" stroke-width="2" opacity="0.85"/>
+              <path d="M8 12l2.5 2.5L16.5 9" stroke="currentColor" stroke-width="2" />
+            </svg>
+          </div>
+          <div>
+            <h1>Roadmap</h1>
+            <div class="subtitle">
+              A Duolingo-style learning path you can fill with your own lessons, projects, and checkpoints.
+              Click a tile to open it. Locked tiles show a reason.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topbar">
+        <div class="pill"><strong id="kpiDone">0</strong> done</div>
+        <div class="pill"><strong id="kpiNext">0</strong> next up</div>
+        <div class="pill"><strong id="kpiLocked">0</strong> locked</div>
+        <button class="btn secondary" type="button" id="btnReset">
+          <svg class="icon" viewBox="0 0 24 24" fill="none">
+            <path d="M3 12a9 9 0 1 0 3-6.7" stroke="currentColor" stroke-width="2"/>
+            <path d="M3 4v5h5" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          Reset progress
+        </button>
+        <button class="btn" type="button" id="btnExport">
+          <svg class="icon" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3v10" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 7l4-4 4 4" stroke="currentColor" stroke-width="2"/>
+            <path d="M4 14v5h16v-5" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          Export JSON
+        </button>
+      </div>
+    </header>
+
+    <div class="controls">
+      <div class="card">
+        <div class="searchRow">
+          <div class="input" role="search">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <input id="q" type="search" placeholder="Search lessons, projects, keywords…" autocomplete="off" />
+          </div>
+
+          <div class="chips" aria-label="Filters">
+            <div class="chip active" data-filter="all">All</div>
+            <div class="chip" data-filter="next">Next</div>
+            <div class="chip" data-filter="done">Done</div>
+            <div class="chip" data-filter="locked">Locked</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+          <div>
+            <div style="font-weight:820; margin-bottom:6px;">How to edit</div>
+            <div style="color:var(--muted); font-size:13.5px;">
+              Open this file and change the <span class="mono">ROADMAP</span> array.
+              Each tile has: <span class="mono">title</span>, <span class="mono">href</span>, <span class="mono">status</span>, and optional <span class="mono">tags</span>.
+            </div>
+          </div>
+          <div style="color:var(--muted); font-size:12.5px;">
+            Tip: press <span class="kbd">/</span> to focus search
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card roadmap">
+      <div class="path" aria-hidden="true">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <path
+            d="M15,5
+               C35,15 35,25 15,35
+               C-5,45 -5,55 15,65
+               C35,75 35,85 15,95
+               C-5,105 -5,115 15,125"
+            fill="none"
+            stroke="rgba(255,255,255,0.20)"
+            stroke-width="2"
+            stroke-dasharray="2 4"
+            vector-effect="non-scaling-stroke"
+          />
+          <path
+            d="M85,5
+               C65,15 65,25 85,35
+               C105,45 105,55 85,65
+               C65,75 65,85 85,95
+               C105,105 105,115 85,125"
+            fill="none"
+            stroke="rgba(122,162,255,0.22)"
+            stroke-width="2"
+            stroke-dasharray="2 4"
+            vector-effect="non-scaling-stroke"
+            opacity="0.55"
+          />
+        </svg>
+      </div>
+
+      <div id="mount" class="lane" aria-live="polite"></div>
+    </div>
+
+    <footer>
+      <div>
+        Status colors: <span style="color:var(--good)">done</span>, <span style="color:var(--warn)">next</span>, <span style="color:var(--bad)">locked</span>.
+        Progress is stored in <span class="mono">localStorage</span>.
+      </div>
+      <div>
+        You can link this into your existing course materials page too.  [oai_citation:0‡scatterplots.html](sediment://file_00000000f83c7209973b75afce1af7b0)
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modal -->
+  <div class="modalWrap" id="modalWrap" role="dialog" aria-modal="true" aria-label="Item details">
+    <div class="modal">
+      <div class="modalHead">
+        <strong id="mTitle">Title</strong>
+        <button class="btn secondary" type="button" id="mClose">Close</button>
+      </div>
+      <div class="modalBody" id="mBody"></div>
+      <div class="modalActions" id="mActions"></div>
+    </div>
+  </div>
+
+  <script>
+    /*****************************************************************
+     * EDIT ME: Your roadmap data
+     *
+     * status: "done" | "next" | "locked"
+     * href: your link (relative) or "#" if you haven't made the page yet
+     * tags: used by search (optional)
+     *****************************************************************/
+    const ROADMAP = [
+      {
+        section: "Week 1: Foundations",
+        items: [
+          { id:"w1-intro",  title:"Orientation + project setup", desc:"Folder structure, scripts, reading CSVs", href:"daily/monday.html", status:"done", tags:["setup","rstudio","csv"] },
+          { id:"w1-clean",  title:"Data wrangling & cleaning", desc:"Tidy data, missingness, joins", href:"daily/tuesday.html", status:"next", tags:["cleaning","dplyr","joins"] },
+          { id:"w1-line",   title:"Line graphs", desc:"Ridership over time", href:"walkthroughs/linegraphs.html", status:"locked", lockReason:"Complete Data wrangling & cleaning first.", tags:["ggplot","time series"] },
+          { id:"w1-scatt",  title:"Scatter plots", desc:"Price vs demand patterns", href:"walkthroughs/scatterplots.html", status:"locked", lockReason:"Complete Data wrangling & cleaning first.", tags:["ggplot","relationships"] },
+          { id:"w1-box",    title:"Box plots", desc:"Compare delays by mode", href:"walkthroughs/boxplots.html", status:"locked", lockReason:"Complete Data wrangling & cleaning first.", tags:["ggplot","distribution"] },
+        ]
+      },
+      {
+        section: "Week 2: Dashboard Build",
+        items: [
+          { id:"w2-shiny",  title:"Intro to Shiny", desc:"UI vs server, reactivity, outputs", href:"Shiny/notes.html", status:"locked", lockReason:"Finish Week 1 plots first.", tags:["shiny","reactive"] },
+          { id:"w2-tasks",  title:"Shiny build tasks", desc:"Inputs, filtering, downloads, tabs", href:"Shiny/tasks.html", status:"locked", lockReason:"Finish Intro to Shiny first.", tags:["shiny","tasks"] },
+          { id:"w2-cheat",  title:"Cheat sheet", desc:"One-page reference while building", href:"Shiny/cheatSheet.html", status:"locked", lockReason:"Unlocks with Shiny tasks.", tags:["reference","shiny"] },
+        ]
+      },
+      {
+        section: "Project briefs",
+        items: [
+          { id:"briefs",    title:"Choose a brief", desc:"Pick a client scenario and build a dashboard", href:"briefs/briefs.html", status:"next", tags:["brief","client","project"] },
+          { id:"brief-ohid",title:"Public health brief", desc:"Health inequalities dashboard", href:"briefs/01_task.html", status:"locked", lockReason:"Choose a brief first.", tags:["ohid","public health"] },
+          { id:"brief-house",title:"Housing brief", desc:"Affordability + short-term lets", href:"briefs/04_task.html", status:"locked", lockReason:"Choose a brief first.", tags:["housing","airbnb"] },
+        ]
+      }
+    ];
+
+    /*****************************************************************
+     * Optional: zig-zag layout positions for desktop (12-col grid)
+     * Each item can be assigned a col span; we auto-stagger by index.
+     *****************************************************************/
+    const POS = [
+      { col:"2 / span 5"  },
+      { col:"7 / span 5"  },
+      { col:"3 / span 5"  },
+      { col:"6 / span 5"  },
+      { col:"2 / span 5"  },
+      { col:"7 / span 5"  }
+    ];
+
+    const LS_KEY = "roadmapProgress.v1";
+
+    function loadProgress(){
+      try {
+        const raw = localStorage.getItem(LS_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch {
+        return {};
+      }
+    }
+
+    function saveProgress(progress){
+      localStorage.setItem(LS_KEY, JSON.stringify(progress));
+    }
+
+    function flatten(roadmap){
+      const out = [];
+      for (const s of roadmap){
+        for (const it of s.items){
+          out.push({ ...it, section: s.section });
+        }
+      }
+      return out;
+    }
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, m => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      })[m]);
+    }
+
+    function iconFor(item){
+      // lightweight “emoji-like” SVGs so you can theme consistently
+      const base = `
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 12.5l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>`;
+      const sparkle = `
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 2l1.4 5.2L19 9l-5.6 1.8L12 16l-1.4-5.2L5 9l5.6-1.8L12 2Z" stroke="currentColor" stroke-width="2" />
+        </svg>`;
+      const lock = `
+        <svg class="lock" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M7 11V8a5 5 0 0 1 10 0v3" stroke="currentColor" stroke-width="2"/>
+          <path d="M6 11h12v10H6V11Z" stroke="currentColor" stroke-width="2"/>
+        </svg>`;
+      if (item.status === "done") return base;
+      if (item.status === "next") return sparkle;
+      return lock;
+    }
+
+    function computeKPIs(items){
+      const done = items.filter(x => x.status === "done").length;
+      const next = items.filter(x => x.status === "next").length;
+      const locked = items.filter(x => x.status === "locked").length;
+      return { done, next, locked, total: items.length };
+    }
+
+    function sectionProgress(items){
+      const total = items.length || 1;
+      const done = items.filter(x => x.status === "done").length;
+      return Math.round((done / total) * 100);
+    }
+
+    function matchesQuery(item, q){
+      if (!q) return true;
+      const hay = [
+        item.title, item.desc, item.section, ...(item.tags || [])
+      ].join(" ").toLowerCase();
+      return hay.includes(q.toLowerCase());
+    }
+
+    function matchesFilter(item, filter){
+      if (filter === "all") return true;
+      return item.status === filter;
+    }
+
+    function mount(){
+      const mountEl = document.getElementById("mount");
+      const q = document.getElementById("q").value.trim();
+      const filter = document.querySelector(".chip.active")?.dataset.filter || "all";
+
+      const progress = loadProgress();
+      // apply saved overrides
+      const roadmap = ROADMAP.map(sec => ({
+        section: sec.section,
+        items: sec.items.map(it => ({
+          ...it,
+          status: progress[it.id]?.status || it.status
+        }))
+      }));
+
+      // KPIs from all items (not filtered)
+      const allItems = flatten(roadmap);
+      const k = computeKPIs(allItems);
+      document.getElementById("kpiDone").textContent = k.done;
+      document.getElementById("kpiNext").textContent = k.next;
+      document.getElementById("kpiLocked").textContent = k.locked;
+
+      // render
+      mountEl.innerHTML = roadmap.map(sec => {
+        const filtered = sec.items
+          .filter(it => matchesQuery(it, q))
+          .filter(it => matchesFilter(it, filter));
+
+        const pct = sectionProgress(sec.items);
+
+        return `
+          <div class="section">
+            <div class="sectionHead">
+              <h2>${escapeHtml(sec.section)}</h2>
+              <div class="meta">
+                <span>${pct}% complete</span>
+                <span class="progress" aria-label="Section progress">
+                  <div style="width:${pct}%"></div>
+                </span>
+              </div>
+            </div>
+
+            <div class="nodes">
+              ${filtered.length ? filtered.map((it, idx) => {
+                const pos = POS[idx % POS.length];
+                const style = pos ? `style="--col:${pos.col}"` : "";
+                const dataAttrs = `data-id="${escapeHtml(it.id)}" data-status="${escapeHtml(it.status)}" data-href="${escapeHtml(it.href || "#")}"`;
+                const locked = it.status === "locked";
+                const hint = locked ? (it.lockReason || "Locked.") : (it.desc || "");
+                const tags = (it.tags || []).slice(0, 3).map(t => `<span class="badge">${escapeHtml(t)}</span>`).join("");
+
+                return `
+                  <a class="node" ${dataAttrs} ${locked ? 'tabindex="0" aria-disabled="true"' : 'tabindex="0"'} ${style}>
+                    <div class="bubble">
+                      ${iconFor(it)}
+                    </div>
+                    <div class="txt">
+                      <div class="name">${escapeHtml(it.title)}</div>
+                      <div class="desc" title="${escapeHtml(hint)}">${escapeHtml(hint)}</div>
+                      <div class="badgeRow">${tags}</div>
+                    </div>
+                    <div class="status" aria-hidden="true">
+                      <div class="dot"></div>
+                      ${locked ? `<svg class="lock" viewBox="0 0 24 24" fill="none">
+                        <path d="M7 11V8a5 5 0 0 1 10 0v3" stroke="currentColor" stroke-width="2"/>
+                        <path d="M6 11h12v10H6V11Z" stroke="currentColor" stroke-width="2"/>
+                      </svg>` : ``}
+                    </div>
+                  </a>
+                `;
+              }).join("") : `
+                <div style="color:var(--muted); padding: 10px 4px;">
+                  No tiles match your search/filter in this section.
+                </div>
+              `}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      wireNodes();
+    }
+
+    function openModal(item){
+      const wrap = document.getElementById("modalWrap");
+      const title = document.getElementById("mTitle");
+      const body = document.getElementById("mBody");
+      const actions = document.getElementById("mActions");
+
+      title.textContent = item.title;
+
+      const statusTxt = item.status === "done" ? "Done" : item.status === "next" ? "Next up" : "Locked";
+      const reason = item.status === "locked" ? (item.lockReason || "This item is locked.") : (item.desc || "");
+
+      body.innerHTML = `
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+          <span class="badge">Section: ${escapeHtml(item.section || "")}</span>
+          <span class="badge">Status: ${escapeHtml(statusTxt)}</span>
+          ${(item.tags || []).slice(0, 6).map(t => `<span class="badge">${escapeHtml(t)}</span>`).join("")}
+        </div>
+        <div style="margin-top:10px;">${escapeHtml(reason)}</div>
+        ${item.href && item.href !== "#" ? `<div style="margin-top:10px; color:var(--muted);">Link: <span class="mono">${escapeHtml(item.href)}</span></div>` : ``}
+      `;
+
+      actions.innerHTML = "";
+
+      const progress = loadProgress();
+
+      if (item.status !== "locked" && item.href && item.href !== "#"){
+        const go = document.createElement("button");
+        go.className = "btn";
+        go.type = "button";
+        go.innerHTML = `
+          <svg class="icon" viewBox="0 0 24 24" fill="none">
+            <path d="M7 17L17 7" stroke="currentColor" stroke-width="2"/>
+            <path d="M10 7h7v7" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          Open page
+        `;
+        go.addEventListener("click", () => { window.location.href = item.href; });
+        actions.appendChild(go);
+      }
+
+      // “Mark done / mark next” quick controls
+      if (item.status !== "locked"){
+        const markDone = document.createElement("button");
+        markDone.className = "btn secondary";
+        markDone.type = "button";
+        markDone.textContent = "Mark as done";
+        markDone.addEventListener("click", () => {
+          progress[item.id] = { status: "done" };
+          saveProgress(progress);
+          closeModal();
+          mount();
+        });
+        actions.appendChild(markDone);
+
+        const markNext = document.createElement("button");
+        markNext.className = "btn secondary";
+        markNext.type = "button";
+        markNext.textContent = "Mark as next";
+        markNext.addEventListener("click", () => {
+          progress[item.id] = { status: "next" };
+          saveProgress(progress);
+          closeModal();
+          mount();
+        });
+        actions.appendChild(markNext);
+      }
+
+      if (item.status === "locked"){
+        const unlockHint = document.createElement("button");
+        unlockHint.className = "btn secondary";
+        unlockHint.type = "button";
+        unlockHint.textContent = "How do I unlock this?";
+        unlockHint.addEventListener("click", () => {
+          body.innerHTML += `
+            <div style="margin-top:12px; padding:10px 12px; border-radius:14px; border:1px solid rgba(255,255,255,0.12); background: rgba(255,211,122,0.08);">
+              <strong style="color:var(--text);">Unlock rule:</strong>
+              <div style="margin-top:6px; color:var(--muted);">${escapeHtml(item.lockReason || "Complete earlier items first.")}</div>
+            </div>
+          `;
+          unlockHint.disabled = true;
+        });
+        actions.appendChild(unlockHint);
+      }
+
+      wrap.style.display = "flex";
+      document.getElementById("mClose").focus();
+    }
+
+    function closeModal(){
+      document.getElementById("modalWrap").style.display = "none";
+    }
+
+    function wireNodes(){
+      const nodes = document.querySelectorAll(".node");
+      nodes.forEach(n => {
+        n.addEventListener("click", (e) => {
+          e.preventDefault();
+          const id = n.dataset.id;
+          const status = n.dataset.status;
+          const href = n.dataset.href;
+
+          // find item
+          const all = flatten(ROADMAP);
+          const item = all.find(x => x.id === id);
+          if (!item) return;
+
+          // apply saved status to modal view
+          const progress = loadProgress();
+          const merged = { ...item, status: progress[id]?.status || status };
+          openModal(merged);
+        });
+
+        n.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            n.click();
+          }
+        });
+      });
+    }
+
+    // Filters
+    document.querySelectorAll(".chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+        mount();
+      });
+    });
+
+    // Search
+    document.getElementById("q").addEventListener("input", mount);
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "/" && document.activeElement?.tagName !== "INPUT") {
+        e.preventDefault();
+        document.getElementById("q").focus();
+      }
+      if (e.key === "Escape") closeModal();
+    });
+
+    // Modal close
+    document.getElementById("mClose").addEventListener("click", closeModal);
+    document.getElementById("modalWrap").addEventListener("click", (e) => {
+      if (e.target.id === "modalWrap") closeModal();
+    });
+
+    // Reset
+    document.getElementById("btnReset").addEventListener("click", () => {
+      localStorage.removeItem(LS_KEY);
+      mount();
+    });
+
+    // Export JSON (downloads your current roadmap config + saved statuses)
+    document.getElementById("btnExport").addEventListener("click", () => {
+      const progress = loadProgress();
+      const merged = ROADMAP.map(sec => ({
+        section: sec.section,
+        items: sec.items.map(it => ({
+          ...it,
+          status: progress[it.id]?.status || it.status
+        }))
+      }));
+
+      const blob = new Blob([JSON.stringify(merged, null, 2)], { type:"application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "roadmap-export.json";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    });
+
+    // Go!
+    mount();
+  </script>
+</body>
+</html>
