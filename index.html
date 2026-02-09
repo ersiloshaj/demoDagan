@@ -413,13 +413,13 @@
         locked: false,
         password: "briefs",
         items: [
-          { title:"", desc:"", href:"briefs/01_task.html" },
-          { title:"", desc:"", href:"briefs/02_task.html" },
+          { title:"Office for Health Improvement and Disparities", desc:"", href:"briefs/01_task.html" },
+          { title:"U.S. Food & Drug Administration", desc:"", href:"briefs/02_task.html" },
           { title:"", desc:"", href:"briefs/03_task.html" },
-          { title:"", desc:"", href:"briefs/04_task.html" },
+          { title:"Department for Levelling Up, Housing & Communities", desc:"", href:"briefs/04_task.html" },
           { title:"", desc:"", href:"briefs/05_task.html" },
-          { title:"", desc:"", href:"briefs/06_task.html" },
-          { title:"", desc:"", href:"briefs/07_task.html", icon:"lcfc"},
+          { title:"ASDA: Retail Operations and Commercial Analysis", desc:"", href:"briefs/06_task.html", icon:"ASDA"},
+          { title:"Leicester City Football Club", desc:"", href:"briefs/07_task.html", icon:"lcfc"},
           { title:"", desc:"", href:"briefs/08_task.html" }
         ]
       }
@@ -439,14 +439,13 @@
     `;
   }
 
-  if(kind === "chart") {
+  if(kind === "ASDA") {
     return `
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M4 20V10M10 20V4M16 20v-6M22 20H2"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"/>
-      </svg>
+      <img 
+        src="assets/asda-logo.png"
+        alt="ASDA logo"
+        class="crest"
+      />
     `;
   }
 
