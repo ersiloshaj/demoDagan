@@ -283,6 +283,31 @@
       background: rgba(15,22,48,0.55);
     }
 
+    /* Make the icon area a real “coin” container */
+    .node{
+      overflow: hidden;              /* important: crops the image to the circle */
+      padding: 0;                    /* remove any padding so the image can fill */
+    }
+    
+    /* Make images fill the coin */
+    .node img.crest{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;             /* fills the circle; may crop edges */
+      transform: scale(1.06);        /* slight zoom so it feels intentional */
+      display:block;
+    }
+    
+    /* Optional: soften with a subtle inner gloss like Duolingo */
+    .node::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent 55%);
+      pointer-events:none;
+    }
+    
     .crest{
       width: 34px;
       height: 34px;
