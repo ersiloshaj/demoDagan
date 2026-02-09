@@ -307,9 +307,6 @@
     <header>
       <div>
         <h1>Roadmap</h1>
-        <div class="subtitle">
-          Duolingo-style path with titles on the right. Only whole sections can be password locked.
-        </div>
       </div>
 
       <div class="topbar">
@@ -327,16 +324,12 @@
         </svg>
         <input id="q" type="search" placeholder="Search lessons, projects, keywords…" autocomplete="off" />
       </div>
-      <div style="color:var(--muted); font-size:12.5px;">
-        Tip: lock entire weeks with passwords.
-      </div>
     </div>
 
     <div id="mount"></div>
 
     <footer>
-      <div>Unlocked sections are remembered in <span class="mono">localStorage</span> for this browser.</div>
-      <div>Fill content by editing <span class="mono">ROADMAP</span>.</div>
+      EL 2026
     </footer>
   </div>
 
@@ -349,33 +342,63 @@
      *****************************************************************/
     const ROADMAP = [
       {
-        section: "Week 1: Foundations",
+        section: "Setting the scene",
         locked: false,
         items: [
-          { title:"Orientation + project setup", desc:"Folder structure, scripts, reading CSVs", href:"monday.html" },
-          { title:"Data wrangling & cleaning", desc:"Missing data, types, joins", href:"tuesday.html" },
-          { title:"Line graphs", desc:"Ridership over time", href:"linegraphs.html" },
-          { title:"Box plots", desc:"Compare delays by mode", href:"boxplots.html" }
+          { title:"Introduction to the Module", desc:"What are we doing here", href:"daily/intro.html" }
         ]
       },
       {
-        section: "Week 2: Dashboard Build",
-        locked: true,
+        section: "Getting started",
+        locked: false,
+        items: [
+          { title:"Data Cleaning", desc:"Intro to data cleaning", href:"data_cleaning.html" }
+        ]
+      },
+      {
+        section: "Walkthroughs and plotting with R",
+        locked: false,
         password: "week2",
         items: [
-          { title:"Intro to Shiny", desc:"UI vs server, reactivity", href:"notes.html" },
-          { title:"Shiny build tasks", desc:"Inputs, filtered data, downloads", href:"tasks.html" },
-          { title:"Cheat sheet", desc:"One-page reference while building", href:"cheatSheet.html" }
+          { title:"", desc:"", href:"walkthrough/0introtask.html" },
+          { title:"", desc:"", href:"walkthrough/linegraphs.html" },
+          { title:"", desc:"", href:"walkthrough/scatterplots.html" },
+          { title:"", desc:"", href:"walkthrough/boxplots.html" },
+          { title:"", desc:"", href:"walkthrough/piecharts.html" },
+          { title:"", desc:"", href:"walkthrough/barcharts.html" }
         ]
       },
       {
-        section: "Project briefs",
-        locked: true,
+        section: "RShiny",
+        locked: false,
+        password: "week2",
+        items: [
+          { title:"", desc:"", href:"Shiny/notes.html" },
+          { title:"", desc:"", href:"Shiny/tasks.html" },
+          { title:"", desc:"", href:"Shiny/cheatsheet.html" },
+        ]
+      },
+      {
+        section: "Briefs",
+        locked: false,
         password: "briefs",
         items: [
-          { title:"Choose a brief", desc:"Pick a client scenario and build a dashboard", href:"briefs.html" },
-          { title:"Public health brief", desc:"Health inequalities dashboard", href:"01_task.html" },
-          { title:"Housing brief", desc:"Affordability and short-term lets", href:"04_task.html" }
+          { title:"Available Contract Offers", desc:"Pick a client scenario and build a dashboard", href:"briefs/briefs.html" }
+        ]
+      },
+      {
+        section: "Letters of Engagement",
+        locked: false,
+        password: "briefs",
+        items: [
+          { title:"", desc:"", href:"briefs/01_task.html" },
+          { title:"", desc:"", href:"briefs/02_task.html" },
+          { title:"", desc:"", href:"briefs/03_task.html" },
+          { title:"", desc:"", href:"briefs/04_task.html" },
+          { title:"", desc:"", href:"briefs/05_task.html" },
+          { title:"", desc:"", href:"briefs/06_task.html" },
+          { title:"", desc:"", href:"briefs/07_task.html" },
+          { title:"", desc:"", href:"briefs/08_task.html" }
         ]
       }
     ];
