@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Module Intro: A Placement as a Data Analyst</title>
+  <style>
+    :root{
+      --max: 980px;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --bg: #ffffff;
+      --bg-soft: #f9fafb;
+      --code-bg: #0b1020;
+      --code-fg: #e7e7e7;
+      --blue: #2563eb;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --purple:#7c3aed;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:var(--bg);
+      line-height:1.6;
+    }
+    header{
+      background: var(--bg-soft);
+      border-bottom: 1px solid var(--border);
+      padding: 34px 16px;
+    }
+    header .wrap, main, footer{
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+    header .wrap{ display:flex; align-items:flex-end; justify-content:space-between; gap:14px; flex-wrap:wrap; }
+    h1{ margin:0; font-size: 2.05rem; line-height: 1.15; }
+    .subtitle{ margin-top: 10px; color: var(--muted); max-width: 78ch; }
+    .chiprow{ display:flex; gap:8px; flex-wrap:wrap; }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size: 12.5px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    main{ padding: 26px 16px 64px; }
+    h2{ margin-top: 2.1rem; font-size: 1.45rem; }
+    h3{ margin-top: 1.1rem; font-size: 1.1rem; }
+    p{ margin: 0.7rem 0; }
+    ul, ol{ margin: 0.6rem 0 0.6rem 1.1rem; padding:0; }
+    li{ margin: 0.25rem 0; }
+    a{ color: var(--blue); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    .box{
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin: 14px 0;
+      background: #fff;
+    }
+    .task{ border-left: 6px solid var(--blue); background: #f7fbff; }
+    .tip{ border-left: 6px solid var(--green); background: #f6fffb; }
+    .warn{ border-left: 6px solid var(--amber); background: #fffaf3; }
+    .role{ border-left: 6px solid var(--purple); background: #fbf7ff; }
+
+    .kicker{ font-weight: 650; }
+    .mini{ color: var(--muted); font-size: 0.95rem; }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+    .grid{ display:grid; grid-template-columns: 1fr; gap: 12px; }
+    @media(min-width: 860px){
+      .grid.two{ grid-template-columns: 1fr 1fr; }
+      .grid.three{ grid-template-columns: 1fr 1fr 1fr; }
+    }
+
+    .callout{
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: #fff;
+      margin: 12px 0;
+    }
+
+    .steps{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+      margin-top: 10px;
+    }
+    @media(min-width: 860px){
+      .steps{ grid-template-columns: repeat(5, 1fr); }
+    }
+    .step{
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 12px;
+      background: #fff;
+      min-height: 94px;
+    }
+    .step .n{
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 650;
+    }
+    .step .t{
+      margin-top: 6px;
+      font-weight: 750;
+    }
+    .step .d{
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.35;
+    }
+
+    pre{
+      background: var(--code-bg);
+      color: var(--code-fg);
+      padding: 12px 14px;
+      border-radius: 14px;
+      overflow:auto;
+    }
+    code, pre{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+    footer{
+      padding: 0 16px 28px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+    .checklist li{ list-style: none; margin-left: -1.1rem; }
+    .checklist li::before{ content: "✓"; margin-right: 10px; color: var(--green); font-weight: 800; }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <div>
+        <h1>Welcome to your placement as a Data Analyst</h1>
+        <div class="subtitle">
+          This module is run like a consultancy. You are not here to “learn R” directly.
+          You are here to build decision-support tools that are capable of generating outputs from imperfect data, justify your choices, and communicate findings clearly.
+        </div>
+      </div>
+
+      <div class="chiprow" aria-label="Module tags">
+        <span class="chip">Role-play</span>
+        <span class="chip">Messy data</span>
+        <span class="chip">Questions before code</span>
+        <span class="chip">Evidence, not vibes</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="box role">
+      <div class="kicker">Your identity in this module</div>
+      <p class="mini">
+        You are a junior analyst in a small analytics consultancy that builds dashboards and technical notes for clients.
+        Clients do not ask for plots. They ask for answers, clarity, and recommendations they can act on.
+      </p>
+      <div class="callout">
+        <div class="kicker">Rule of the game</div>
+        <p style="margin:0.35rem 0 0;">
+          You may make educated assumptions based on the results of research / asking questions to the "contracted companies", BUT you must not make them silently.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>How the work flows</h2>
+      <p class="mini">
+        Most real projects follow the same lifecycle as this one. You will gain experience in this loop and by the end of the placement understand how and why these procedures and processes take place
+      </p>
+
+      <div class="steps" aria-label="Project lifecycle">
+        <div class="step">
+          <div class="n">1) Frame</div>
+          <div class="t">Question</div>
+          <div class="d">What decision is being supported?</div>
+        </div>
+        <div class="step">
+          <div class="n">2) Interrogate</div>
+          <div class="t">Data</div>
+          <div class="d">What does one row actually represent?</div>
+        </div>
+        <div class="step">
+          <div class="n">3) Justify</div>
+          <div class="t">Transform</div>
+          <div class="d">Cleaning is meaning. Explain every change.</div>
+        </div>
+        <div class="step">
+          <div class="n">4) Extract</div>
+          <div class="t">Insight</div>
+          <div class="d">Patterns, comparisons, exceptions.</div>
+        </div>
+        <div class="step">
+          <div class="n">5) Deliver</div>
+          <div class="t">Communicate</div>
+          <div class="d">Make it legible to non-technical people.</div>
+        </div>
+      </div>
+
+      <div class="box tip">
+        <div class="kicker">What “good” looks like</div>
+        <ul class="checklist">
+          <li>The question your output answers is obvious.</li>
+          <li>Your transformations are documented and defensible.</li>
+          <li>You avoid over-claiming what the data cannot prove.</li>
+          <li>A stakeholder could plausibly act on what you show.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>First client: A project in Urban Mobility</h2>
+      <div class="grid two">
+        <div class="box">
+          <div class="kicker">Client context</div>
+          <p class="mini">
+            The Department for Transport needs a consistent view of usage, reliability, and pricing patterns across modes and cities.
+            They have data, but they need clarity that supports planning and policy.
+          </p>
+          <ul>
+            <li>How does ridership change over time?</li>
+            <li>Which modes are most reliable or most variable?</li>
+            <li>How does pricing align with demand?</li>
+            <li>Where do incidents likely affect riders most?</li>
+          </ul>
+        </div>
+
+        <div class="box warn">
+          <div class="kicker">Realistic constraints</div>
+          <p class="mini">
+            The dataset is not perfect. Some fields are redundant. Some choices are ambiguous.
+            This is intentional, because that is what “real data” feels like. In the real world you are expected to do 
+            additional research and ask questions to the teams that provided the data. This will all be possible to you in this module.
+          </p>
+          <ul>
+            <li>Expect missingness and unusual entries</li>
+            <li>Expect trade-offs in cleaning decisions.</li>
+            <li>Expect multiple reasonable answers.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>What you will deliver</h2>
+      <div class="grid three">
+        <div class="box task">
+          <div class="kicker">Week 1</div>
+          <p class="mini">Build core plots and learn to explain what they mean.</p>
+          <ul>
+            <li>Time series</li>
+            <li>Bars and proportions</li>
+            <li>Box plots</li>
+            <li>Scatter plots + trends</li>
+          </ul>
+        </div>
+
+        <div class="box task">
+          <div class="kicker">Week 2</div>
+          <p class="mini">Turn insight into something a stakeholder can explore.</p>
+          <ul>
+            <li>Shiny app skeleton</li>
+            <li>Filters (city, mode, dates)</li>
+            <li>Reactive dataset driving all outputs</li>
+          </ul>
+        </div>
+
+        <div class="box task">
+          <div class="kicker>Final stretch</div>
+          <p class="mini">Choose a client brief and build a polished deliverable.</p>
+          <ul>
+            <li>Dashboard + short technical notes</li>
+            <li>Clear assumptions and limitations</li>
+            <li>Decision-support framing</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="kicker">Key mindset</div>
+        <p style="margin:0.35rem 0 0;">
+          The point is not complexity. The point is credible, reusable work that others can trust.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Today: practical setup</h2>
+      <div class="grid two">
+        <div class="box">
+          <div class="kicker">Your project folder</div>
+          <p class="mini">Keep everything inside one folder so paths do not break and work stays reproducible.</p>
+          <pre><code>week1/
+  ├─ data_raw/
+  ├─ data_clean/
+  ├─ scripts/
+  └─ outputs/</code></pre>
+        </div>
+
+        <div class="box">
+          <div class="kicker">Your first script</div>
+          <p class="mini">Write steps you want to keep in a script, not the console.</p>
+          <pre><code># scripts/monday_exploration.R
+library(tidyverse)
+
+# Load, inspect, and describe the dataset
+# Write comments that explain your assumptions</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="box tip">
+      <div class="kicker">If you remember one thing</div>
+      <p class="mini">
+        Every output you produce should be able to finish this sentence:
+        <span class="mono">“This helps the client decide...”</span>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p style="margin: 16px 0;">
+      Next: you will receive the first project brief and your initial datasets. Then we start with inspection, not plotting.
+    </p>
+  </footer>
+</body>
+</html>
