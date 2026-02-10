@@ -458,6 +458,16 @@
       />
     `;
   }
+  
+  if(kind === "FDA") {
+    return `
+      <img 
+        src="assets/fda-logo.png"
+        alt="FDA logo"
+        class="crest"
+      />
+    `;
+  }
 
   return iconCheck(); // fallback
 }
