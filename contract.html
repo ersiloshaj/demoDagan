@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Offer Letter & Internship Agreement (Template)</title>
+
+  <style>
+    :root{
+      /* City St George’s / SGUL-inspired teal palette (adjust if you have exact brand values) */
+      --brand:  #009B77;
+      --brand2: #003B49;
+
+      --ink:    #121826;
+      --muted:  rgba(18,24,38,0.70);
+
+      --paper:  #ffffff;
+      --bg:     #eef4f2;
+
+      --hair:   rgba(0,0,0,0.14);
+      --hair2:  rgba(0,0,0,0.08);
+
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+      --paper-w: 210mm; /* A4 width */
+      --paper-h: 297mm; /* A4 height */
+      --m-top:   18mm;
+      --m-side:  18mm;
+      --m-bot:   18mm;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    /* Screen preview: center a "sheet of paper" */
+    .desk{
+      padding: 26px 16px 44px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .controls{
+      width: min(980px, 100%);
+      margin: 0 auto 12px;
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+      padding: 0 16px;
+    }
+
+    .paper{
+      width: min(var(--paper-w), 100%);
+      min-height: var(--paper-h);
+      background: var(--paper);
+      box-shadow:
+        0 1px 0 rgba(0,0,0,0.06),
+        0 18px 50px rgba(0,0,0,0.12);
+      border: 1px solid rgba(0,0,0,0.10);
+      position: relative;
+    }
+
+    /* Optional subtle letterhead line */
+    .paper::before{
+      content:"";
+      position:absolute;
+      left:0; top:0;
+      width:100%;
+      height: 6mm;
+      background: linear-gradient(90deg, var(--brand2), var(--brand));
+    }
+
+    /* Page margins like a real letter */
+    .content{
+      padding: calc(var(--m-top) + 6mm) var(--m-side) var(--m-bot);
+    }
+
+    /* Letterhead block */
+    .letterhead{
+      display:flex;
+      justify-content:space-between;
+      gap: 16px;
+      align-items:flex-start;
+      padding-bottom: 8mm;
+      border-bottom: 1px solid var(--hair2);
+      margin-bottom: 8mm;
+    }
+
+    .logos{
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+
+    .logo{
+    width: 52mm;
+    height: 16mm;
+    display:flex;
+    align-items:flex-start;
+    justify-content:flex-start;
+    }
+
+    .company{
+      margin-top: 1mm;
+    }
+    .company .name{
+      font-weight: 900;
+      letter-spacing: 0.2px;
+      color: var(--brand2);
+      font-size: 14px;
+    }
+    .company .strap{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .meta{
+      text-align:right;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+      min-width: 64mm;
+    }
+    .meta b{ color: var(--ink); }
+
+    /* Body typography */
+    h1{
+      font-family: var(--serif);
+      font-size: 18.5px;
+      margin: 0 0 4mm;
+      letter-spacing: 0.2px;
+    }
+
+    h2{
+      font-family: var(--serif);
+      font-size: 14.5px;
+      margin: 6mm 0 2mm;
+      color: var(--brand2);
+    }
+
+    p{
+      margin: 0 0 3.5mm;
+      line-height: 1.55;
+      font-size: 12.5px;
+    }
+
+    ul{
+      margin: 0 0 3.5mm 5mm;
+      padding:0;
+      line-height: 1.55;
+      font-size: 12.5px;
+    }
+    li{ margin: 1.5mm 0; }
+
+    .address-row{
+      display:flex;
+      justify-content:space-between;
+      gap: 14mm;
+      margin: 6mm 0 6mm;
+      align-items:flex-start;
+    }
+
+    .to, .from{
+      width: 50%;
+      font-size: 12.5px;
+      line-height: 1.45;
+    }
+
+    .block-title{
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 2mm;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .rule{
+      height: 1px;
+      background: var(--hair2);
+      margin: 6mm 0 6mm;
+    }
+
+    /* Key terms table-like list */
+    .terms{
+      margin: 4mm 0 5mm;
+      border-top: 1px solid var(--hair2);
+      border-bottom: 1px solid var(--hair2);
+      padding: 3mm 0;
+    }
+
+    .term{
+      display:grid;
+      grid-template-columns: 34mm 1fr;
+      gap: 6mm;
+      padding: 2mm 0;
+      font-size: 12.5px;
+    }
+    .term .k{
+      color: var(--muted);
+    }
+
+    /* Signature area */
+    .signatures{
+      margin-top: 8mm;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10mm;
+    }
+    .sig h3{
+      font-size: 12.5px;
+      margin: 0 0 3mm;
+      font-weight: 800;
+      color: var(--ink);
+    }
+    .line{
+      height: 8mm;
+      border-bottom: 1px solid rgba(0,0,0,0.45);
+      margin: 2mm 0 1mm;
+    }
+    .sig small{
+      display:block;
+      color: var(--muted);
+      font-size: 11.5px;
+      margin-bottom: 2mm;
+    }
+
+    /* Footer inside the page */
+    .footer{
+      position:absolute;
+      left: var(--m-side);
+      right: var(--m-side);
+      bottom: 10mm;
+      padding-top: 3mm;
+      border-top: 1px solid var(--hair2);
+      font-size: 11.5px;
+      color: var(--muted);
+      display:flex;
+      justify-content:space-between;
+      gap: 10mm;
+    }
+    .footer .right{
+      text-align:right;
+      font-family: var(--mono);
+    }
+
+    /* Print */
+    @page{
+      size: A4;
+      margin: 0;
+    }
+    @media print{
+      body{ background:#fff; }
+      .controls{ display:none; }
+      .desk{ padding:0; }
+      .paper{
+        width: var(--paper-w);
+        min-height: var(--paper-h);
+        box-shadow:none;
+        border: none;
+      }
+      .paper::before{
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+
+    @media (max-width: 900px){
+      .address-row{ flex-direction:column; gap: 8mm; }
+      .to, .from{ width: 100%; }
+      .signatures{ grid-template-columns: 1fr; }
+      .meta{ min-width: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="desk">
+    <div class="paper" role="document" aria-label="Offer letter and internship agreement">
+
+      <div class="content">
+
+        <!-- LETTERHEAD -->
+        <div class="letterhead">
+          <div>
+            <div class="logos">
+              <div class="logo" aria-label="Company logo">
+                <img
+                  src="briefs/assets/citysg-logo.png"
+                  alt="City St Georges Logo"
+                  style="height:100%; width:auto; object-fit:contain;"
+                />
+              </div>
+            </div>
+            <div class="company">
+              <div class="name editable" contenteditable="false">CSG Analytx</div>
+              <div class="strap editable" contenteditable="false">Data &amp; Insights | Client Delivery | Training Programme</div>
+            </div>
+          </div>
+
+          <div class="meta">
+            <div><b>Reference:</b> <span class="editable" contenteditable="false">[REF-0001]</span></div>
+            <div><b>Date:</b> <span id="docDate" class="editable" contenteditable="false">[DD Month YYYY]</span></div>
+            <div><b>Private &amp; Confidential</b></div>
+          </div>
+        </div>
+
+        <!-- TITLE -->
+        <h1>Internship Agreement: Junior Analyst Intern</h1>
+
+        <p>
+          We are pleased to offer you the position of <b>Junior Analyst Intern</b> with
+          <b class="editable" contenteditable="false">CSG Analytx</b> (the “Company”), subject to the terms set out in this letter.
+        </p>
+
+        <!-- KEY TERMS -->
+        <div class="terms" aria-label="Key terms summary">
+          <div class="term">
+            <div class="k">Role</div>
+            <div><span class="editable" contenteditable="false">Junior Analyst Intern</span></div>
+          </div>
+          <div class="term">
+            <div class="k">Start date</div>
+            <div><span class="editable" contenteditable="false">[DD Month YYYY]</span></div>
+          </div>
+          <div class="term">
+            <div class="k">End date</div>
+            <div><span class="editable" contenteditable="false">[DD Month YYYY]</span></div>
+          </div>
+          <div class="term">
+            <div class="k">Working pattern</div>
+            <div><span class="editable" contenteditable="false"></span></div>
+          </div>
+          <div class="term">
+            <div class="k">Location</div>
+            <div><span class="editable" contenteditable="false">Hybrid</span></div>
+          </div>
+          <div class="term">
+            <div class="k">Supervisor</div>
+            <div><span class="editable" contenteditable="false"></span></div>
+          </div>
+          <div class="term">
+            <div class="k">Compensation</div>
+            <div><span class="editable" contenteditable="false">Very unpaid</span></div>
+          </div>
+        </div>
+
+        <h2>1. Term</h2>
+        <p>
+          Your internship will commence on <span class="editable" contenteditable="false">[DD Month YYYY]</span> and is expected to end on
+          <span class="editable" contenteditable="false">[DD Month YYYY]</span>.
+        </p>
+
+        <h2>2. Duties</h2>
+        <p>You will support project delivery, which may include:</p>
+        <ul>
+          <li>Preparing, cleaning, and validating datasets for analysis.</li>
+          <li>Producing charts and summaries for non-technical stakeholders.</li>
+          <li>Supporting dashboard development (for example, Shiny or similar tools).</li>
+          <li>Maintaining reproducible work: organised files, documented assumptions, and clear code.</li>
+          <li>Participating in stand-ups, reviews, and client-style check-ins.</li>
+        </ul>
+
+        <h2>3. Professional Standards</h2>
+        <p>
+          You agree to act professionally, communicate clearly, and follow reasonable instructions from your supervisor.
+          You should avoid unsupported causal claims and clearly state assumptions and limitations in analysis.
+        </p>
+
+        <h2>4. Intellectual Property</h2>
+        <p>
+          Unless otherwise agreed in writing, all work created by you in the course of the internship (including code, dashboards,
+          charts, and written outputs) will belong to the Company upon creation. You may reference your participation in general terms
+          in your CV or portfolio, provided you do not disclose Confidential Information or client-identifiable details.
+        </p>
+
+        <h2>5. Disclaimer</h2>
+        <p>
+        This is, of course, a simulated placement for a fictional company. Therefore, there is absolutely nothing legally binding or "real" about this or any other "contracts" you may enounter during the placement. Try to have some fun with it and put in the work to gain some new and valuable skills.
+        </p>
+
+        <h2>6. Acceptance</h2>
+        <p>
+          Please sign and date below to confirm your acceptance of this offer and the terms set out in this Agreement.
+        </p>
+
+          <div class="sig">
+            <h3>Signed by the Intern</h3>
+            <div class="line"></div><small>Signature</small>
+            <div class="line"></div><small>Name (print)</small>
+            <div class="line"></div><small>Date</small>
+          </div>
+        </div>
+
+      </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function formatToday(){
+      const d = new Date();
+      const day = String(d.getDate()).padStart(2, "0");
+      const month = d.toLocaleString(undefined, { month: "long" });
+      const year = d.getFullYear();
+      return `${day} ${month} ${year}`;
+    }
+    function fillToday(){
+      const today = formatToday();
+      const docDate = document.getElementById("docDate");
+      if(docDate && docDate.textContent.trim() === "[DD Month YYYY]") docDate.textContent = today;
+
+      // Replace a few common placeholders
+      const edits = document.querySelectorAll(".editable[contenteditable='true']");
+      let n = 0;
+      for(const el of edits){
+        if(n > 8) break;
+        if(el.textContent.includes("[DD Month YYYY]")){
+          el.textContent = el.textContent.replace("[DD Month YYYY]", today);
+          n++;
+        }
+      }
+    }
+  </script>
+</body>
+</html>
