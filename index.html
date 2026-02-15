@@ -218,18 +218,16 @@
       justify-content:space-between;
       gap: 10px;
       padding: 12px 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(15,22,48,0.55);
-      box-shadow: 0 14px 40px rgba(0,0,0,0.22);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background:#ffffff;
       text-decoration:none;
       color: inherit;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      transition: background .12s ease, border-color .12s ease;
     }
     .content:hover{
-      transform: translateY(-1px);
-      border-color: rgba(122,162,255,0.35);
-      background: rgba(18,26,51,0.68);
+      border-color: var(--accent);
+      background:#f9fafb;
     }
     .content:focus{ outline:none; box-shadow: 0 14px 40px rgba(0,0,0,0.22), var(--ring); }
 
