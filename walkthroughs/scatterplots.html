@@ -5,37 +5,106 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Lesson: Ticket price vs daily riders using scatter plots with trend lines</title>
   <style>
-    :root { --bg:#0b0f14; --card:#111826; --text:#e7eef7; --muted:#a9b6c5; --accent:#7dd3fc; --border:#223044; }
-    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--text); line-height:1.5; }
-    .wrap { max-width: 980px; margin: 0 auto; padding: 28px 18px 60px; }
-    h1 { font-size: 28px; margin: 0 0 6px; }
-    p { margin: 10px 0; color: var(--muted); }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin: 14px 0; }
-    .badge { display:inline-block; font-size: 12px; padding: 3px 8px; border-radius: 999px; background: rgba(125,211,252,0.12); color: var(--accent); border: 1px solid rgba(125,211,252,0.22); }
-    ul { margin: 8px 0 0 18px; color: var(--muted); }
-    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
-    pre { margin: 0; padding: 14px; border-radius: 12px; background: #0a1220; border: 1px solid #1c2a40; overflow:auto; }
-    .solnHead { display:flex; align-items:center; justify-content:space-between; gap:12px; }
-    .btn {
-      cursor:pointer; user-select:none;
-      background: rgba(125,211,252,0.12);
-      border: 1px solid rgba(125,211,252,0.28);
+    :root { --bg:#ffffff; --card:#ffffff; --text:#111827; --muted:#6b7280; --accent:#2563eb; --border:#e5e7eb; }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
+    }
+
+    /* Fully responsive width */
+    .wrap{
+      width: min(1100px, calc(100vw - 36px));
+      margin: 0 auto;
+      padding: 28px 0 60px;
+    }
+
+    h1{ font-size: 28px; margin: 0 0 6px; }
+    p{ margin: 10px 0; color: var(--muted); }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      margin: 22px 0;              /* clear vertical separation */
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    }
+
+    .badge{
+      display:inline-block;
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(37,99,235,0.08);
+      color: var(--accent);
+      border: 1px solid rgba(37,99,235,0.18);
+    }
+
+    ul{ margin: 8px 0 0 18px; color: var(--muted); }
+
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    pre{
+      margin: 0;
+      padding: 14px;
+      border-radius: 12px;
+      background: #0b1020;
+      border: 1px solid rgba(255,255,255,0.10);
+      overflow:auto;
+      color:#e7eef7;
+      max-width:100%;
+    }
+
+    .solnHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .btn{
+      cursor:pointer;
+      user-select:none;
+      background: rgba(37,99,235,0.08);
+      border: 1px solid rgba(37,99,235,0.22);
       color: var(--accent);
       padding: 6px 10px;
       border-radius: 10px;
-      display:inline-flex; align-items:center; gap:8px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
       font-weight: 650;
     }
-    .blurred pre { filter: blur(7px); transition: filter 180ms ease; }
-    .revealed pre { filter: none; }
-    .note { margin-top: 10px; font-size: 13px; color: var(--muted); }
-    .icon { width: 18px; height: 18px; display:inline-block; }
-    .callout { border-left: 4px solid rgba(125,211,252,0.7); padding-left: 12px; margin: 10px 0; color: var(--muted); }
+
+    .btn:focus{
+      outline: 2px solid rgba(37,99,235,0.35);
+      outline-offset: 2px;
+    }
+
+    .blurred pre{ filter: blur(7px); transition: filter 180ms ease; }
+    .revealed pre{ filter: none; }
+
+    .note{ margin-top: 10px; font-size: 13px; color: var(--muted); }
+    .icon{ width: 18px; height: 18px; display:inline-block; }
+
+    .callout{
+      border-left: 4px solid rgba(37,99,235,0.45);
+      padding-left: 12px;
+      margin: 10px 0;
+      color: var(--muted);
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <span class="badge">ggplot2 lesson</span>
     <h1>Ticket price vs daily riders with a trend line coloured by mode</h1>
     <p>
       Goal: make a scatter plot that shows routes against cost.

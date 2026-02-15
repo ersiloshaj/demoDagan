@@ -6,77 +6,89 @@
   <title>Week 2 Worksheet: Build the Transport Shiny App</title>
   <style>
     :root{
-      --bg:#0b1020;
-      --panel:#121a33;
-      --panel2:#0f1630;
-      --text:#e8ecff;
-      --muted:#b9c2ff;
-      --accent:#7aa2ff;
-      --border:rgba(255,255,255,0.12);
-      --code:#0a0f1f;
+      --bg:#ffffff;
+      --panel:#ffffff;
+      --panel2:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --accent:#2563eb;
+      --border:#e5e7eb;
+      --code:#0b1020;
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
+
+    *{ box-sizing:border-box; }
+
     body{
       margin:0;
       font-family:var(--sans);
-      background: radial-gradient(1200px 700px at 20% 0%, rgba(122,162,255,0.18), transparent 60%),
-                  radial-gradient(800px 600px at 80% 10%, rgba(255,211,122,0.10), transparent 55%),
-                  var(--bg);
+      background: var(--bg);
       color:var(--text);
       line-height:1.55;
     }
+
     header{
       padding:34px 18px 14px;
       max-width:1050px;
       margin:0 auto;
     }
+
     h1{
       margin:0 0 8px;
       font-size: clamp(24px, 3vw, 34px);
       letter-spacing:0.2px;
     }
+
     .subtitle{
       color:var(--muted);
       max-width: 80ch;
       font-size: 15px;
     }
+
     .wrap{
       max-width:1050px;
       margin:0 auto;
       padding:0 18px 60px;
     }
+
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      background: var(--panel);
       border:1px solid var(--border);
       border-radius:16px;
       padding:16px;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
       margin-top: 14px;
     }
+
     .task{
-      border:1px solid rgba(255,255,255,0.12);
+      border:1px solid var(--border);
       border-radius: 14px;
       padding: 14px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(17,24,39,0.02);
       margin: 12px 0;
     }
+
     .task h2{
       margin: 0 0 8px;
       font-size: 18px;
     }
+
     .task .goal{
       color: var(--muted);
       font-size: 14px;
       margin-bottom: 10px;
     }
+
     .checklist{
       margin: 8px 0 0 0;
       padding-left: 18px;
     }
+
     .checklist li{
       margin: 6px 0;
     }
+
     .code{
       background: var(--code);
       border:1px solid rgba(255,255,255,0.10);
@@ -88,48 +100,56 @@
       line-height: 1.45;
       margin: 10px 0 14px;
       white-space: pre;
+      color:#e7eef7;
     }
+
     .hint{
-      border-left: 4px solid var(--accent);
+      border-left: 4px solid rgba(37,99,235,0.45);
       padding: 10px 12px;
-      background: rgba(122,162,255,0.08);
+      background: rgba(37,99,235,0.06);
       border-radius: 12px;
       margin: 10px 0;
+      color: var(--muted);
     }
 
     /* Solution panels */
     .solution-wrap{
       margin-top: 10px;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid var(--border);
       overflow:hidden;
-      background: rgba(255,255,255,0.02);
+      background: rgba(17,24,39,0.02);
     }
+
     .solution-header{
       display:flex;
       gap:10px;
       align-items:center;
       justify-content: space-between;
       padding: 10px 12px;
-      background: rgba(255,255,255,0.03);
-      border-bottom: 1px solid rgba(255,255,255,0.10);
+      background: rgba(17,24,39,0.02);
+      border-bottom: 1px solid var(--border);
     }
+
     .solution-header b{
       font-size: 14px;
     }
+
     .btn{
       appearance:none;
-      border:1px solid rgba(255,255,255,0.18);
-      background: rgba(122,162,255,0.10);
-      color: var(--text);
+      border:1px solid rgba(37,99,235,0.25);
+      background: rgba(37,99,235,0.08);
+      color: var(--accent);
       border-radius: 12px;
       padding: 8px 10px;
       cursor:pointer;
       font-size: 13px;
+      font-weight: 650;
     }
+
     .btn:hover{
-      background: rgba(122,162,255,0.18);
-      border-color: rgba(122,162,255,0.35);
+      background: rgba(37,99,235,0.12);
+      border-color: rgba(37,99,235,0.35);
     }
 
     .solution-body{
@@ -141,9 +161,11 @@
       user-select: none;
       pointer-events: none;
     }
+
     .locked .lock-note{
       display:block;
     }
+
     .lock-note{
       display:none;
       color: var(--muted);
@@ -156,19 +178,24 @@
       font-size: 13px;
       margin-top: 18px;
     }
+
     .badge{
       display:inline-block;
       font-size:12px;
       padding:3px 10px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,0.15);
+      border:1px solid var(--border);
       color:var(--muted);
-      background: rgba(255,255,255,0.03);
+      background: rgba(17,24,39,0.03);
       margin-left: 8px;
     }
+
+    p{ color: var(--muted); }
+    ul{ color: var(--muted); }
+    code{ font-family: var(--mono); font-size: 0.95em; }
   </style>
 </head>
-  
+
 <body>
   <header>
     <h1>Week 2 Worksheet: Build the Transport Shiny App</h1>
@@ -287,176 +314,34 @@ shinyApp(ui, server)</div>
       </div>
     </div>
 
-
-      <!-- Task 3 -->
-      <!---
-      <div class="card task">
-        <h2>Task 3: Add inputs and build a reactive filtered dataset <span class="badge">Stage 3</span></h2>
-        <div class="goal">Goal: add city selector, mode selector, date range, and make all outputs use a single filtered dataset.</div>
-        <ol class="checklist">
-          <li>Add a sidebar layout with inputs: city, mode, date range.</li>
-          <li>Populate city and mode choices from the dataset.</li>
-          <li>Create <code>filtered_data <- reactive({ ... })</code>.</li>
-          <li>Update your plot to use <code>filtered_data()</code>.</li>
-        </ol>
-  
-        <div class="hint">
-          Use <code>req()</code> inside your reactive to avoid startup errors.
-        </div>
-  
-        <div class="solution-wrap locked" data-solution="s3">
-          <div class="solution-header">
-            <b>Solution</b>
-            <button class="btn" onclick="unlockSolution('s3')">Unlock</button>
-          </div>
-          <div class="solution-body">
-            <div class="lock-note">Enter the password to reveal this solution.</div>
-            <div class="code blurred">library(shiny)
-  library(ggplot2)
-  library(dplyr)
-  
-  ui <- fluidPage(
-    titlePanel("Transport Dashboard"),
-    sidebarLayout(
-      sidebarPanel(
-        selectInput("city", "City", choices = NULL, selected = NULL, multiple = TRUE),
-        selectInput("mode", "Mode", choices = NULL, selected = NULL, multiple = TRUE),
-        dateRangeInput("dates", "Date range", start = NULL, end = NULL)
-      ),
-      mainPanel(
-        plotOutput("p1")
-      )
-    )
-  )
-  
-  server <- function(input, output, session) {
-  
-    df <- read.csv("analysis_ready_transport.csv")
-    df$date <- as.Date(df$date)
-  
-    observe({
-      updateSelectInput(session, "city", choices = sort(unique(df$city)), selected = unique(df$city)[1])
-      updateSelectInput(session, "mode", choices = sort(unique(df$mode)), selected = unique(df$mode)[1])
-      updateDateRangeInput(session, "dates",
-                           start = min(df$date, na.rm = TRUE),
-                           end   = max(df$date, na.rm = TRUE))
-    })
-  
-    filtered_data <- reactive({
-      req(input$city, input$mode, input$dates)
-      df %>%
-        filter(city %in% input$city) %>%
-        filter(mode %in% input$mode) %>%
-        filter(date >= input$dates[1], date <= input$dates[2])
-    })
-  
-    output$p1 <- renderPlot({
-      fd <- filtered_data()
-      ggplot(fd, aes(x = date, y = daily_riders, color = mode)) +
-        geom_line() +
-        labs(x = "Date", y = "Daily riders")
-    })
-  }
-  
-  shinyApp(ui, server)</div>
-          </div>
-        </div>
+    <!-- Task 3 -->
+    <div class="card task">
+      <h2>Task 3: Inputs & one filtered dataset <span class="badge">Stage 3</span></h2>
+      <div class="goal">
+        Goal: add the inputs, populate them from the data, and drive everything from one reactive filtered dataset.
       </div>
---->
-      <!-- Task 4 -->
-          <!---
-      <div class="card task">
-        <h2>Task 4: Add the two main plots with a smooth toggle <span class="badge">Stage 4</span></h2>
-        <div class="goal">Goal: ridership over time and ticket price vs daily riders, controlled by inputs and a raw vs smooth toggle.</div>
-        <ol class="checklist">
-          <li>Add a checkbox input: raw vs smooth.</li>
-          <li>Create Plot 1: ridership over time by mode, faceted by city when multiple cities selected.</li>
-          <li>Create Plot 2: ticket price vs daily riders with raw points and optional smooth.</li>
-        </ol>
-  
-        <div class="hint">
-          Use <code>facet_wrap(~ city)</code> when more than one city is selected.
-          When only one city is selected, you can skip faceting for clarity.
-        </div>
-  
-        <div class="solution-wrap locked" data-solution="s4">
-          <div class="solution-header">
-            <b>Solution</b>
-            <button class="btn" onclick="unlockSolution('s4')">Unlock</button>
-          </div>
-          <div class="solution-body">
-            <div class="lock-note">Enter the password to reveal this solution.</div>
-            <div class="code blurred"># Add this input in sidebarPanel:
-  # checkboxInput("smooth", "Show smooth curve", value = FALSE)
-  
-  # In mainPanel add:
-  # plotOutput("p_riders")
-  # plotOutput("p_price")
-  
-  output$p_riders <- renderPlot({
-    fd <- filtered_data()
-  
-    p <- ggplot(fd, aes(x = date, y = daily_riders, color = mode)) +
-      geom_line() +
-      labs(x = "Date", y = "Daily riders")
-  
-    # Facet only if multiple cities are selected
-    if (length(input$city) > 1) {
-      p <- p + facet_wrap(~ city, scales = "free_y")
-    }
-  
-    p
-  })
-  
-  output$p_price <- renderPlot({
-    fd <- filtered_data()
-  
-    p <- ggplot(fd, aes(x = ticket_price, y = daily_riders)) +
-      geom_point(alpha = 0.6) +
-      labs(x = "Ticket price", y = "Daily riders")
-  
-    if (isTRUE(input$smooth)) {
-      p <- p + geom_smooth(se = FALSE)
-    }
-  
-    p
-  })</div>
-          </div>
-        </div>
+
+      <ol class="checklist">
+        <li><b>3.1</b> Add a sidebar layout with city, mode, and date range inputs.</li>
+        <li><b>3.2</b> Load and prepare the dataset.</li>
+        <li><b>3.3</b> Populate all input choices from the dataset.</li>
+        <li><b>3.4</b> Create a single <code>filtered_data()</code> reactive.</li>
+        <li><b>3.5</b> Update outputs to use <code>filtered_data()</code>.</li>
+      </ol>
+
+      <div class="hint">
+        If the app errors on startup, think about which inputs exist at launch and how to guard against that.
       </div>
-  
-        }
-      --->
 
+      <div class="solution-wrap locked" data-solution="s3">
+        <div class="solution-header">
+          <b>Solution</b>
+          <button class="btn" onclick="unlockSolution('s3')">Unlock</button>
+        </div>
+        <div class="solution-body">
+          <div class="lock-note">Enter the password to reveal this solution.</div>
 
-      <!-- Task 3 -->
-<div class="card task">
-  <h2>Task 3: Inputs & one filtered dataset <span class="badge">Stage 3</span></h2>
-  <div class="goal">
-    Goal: add the inputs, populate them from the data, and drive everything from one reactive filtered dataset.
-  </div>
-
-  <ol class="checklist">
-    <li><b>3.1</b> Add a sidebar layout with city, mode, and date range inputs.</li>
-    <li><b>3.2</b> Load and prepare the dataset.</li>
-    <li><b>3.3</b> Populate all input choices from the dataset.</li>
-    <li><b>3.4</b> Create a single <code>filtered_data()</code> reactive.</li>
-    <li><b>3.5</b> Update outputs to use <code>filtered_data()</code>.</li>
-  </ol>
-
-  <div class="hint">
-    If the app errors on startup, think about which inputs exist at launch and how to guard against that.
-  </div>
-
-  <div class="solution-wrap locked" data-solution="s3">
-    <div class="solution-header">
-      <b>Solution</b>
-      <button class="btn" onclick="unlockSolution('s3')">Unlock</button>
-    </div>
-    <div class="solution-body">
-      <div class="lock-note">Enter the password to reveal this solution.</div>
-
-      <div class="code blurred">
+          <div class="code blurred">
 library(shiny)
 library(ggplot2)
 library(dplyr)
@@ -523,39 +408,38 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
+    <!-- Task 4 -->
+    <div class="card task">
+      <h2>Task 4: Two plots & smooth toggle <span class="badge">Stage 4</span></h2>
+      <div class="goal">
+        Goal: Build an additional scatter plot of ticket price vs riders which has the same filtering available. There should also be a toggle that optionally adds smoothing to the scatter plot.
+      </div>
 
-<!-- Task 4 -->
-<div class="card task">
-  <h2>Task 4: Two plots & smooth toggle <span class="badge">Stage 4</span></h2>
-  <div class="goal">
-    Goal: Build an additional scatter plot of ticket price vs riders which has the same filtering available. There should also be a toggle that optionally adds smoothing to the scatter plot.
-  </div>
+      <ol class="checklist">
+        <li><b>4.1</b> Add a smooth toggle and plot outputs.</li>
+        <li><b>4.2</b> Ridership over time plot using <code>filtered_data()</code>.</li>
+        <li><b>4.3</b> Facet by city only when multiple cities are selected.</li>
+        <li><b>4.4</b> Ticket price vs daily riders with optional smoothing.</li>
+      </ol>
 
-  <ol class="checklist">
-    <li><b>4.1</b> Add a smooth toggle and plot outputs.</li>
-    <li><b>4.2</b> Ridership over time plot using <code>filtered_data()</code>.</li>
-    <li><b>4.3</b> Facet by city only when multiple cities are selected.</li>
-    <li><b>4.4</b> Ticket price vs daily riders with optional smoothing.</li>
-  </ol>
+      <div class="hint">
+        Start with a minimal working plot, then add the conditional behaviour.
+      </div>
 
-  <div class="hint">
-    Start with a minimal working plot, then add the conditional behaviour.
-  </div>
+      <div class="solution-wrap locked" data-solution="s4">
+        <div class="solution-header">
+          <b>Solution</b>
+          <button class="btn" onclick="unlockSolution('s4')">Unlock</button>
+        </div>
+        <div class="solution-body">
+          <div class="lock-note">Enter the password to reveal this solution.</div>
 
-  <div class="solution-wrap locked" data-solution="s4">
-    <div class="solution-header">
-      <b>Solution</b>
-      <button class="btn" onclick="unlockSolution('s4')">Unlock</button>
-    </div>
-    <div class="solution-body">
-      <div class="lock-note">Enter the password to reveal this solution.</div>
-
-      <div class="code blurred">
+          <div class="code blurred">
 # UI additions:
 # checkboxInput("smooth", "Show smooth curve", value = FALSE)
 # plotOutput("p_riders")
@@ -588,11 +472,11 @@ output$p_price <- renderPlot({
 
   p
 })
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-      
+
     <!-- Task 5 -->
     <div class="card task">
       <h2>Task 5: Add summary table, KPIs, and downloads <span class="badge">Stage 5</span></h2>
@@ -731,7 +615,6 @@ ui <- fluidPage(
       Your app should run with <code>shiny::runApp()</code>.
     </div>
   </div>
-
 
 <script>
   function unlockSolution(id){
