@@ -329,10 +329,6 @@
 <body>
   <div class="wrap">
     <header>
-      <div>
-        <h1>Roadmap</h1>
-      </div>
-
       <div class="topbar">
         <button class="btn" id="btnClearUnlocks" type="button" title="Forget unlocked sections on this device">
           Clear unlocks
@@ -369,7 +365,15 @@
         section: "Setting the scene",
         locked: false,
         items: [
-          { title:"Introduction to the Module", desc:"What are we doing here", href:"daily/intro.html", icon:"information" }
+          { title:"Introduction to the Module", desc:"What are we doing here?", href:"daily/intro.html", icon:"information" }
+        ]
+      },
+      {
+        section: "Contract",
+        locked: false,
+        password: "briefs",
+        items: [
+          { title:"Signed, Sealed & Delivered.", desc:"Welcome to the team, Interns.", href:"contract.html", icon:"contract-icon"}
         ]
       },
       {
@@ -405,9 +409,9 @@
         locked: false,
         password: "week2",
         items: [
-          { title:"", desc:"", href:"Shiny/notes.html" },
-          { title:"", desc:"", href:"Shiny/tasks.html" },
-          { title:"", desc:"", href:"Shiny/cheatsheet.html" }
+          { title:"Intro to R Shiny", desc:"Let's turn our static analysis into something interactive", href:"Shiny/notes.html", icon: "shiny-logo" },
+          { title:"Shiny Tasks", desc:"Here are your shiny tasks for the week. Work through them, answers and examples to be provided later. Create to your taste and see what tricks and other possibilities you can discover.", href:"Shiny/tasks.html", icon:"thinking-emoji" },
+          { title:"Reference List", desc:"Your one stop shop for basic shiny commands and conventions all in one place. To be unlocked during W4.", href:"Shiny/cheatsheet.html", icon:"lock-icon" }
         ]
       },
       {
@@ -431,11 +435,10 @@
         ]
       },
       {
-        section: "Contract",
+        section: "TLDR;",
         locked: false,
-        password: "briefs",
         items: [
-          { title:"Contract", desc:"", href:"contract.html", icon:"GOVuk"}
+          { title:"The Task", desc:"A generic task explanation that is not project specific.", href:"officialTask.html", icon:"cleaning" }
         ]
       }
     ];
@@ -558,6 +561,46 @@
     return `
       <img 
         src="briefs/assets/barchart.png"
+        alt="barchart"
+        class="crest"
+      />
+    `;
+  }
+
+  if(kind === "shiny-logo") {
+    return `
+      <img 
+        src="briefs/assets/shiny-logo.png"
+        alt="barchart"
+        class="crest"
+      />
+    `;
+  }
+
+  if(kind === "thinking-emoji") {
+    return `
+      <img 
+        src="briefs/assets/thinking-emoji.jpeg"
+        alt="barchart"
+        class="crest"
+      />
+    `;
+  }
+
+  if(kind === "lock-icon") {
+    return `
+      <img 
+        src="briefs/assets/lock-icon.png"
+        alt="barchart"
+        class="crest"
+      />
+    `;
+  }
+
+  if(kind === "contract-icon") {
+    return `
+      <img 
+        src="briefs/assets/contract-icon.png"
         alt="barchart"
         class="crest"
       />

@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Final Project Task Brief (Applies to All Client Briefs)</title>
+
+  <style>
+    :root{
+      /* City St George’s / SGUL-inspired teal palette */
+      --brand:  #009B77;
+      --brand2: #003B49;
+
+      --ink:    #121826;
+      --muted:  rgba(18,24,38,0.70);
+      --hair:   rgba(0,0,0,0.14);
+      --hair2:  rgba(0,0,0,0.08);
+
+      --paper:  #ffffff;
+      --bg:     #eef4f2;
+
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+      --paper-w: 210mm; /* A4 */
+      --paper-h: 297mm;
+      --m-top:   18mm;
+      --m-side:  18mm;
+      --m-bot:   18mm;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    .controls{
+      width: min(980px, 100%);
+      margin: 18px auto 10px;
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+      padding: 0 16px;
+    }
+    button{
+      border: 1px solid rgba(0,0,0,0.18);
+      background: #fff;
+      color: var(--brand2);
+      border-radius: 999px;
+      padding: 10px 12px;
+      font-weight: 750;
+      cursor:pointer;
+    }
+    button.primary{
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: #fff;
+    }
+    button:active{ transform: translateY(1px); }
+
+    .desk{
+      padding: 0 16px 44px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .paper{
+      width: min(var(--paper-w), 100%);
+      min-height: var(--paper-h);
+      background: var(--paper);
+      box-shadow:
+        0 1px 0 rgba(0,0,0,0.06),
+        0 18px 50px rgba(0,0,0,0.12);
+      border: 1px solid rgba(0,0,0,0.10);
+      position: relative;
+    }
+
+    .paper::before{
+      content:"";
+      position:absolute;
+      left:0; top:0;
+      width:100%;
+      height: 6mm;
+      background: linear-gradient(90deg, var(--brand2), var(--brand));
+    }
+
+    .content{
+      padding: calc(var(--m-top) + 6mm) var(--m-side) var(--m-bot);
+    }
+
+    .letterhead{
+      display:flex;
+      justify-content:space-between;
+      gap: 16px;
+      align-items:flex-start;
+      padding-bottom: 6mm;
+      border-bottom: 1px solid var(--hair2);
+      margin-bottom: 6mm;
+    }
+
+    .brandblock{
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+      min-width: 320px;
+    }
+
+    .logo{
+      width: 52mm;
+      height: 16mm;
+      display:flex;
+      align-items:flex-start;
+      justify-content:flex-start;
+    }
+    .logo img{
+      height:100%;
+      width:auto;
+      object-fit:contain;
+      display:block;
+    }
+    .logo.placeholder{
+      border: 1px dashed var(--hair);
+      color: var(--muted);
+      font-size: 11px;
+      padding: 3mm;
+      height: 16mm;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .org{
+      margin-top: 1mm;
+    }
+    .org .name{
+      font-weight: 900;
+      letter-spacing: 0.2px;
+      color: var(--brand2);
+      font-size: 14px;
+      line-height: 1.15;
+    }
+    .org .strap{
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-top: 2px;
+      line-height: 1.35;
+    }
+
+    .meta{
+      text-align:right;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+      min-width: 64mm;
+    }
+    .meta b{ color: var(--ink); }
+
+    h1{
+      font-family: var(--serif);
+      font-size: 18.5px;
+      margin: 0 0 3mm;
+      letter-spacing: 0.2px;
+    }
+    h2{
+      font-family: var(--serif);
+      font-size: 14.5px;
+      margin: 6mm 0 2mm;
+      color: var(--brand2);
+    }
+    h3{
+      font-size: 12.8px;
+      margin: 4mm 0 2mm;
+      color: var(--ink);
+    }
+    p{
+      margin: 0 0 3.5mm;
+      line-height: 1.55;
+      font-size: 12.5px;
+    }
+    ul{
+      margin: 0 0 3.5mm 5mm;
+      padding:0;
+      line-height: 1.55;
+      font-size: 12.5px;
+    }
+    li{ margin: 1.5mm 0; }
+
+    .rule{
+      height: 1px;
+      background: var(--hair2);
+      margin: 6mm 0 6mm;
+    }
+
+    .editable{
+      outline: none;
+      border-bottom: 1px dotted rgba(0,0,0,0.35);
+      padding: 0 2px;
+    }
+
+    .box{
+      border: 1px solid var(--hair2);
+      padding: 4mm;
+      margin: 4mm 0 0;
+    }
+
+    .two{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8mm;
+      margin-top: 4mm;
+    }
+
+    .table{
+      width:100%;
+      border-collapse: collapse;
+      margin: 2mm 0 0;
+      font-size: 12.5px;
+    }
+    .table th, .table td{
+      padding: 2.2mm 2mm;
+      border-bottom: 1px solid var(--hair2);
+      vertical-align: top;
+      text-align:left;
+    }
+    .table th{
+      color: var(--muted);
+      font-weight: 800;
+      border-bottom: 1px solid var(--hair);
+    }
+
+    code{
+      font-family: var(--mono);
+      background: rgba(0,59,73,0.06);
+      padding: 0.1em 0.35em;
+      border-radius: 6px;
+      font-size: 0.95em;
+    }
+
+    .checklist li{
+      list-style: none;
+      position: relative;
+      padding-left: 6mm;
+      margin: 2mm 0;
+    }
+    .checklist li::before{
+      content:"☐";
+      position:absolute;
+      left:0;
+      top:0;
+      color: var(--brand2);
+      font-weight: 900;
+    }
+
+    .footer{
+      position:absolute;
+      left: var(--m-side);
+      right: var(--m-side);
+      bottom: 10mm;
+      padding-top: 3mm;
+      border-top: 1px solid var(--hair2);
+      font-size: 11.5px;
+      color: var(--muted);
+      display:flex;
+      justify-content:space-between;
+      gap: 10mm;
+    }
+    .footer .right{
+      text-align:right;
+      font-family: var(--mono);
+    }
+
+    @page{
+      size: A4;
+      margin: 0;
+    }
+    @media print{
+      body{ background:#fff; }
+      .controls{ display:none; }
+      .desk{ padding:0; }
+      .paper{
+        width: var(--paper-w);
+        min-height: var(--paper-h);
+        box-shadow:none;
+        border: none;
+      }
+      .paper::before{
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+
+    @media (max-width: 900px){
+      .two{ grid-template-columns: 1fr; }
+      .meta{ min-width: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="controls">
+    <button class="primary" onclick="window.print()">Print / Save as PDF</button>
+    <button onclick="fillToday()">Set today’s date</button>
+  </div>
+
+  <div class="desk">
+    <div class="paper" role="document" aria-label="Final project task brief">
+
+      <div class="content">
+
+        <div class="letterhead">
+          <div class="brandblock">
+            <!-- Replace placeholder with your logo:
+                 <div class="logo"><img src="assets/citing-logo.webp" alt="Logo"></div>
+                 or if this file sits outside /briefs, use: briefs/assets/citing-logo.webp
+            -->
+            <div class="logo placeholder"><b>[Logo]</b></div>
+
+            <div class="org">
+              <div class="name editable" contenteditable="true">[Hypothetical Consultancy Name]</div>
+              <div class="strap editable" contenteditable="true">
+                Final Project Task Brief (Applies to all client briefs)
+              </div>
+            </div>
+          </div>
+
+          <div class="meta">
+            <div><b>Document:</b> Final Task</div>
+            <div><b>Module:</b> <span class="editable" contenteditable="true">[Module title]</span></div>
+            <div><b>Reference:</b> <span class="editable" contenteditable="true">[FP-0001]</span></div>
+            <div><b>Date:</b> <span id="docDate" class="editable" contenteditable="true">[DD Month YYYY]</span></div>
+          </div>
+        </div>
+
+        <h1>Final Project: Client Insight Pack</h1>
+        <p>
+          Your final task is to deliver a <b>client-ready insight pack</b> based on the brief you selected.
+          This page is intentionally generic so it applies to every brief.
+        </p>
+        <p>
+          You are working as a <b>Junior Analyst Intern</b>. The goal is not to show everything you can do,
+          but to deliver a clear, defensible, stakeholder-friendly output that answers the brief.
+        </p>
+
+        <div class="rule"></div>
+
+        <h2>What you must submit</h2>
+        <p>Submit <b>three things</b> (unless your brief states otherwise):</p>
+
+        <table class="table" aria-label="Submission components">
+          <thead>
+            <tr>
+              <th style="width:34mm;">Component</th>
+              <th>What it is</th>
+              <th style="width:48mm;">What we look for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>1) Dashboard</b></td>
+              <td>
+                An interactive dashboard that lets a stakeholder explore the data and answer the brief’s key questions.
+                It must include sensible filters and clear labels.
+              </td>
+              <td>
+                Works end-to-end, readable, correct, not cluttered, supports decisions.
+              </td>
+            </tr>
+            <tr>
+              <td><b>2) Short findings note</b></td>
+              <td>
+                A 1–2 page summary written for non-technical readers:
+                what you found, what it means, and what you recommend next.
+              </td>
+              <td>
+                Clear narrative, cautious claims, actionable recommendations.
+              </td>
+            </tr>
+            <tr>
+              <td><b>3) Robust codebase</b></td>
+              <td>
+                A fully commented codebase that is logically organised and backed up using Git.
+              </td>
+              <td>
+                Decisions are clear, structure is clean.
+              </td>
+            </tr>
+            <tr>
+              <td><b>4) Technical appendix</b></td>
+              <td>
+                A short technical record of how you built the work:
+                data sources, cleaning steps, key definitions, limitations, and how to reproduce the analysis.
+              </td>
+              <td>
+                Reproducible, transparent assumptions, correct joins/definitions.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Minimum requirements</h2>
+        <div class="box">
+          <ul class="checklist">
+            <li>Your dashboard runs without errors and shows the correct data.</li>
+            <li>You include at least <b>3 core visuals</b> that directly relate to the brief’s questions.</li>
+            <li>You include at least <b>one KPI / headline metric</b> (clearly defined).</li>
+            <li>You explain <b>what you can and cannot conclude</b> from the data.</li>
+            <li>You document cleaning and assumptions in a way someone else can follow.</li>
+            <li>Your file structure is organised and your work can be reproduced.</li>
+          </ul>
+        </div>
+
+        <h2>How to structure your deliverables</h2>
+
+        <div class="two">
+          <div>
+            <h3>Dashboard (suggested sections)</h3>
+            <ul>
+              <li><b>Overview:</b> KPIs + one “big picture” chart.</li>
+              <li><b>Drivers:</b> breakdowns (by group, time, location, category).</li>
+              <li><b>Deep dive:</b> filters + drill-down.</li>
+              <li><b>Notes:</b> definitions + limitations.</li>
+            </ul>
+
+            <h3>Visual standards</h3>
+            <ul>
+              <li>Every chart has a clear title and labelled axes.</li>
+              <li>Units are obvious (currency, %, counts, minutes, etc.).</li>
+              <li>Legend labels are human-readable (no raw variable names).</li>
+              <li>No chart is there “just because”. Each one answers a question.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>Findings note (1–2 pages)</h3>
+            <ul>
+              <li><b>Context:</b> what the brief asked.</li>
+              <li><b>Approach:</b> what data you used and how you analysed it.</li>
+              <li><b>Key findings:</b> 3–6 bullet points, each backed by evidence.</li>
+              <li><b>Recommendations:</b> 2–4 actions or next steps.</li>
+              <li><b>Risks/limits:</b> what might be misleading or missing.</li>
+            </ul>
+
+            <h3>Technical appendix (short)</h3>
+            <ul>
+              <li>Data sources and definitions (data dictionary highlights).</li>
+              <li>Cleaning decisions (missingness, duplicates, joins, outliers).</li>
+              <li>Assumptions and limitations.</li>
+              <li>How to run your code or app (repro steps).</li>
+            </ul>
+          </div>
+        </div>
+
+        <h2>Suggested file structure</h2>
+        <p>Use a structure like this so your submission is easy to mark and easy to reproduce:</p>
+        <div class="box">
+          <p style="margin-bottom:0;">
+            <code>
+              project/<br/>
+              ├─ data_raw/<br/>
+              ├─ data_clean/<br/>
+              ├─ scripts/<br/>
+              ├─ app/<br/>
+              ├─ outputs/<br/>
+              ├─ report/<br/>
+              └─ README.md
+            </code>
+          </p>
+        </div>
+
+        <h2>Marking criteria (high level)</h2>
+        <p>Your grade is based on both <b>technical correctness</b> and <b>client readiness</b>:</p>
+        <table class="table" aria-label="Marking criteria">
+          <thead>
+            <tr>
+              <th style="width:45mm;">Area</th>
+              <th>What “good” looks like</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Analytical judgement</b></td>
+              <td>Answers the brief, picks appropriate visuals, avoids overclaiming, interprets responsibly.</td>
+            </tr>
+            <tr>
+              <td><b>Data integrity</b></td>
+              <td>Cleaning is sensible and documented, definitions are consistent, joins make sense.</td>
+            </tr>
+            <tr>
+              <td><b>Reproducibility</b></td>
+              <td>Clear structure, scripts/app run end-to-end, assumptions recorded, README is usable.</td>
+            </tr>
+            <tr>
+              <td><b>Dashboard quality</b></td>
+              <td>Readable, well-labelled, interactive where it matters, no broken filters, stakeholder-friendly.</td>
+            </tr>
+            <tr>
+              <td><b>Communication</b></td>
+              <td>Findings note is clear, concise, and actionable; limitations are stated plainly.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Common pitfalls to avoid</h2>
+        <ul>
+          <li>Dumping many charts with no narrative.</li>
+          <li>Using raw variable names instead of plain language labels.</li>
+          <li>Making causal claims from observational data.</li>
+          <li>Not defining metrics (what exactly is “delay”, “demand”, “risk”, “usage”).</li>
+          <li>Cleaning steps that are not recorded anywhere.</li>
+          <li>Filters that change the numbers but the text still claims the original story.</li>
+        </ul>
+
+        <h2>Optional stretch goals</h2>
+        <ul>
+          <li>Add a “So what?” panel that updates with the filters.</li>
+          <li>Add a download of filtered data and/or a chart export.</li>
+          <li>Add a small sensitivity check (e.g. excluding outliers, alternate definition).</li>
+          <li>Add a short “next data we wish we had” section.</li>
+        </ul>
+
+        <div class="rule"></div>
+
+        <h2>Submission checklist</h2>
+        <div class="box">
+          <ul class="checklist">
+            <li>Dashboard runs and loads cleanly.</li>
+            <li>Findings note included (PDF/HTML/Doc, as specified).</li>
+            <li>Technical appendix included.</li>
+            <li>README explains how to run the project.</li>
+            <li>All files named clearly and organised.</li>
+            <li>No confidential or personal data included beyond what the brief provides.</li>
+          </ul>
+        </div>
+
+        <p style="margin-top:5mm;color:var(--muted);font-size:12px;">
+          Template fields are editable. Click any bracketed item to replace it.
+        </p>
+
+      </div>
+
+      <div class="footer" aria-label="Page footer">
+        <div>
+          <b class="editable" contenteditable="true">[Hypothetical Consultancy Name]</b> •
+          <span class="editable" contenteditable="true">Final Project Task Brief</span><br/>
+          <span class="editable" contenteditable="true">[Module / Department]</span>
+        </div>
+        <div class="right">
+          Ref: <span class="editable" contenteditable="true">[FP-0001]</span><br/>
+          Page 1
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function formatToday(){
+      const d = new Date();
+      const day = String(d.getDate()).padStart(2, "0");
+      const month = d.toLocaleString(undefined, { month: "long" });
+      const year = d.getFullYear();
+      return `${day} ${month} ${year}`;
+    }
+    function fillToday(){
+      const today = formatToday();
+      const docDate = document.getElementById("docDate");
+      if(docDate && docDate.textContent.trim() === "[DD Month YYYY]") docDate.textContent = today;
+
+      // Replace a few common placeholders
+      const edits = document.querySelectorAll(".editable[contenteditable='true']");
+      let n = 0;
+      for(const el of edits){
+        if(n > 10) break;
+        if(el.textContent.includes("[DD Month YYYY]")){
+          el.textContent = el.textContent.replace("[DD Month YYYY]", today);
+          n++;
+        }
+      }
+    }
+  </script>
+</body>
+</html>
