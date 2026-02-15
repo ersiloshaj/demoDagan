@@ -374,7 +374,7 @@
         section: "Getting started",
         locked: false,
         items: [
-          { title:"Data Cleaning", desc:"A series of tasks to challenge you and improve your data cleaning skills", href:"data_cleaning.html" }
+          { title:"Data Cleaning", desc:"A series of tasks to challenge you and improve your data cleaning skills", href:"data_cleaning.html", icon:"cleaning" }
         ]
       },
       {
@@ -474,6 +474,16 @@
       <img 
         src="briefs/assets/information-icon.jpeg"
         alt="information icon"
+        class="crest"
+      />
+    `;
+  }
+  
+  if(kind === "cleaning") {
+    return `
+      <img 
+        src="briefs/assets/cleaning-icon.jpeg"
+        alt="cleaning icon"
         class="crest"
       />
     `;
