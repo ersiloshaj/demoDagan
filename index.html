@@ -385,11 +385,11 @@
         password: "week2",
         items: [
           { title:"Intro to plotting", desc:"This module uses the cleaned data from the previous session.", href:"walkthroughs/0introtask.html", icon:"r-logo" },
-          { title:"Linegraphs", desc:"", href:"walkthroughs/linegraphs.html" },
-          { title:"Scatterplots", desc:"", href:"walkthroughs/scatterplots.html" },
-          { title:"Boxplots", desc:"", href:"walkthroughs/boxplots.html" },
-          { title:"Piecharts", desc:"", href:"walkthroughs/piecharts.html" },
-          { title:"Bar Charts", desc:"", href:"walkthroughs/barcharts.html" }
+          { title:"Linegraphs", desc:"", href:"walkthroughs/linegraphs.html", icon:"linegraph" },
+          { title:"Scatterplots", desc:"", href:"walkthroughs/scatterplots.html", icon:"scatterplot" },
+          { title:"Boxplots", desc:"", href:"walkthroughs/boxplots.html", icon:"boxplot" },
+          { title:"Piecharts", desc:"", href:"walkthroughs/piecharts.html", icon:"piechart" },
+          { title:"Bar Charts", desc:"", href:"walkthroughs/barcharts.html", icon:"barchart" }
         ]
       },
       {
@@ -496,6 +496,56 @@
       <img 
         src="briefs/assets/r-logo.png"
         alt="R Logo"
+        class="crest"
+      />
+    `;
+  }
+  
+  if(kind === "linegraph") {
+    return `
+      <img 
+        src="briefs/assets/linegraph.png"
+        alt="linegraph"
+        class="crest"
+      />
+    `;
+  }
+
+  if(kind === "scatterplot") {
+    return `
+      <img 
+        src="briefs/assets/scatterplot.jpeg"
+        alt="scatterplot"
+        class="crest"
+      />
+    `;
+  }
+  
+  if(kind === "boxplot") {
+    return `
+      <img 
+        src="briefs/assets/boxplot.png"
+        alt="boxplot"
+        class="crest"
+      />
+    `;
+  }
+
+  if(kind === "piechart") {
+    return `
+      <img 
+        src="briefs/assets/piechart.png"
+        alt="piechart"
+        class="crest"
+      />
+    `;
+  }
+
+  if(kind === "barchart") {
+    return `
+      <img 
+        src="briefs/assets/barchart.png"
+        alt="barchart"
         class="crest"
       />
     `;
