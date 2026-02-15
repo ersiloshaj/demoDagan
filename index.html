@@ -367,7 +367,7 @@
         section: "Setting the scene",
         locked: false,
         items: [
-          { title:"Introduction to the Module", desc:"What are we doing here", href:"daily/intro.html" }
+          { title:"Introduction to the Module", desc:"What are we doing here", href:"daily/intro.html", icon:"information" }
         ]
       },
       {
@@ -464,6 +464,16 @@
       <img 
         src="briefs/assets/fda-logo2.jpeg"
         alt="FDA logo"
+        class="crest"
+      />
+    `;
+  }
+  
+  if(kind === "information") {
+    return `
+      <img 
+        src="briefs/assets/information-icon.jpeg"
+        alt="information icon"
         class="crest"
       />
     `;
