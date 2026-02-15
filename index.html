@@ -382,7 +382,7 @@
         locked: false,
         password: "week2",
         items: [
-          { title:"Intro to plotting", desc:"This module uses the cleaned data from the previous session.", href:"walkthroughs/0introtask.html" },
+          { title:"Intro to plotting", desc:"This module uses the cleaned data from the previous session.", href:"walkthroughs/0introtask.html", icon:"r-logo" },
           { title:"Linegraphs", desc:"", href:"walkthroughs/linegraphs.html" },
           { title:"Scatterplots", desc:"", href:"walkthroughs/scatterplots.html" },
           { title:"Boxplots", desc:"", href:"walkthroughs/boxplots.html" },
@@ -484,6 +484,16 @@
       <img 
         src="briefs/assets/cleaning-icon.jpeg"
         alt="cleaning icon"
+        class="crest"
+      />
+    `;
+  }
+  
+  if(kind === "r-logo") {
+    return `
+      <img 
+        src="briefs/assets/r-icon.png"
+        alt="R Logo"
         class="crest"
       />
     `;
