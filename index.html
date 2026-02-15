@@ -27,6 +27,10 @@
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     }
 
+    #btnClearUnlocks {
+      display: none;
+    }
+
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
 
@@ -107,9 +111,9 @@
       gap:10px;
       align-items:center;
       padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(10,15,31,0.55);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #ffffff;
     }
     .input input{
       width:100%;
@@ -119,7 +123,13 @@
       color: var(--text);
       font-size: 14px;
     }
-    .input input::placeholder{ color: rgba(185,194,255,0.55); }
+    .input input::placeholder{
+      color: var(--muted);
+    }
+    .input:focus-within{
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+    }
 
     /* Sections */
     .section{
